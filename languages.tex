@@ -1,0 +1,20 @@
+%!TEX root=ndma.tex
+
+Traditionally, automata can be deterministic or non-deterministic. In order to extend previous results on closure under complementation and decidability, one needs to work with deterministic structures; therefore, in this paper, we introduce directly the deterministic structures.
+
+\begin{definition}
+ A \emph{nominal deterministic Muller automaton} (nDMA) is a tuple $(Q,\tr{},q_0,\acc)$ where:
+ 
+  \begin{itemize}
+  \item $Q$ is an orbit-finite nominal set of \emph{states};
+  
+  \item $q_0 \in Q$ is the \emph{initial state};
+  
+  \item $\acc \subseteq \Pow(\Orb(Q))$ is a set of sets of orbits, intended to be used as an accepting condition in the style of Muller automata.
+  
+  \item $\htr{}{}$ is the \emph{transition relation}, made up of triples $q_1 \tr{l} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, \emph{label} $l \in \names$;
+  
+  \item the transition relation is \emph{deterministic}, that is, for each $q \in Q$ and label $l \in \names$ there is exactly one transition with source $q$ and label $l$.
+ \end{itemize}
+\end{definition}
+

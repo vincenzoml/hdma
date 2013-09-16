@@ -1,0 +1,40 @@
+\documentclass[orivec]{llncs}
+
+\title{Nominal deterministic Muller automata}
+\author{Vincenzo Ciancia, Matteo Sammartino}
+\institute{}
+
+\input{vincenzo-macros}
+\input{matteo-macros}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+ We define a class of stream languages, and the corresponding automata, that operate on infinite alphabets. The automata used for recognition are a generalisation of deterministic Muller automata to the case of infinite alphabets. Closure under complement, union and intersection is retained from the classical case.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}\input{introduction}
+
+\section{Background}\label{sec:background}\input{background}
+
+\section{Nominal regular $\omega$-languages}\label{sec:languages}\input{languages}
+
+
+\section{Finite automata}\label{sec:hd-automata}
+\input{hd-automata}
+\input{up-fragment-proof.tex}
+
+\section{Boolean operations}\label{sec:boolean-operations}\input{boolean-operations}
+
+\section{Ultimately-periodic determinacy}\label{sec:up-determinacy}\input{up-determinacy}
+
+\section{Nominal regularity of looping fragments}\label{sec:regularity-of-loop}\input{regularity-of-loop}
+
+\section{Decidability}\label{sec:decidability}\input{decidability}
+
+\bibliographystyle{splncs}
+\bibliography{bibliography}
+
+\end{document}

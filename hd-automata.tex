@@ -1,0 +1,36 @@
+%!TEX root=ndma.tex
+
+\begin{definition}\label{def:hdma}
+ An \emph{history-dependent deterministic Muller automaton} (hDMA) is a tuple $(Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$
+ where:
+ \begin{itemize}
+  \item $Q$ is a finite set of \emph{states};
+  \item for $q \in Q$, $\weight{q}$ is a finite set of \emph{local names} (or \emph{registers}) of state $q$;
+  \item $q_0 \in Q$ is the \emph{initial state};
+  \item $\rho_0 : \weight{q_0} \to \names$ is the \emph{initial assignment};
+  \item $\acc \subseteq \Pow(Q)$ is the \emph{accepting condition}, in the style of \emph{Muller automata};
+  \item $\htr{}{}$ is the \emph{transition relation}, made up of quadruples $q_1 \htr{l}{\sigma} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, label $l \in \weight{q_1} \uplus \{\star\}$, and \emph{history} $\sigma : \weight{q_2} \inj \weight{q_1} \uplus \{l\}$;
+  \item the transition relation is \emph{deterministic} in the following sense: for each $q_1 \in Q$,   there is exactly one transition with source $q_1$ and label $\star$, and exactly one transition with source $q_1$ and label $x$ for each $x \in \weight{q_1}$.
+ \end{itemize}
+\end{definition}
+
+\noindent In the following we fix a HDMA $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. Acceptance of an word $\alpha \in \names^\omega$ is defined in terms of the \emph{configuration graph} of $A$.
+
+\begin{definition}
+ The set $\confs$ of \emph{configurations} of $A$ consists of the pairs $(q,\rho)$ such that $q \in Q$ and $\rho : \weight q \to \names$.
+\end{definition}
+
+\begin{definition}
+ The \emph{configuration graph} of $A$ is a transition relation over triples $(q_1,\rho_1) \tr a (q_2,\rho_2)$ where the source and destination are configurations, and $a \in \names$. There is one such transition if and only if there is a transition $q_1 \htr l \sigma q_2$ in $A$ and either of the following happens: 
+ \begin{itemize} 
+  \item $l \in \weight{q_1}$, $\rho_1(l) = a$, and $\rho_2 = \rho_1 \circ \sigma$;
+  \item $l = \star$, $a \notin \Im(\rho_1)$, $\rho_2 = (\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)}$.
+ \end{itemize}
+\end{definition}
+% 
+The definition deserves some explanation. Fix a configuration $(q_1,\rho_1)$. Say that name $a\in \names$ is \emph{assigned to} the register $i \in \weight{q_1}$ if $\rho_1(i) = a$. When $a$ is not assigned to any register, it is fresh for a given configuration. Then the transition $q_1 \htr l \sigma q_2$, under the assignment $\rho_1$, consumes a symbol as follows: either $l \in \weight{q_1}$ and $a$ is the name assigned to register $l$, or $l$ is $\star$ and $a$ is fresh. The destination assignment $\rho_2$ is defined using $\sigma$ as a binding between local registers of $q_2$ and local registers of $q_1$, therefore composing $\sigma$ with $\rho_1$ and eventually associating a freshly received name, whenever $\star$ is in the image of $\sigma$.
+
+% 
+% \begin{definition}
+%  The configuration graph of $A$ consists of the set of configurations equipped with a ternary transition relation, labelled with names. Specifically, we have $(q_1,\rho_1) \tr a (q_2,\rho_2)$, with $a \in \names$ if and only if 
+% \end{definition}
