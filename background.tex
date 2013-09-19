@@ -1,6 +1,12 @@
 %!TEX root=ndma.tex
 \paragraph{Notation.} As a matter of notation, for $X$, $Y$ sets, we let $f \colon X \to Y$ be a total function from $X$ to $Y$, $f \colon X \inj Y$ be a total injective function and $f \colon X \pto Y$ a partial function. Given a (partial) injective function $f$, we write $f^{-1} \colon Y \pto X$ for the partial inverse function $\{(y,x) \mid f(x) = y \}$. We let $\restr{f}{X'}$, with $X' \subseteq X$, be the domain restriction of $f$ to $X'$.
 
+We assume an infinite set of names $\names$, and we write $Perm$ for the group of finite-kernel permutations of $\names$, namely those bijections $\pi \colon \names \to \names$ such that the set $\{ a \mid \pi(a) \neq a \}$ is finite.
+\begin{definition}
+A \emph{nominal set} is a set $X$ along with an action for $Perm$, that is a function $\cdot \colon Perm \times X \to X$ such that, for all $x \in X$ and $\pi,\pi' \in Perm$, $x \cdot id_\names = x$ and $(\pi \circ \pi') \cdot x = \pi \cdot (\pi' \cdot x)$. Also, each $x \in X$ has \emph{finite support}, meaning that there exists a finite $S \subseteq \names$ such that, $\restr{\pi}{S} = id_S$ implies $\pi \cdot x = x$, for all $\pi \in Perm$.
+\end{definition}
+%
+Given $x \in X$, the \emph{orbit} of $x$, denotedy $\Orb(x) $, is the set $\{ \pi \cdot x \mid \pi \in Perm\} \subseteq X$. We write $\Orb(X)$ for $\{ \Orb(x) \mid x \in X\}$. This set forms a partition of $X$. 
 \begin{Todo}
  Introduce nominal sets and the notation $\Orb(X)$ for the set of orbits of $X$.
 \end{Todo}
