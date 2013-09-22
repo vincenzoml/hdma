@@ -1,7 +1,7 @@
 %!TEX root=ndma.tex
 
 \begin{definition}\label{def:hdma}
- An \emph{history-dependent deterministic Muller automaton} (hDMA) is a tuple $(Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$
+ An \emph{history-dependent deterministic Muller automaton} (\hdma) is a tuple $(Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$
  where:
  \begin{itemize}
   \item $Q$ is a finite set of \emph{states};
@@ -13,8 +13,8 @@
   \item the transition relation is \emph{deterministic} in the following sense: for each $q_1 \in Q$,   there is exactly one transition with source $q_1$ and label $\star$, and exactly one transition with source $q_1$ and label $x$ for each $x \in \weight{q_1}$.
  \end{itemize}
 \end{definition}
-
-\noindent In the following we fix a HDMA $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. Acceptance of an word $\alpha \in \names^\omega$ is defined in terms of the \emph{configuration graph} of $A$.
+%
+In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. Acceptance of an word $\alpha \in \names^\omega$ is defined in terms of the \emph{configuration graph} of $A$.
 
 \begin{definition}
  The set $\confs$ of \emph{configurations} of $A$ consists of the pairs $(q,\rho)$ such that $q \in Q$ and $\rho : \weight q \to \names$.

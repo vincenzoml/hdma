@@ -1,14 +1,23 @@
-% Transition arrows
-\usepackage{cleveref}
-\usepackage{todonotes}
+\usepackage{cleveref,todonotes,mathpartir}
 \usepackage[utf8]{inputenc}
 
+\DeclareMathOperator{\dom}{dom}
+
+\newcommand{\todosm}[1]{\todo[size=\tiny]{#1}}
+
+\newcommand{\autom}{\mathcal{A}}
+\newcommand{\hdma}{hDMA}
+\newcommand{\hdmas}{\hdma s}
+
+% Transition arrows
 \newcommand{\Trarrow}{\Longrightarrow}
 \newcommand{\Tr}[1]{\overset{#1}{\Trarrow}}
 \newcommand{\TrP}[2]{\Tr{#1}_{#2}}
+\newcommand{\htrind}[3]{\overset{#1}{\underset{#2}{\trarrow_{#3}}}}
+\newcommand{\trind}[2]{\overset{#1}{\trarrow_{#2}}}
 
 \newcommand{\pto}{\rightharpoonup}
 \newcommand{\ul}[1]{{\underline{#1}}}
 \newcommand{\restr}[2]{\ensuremath{\left.#1\right|_{#2}}}
-
 \newcommand{\lang}{\mathcal{L}}
+\newcommand{\syncp}{\otimes}
