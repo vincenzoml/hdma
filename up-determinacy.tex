@@ -19,7 +19,7 @@ Now we analyze properties of \emph{loops}, i.e.\ sequences of transitions whose 
 	\widehat{\sigma}_i := \sigma_i \setminus \{ (x,y) \in \sigma_i \mid y = \star \} 
 	\qquad (i=0,\dots,n-1)
 \]
-Intuitively, these are the maps between local names induced by $\sigma_i$ ignoring allocations. Let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their composition $\widehat{\sigma}_0 \circ \widehat{\sigma}_1 \dots \circ \widehat{\sigma}_{n}$. We define the set $I$ as the greatest subset of $\dom(\widehat{\sigma})$ such that
+Intuitively, these are the maps between local names induced by $\sigma_i$ ignoring allocations. Let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their composition $\widehat{\sigma}_0 \circ \widehat{\sigma}_1 \dots \circ \widehat{\sigma}_{n-1}$. We define the set $I$ as the greatest subset of $\dom(\widehat{\sigma})$ such that
 \[
 	\widehat{\sigma}(I) = I \enspace ,
 \]
@@ -33,10 +33,10 @@ We introduce some lemmata regarding these sets.
 
 \begin{lemma}
 \label{lem:xI}
-Given $x \in \dom(\widehat{\sigma})$, suppose there is a positive integer $n$ such that $x = \widehat{\sigma}^n (x)$. Then $x \in I$.
+Given $x \in \dom(\widehat{\sigma})$, suppose there is a positive integer $k$ such that $x = \widehat{\sigma}^k (x)$. Then $x \in I$.
 \end{lemma}
 \begin{proof}
-Suppose $x \notin I$. $I = \widehat{\sigma}(I)$ implies $I = \widehat{\sigma}^n(I)$, so $I \cup \{x\} = \widehat{\sigma}^n(I \cup \{x\})$, but this is against the assumption that $I$ is the largest set satisfying $I = \widehat{\sigma}(I)$.
+Suppose $x \notin I$. $I = \widehat{\sigma}(I)$ implies $I = \widehat{\sigma}^k(I)$, so $I \cup \{x\} = \widehat{\sigma}^k(I \cup \{x\})$, but this is against the assumption that $I$ is the largest set satisfying $I = \widehat{\sigma}(I)$.
 \qed
 \end{proof}
 
@@ -47,7 +47,7 @@ The intuition for the following lemma is that names assigned to $T$ are eventual
 Given any $x \in T$, let $\{x_j\}_{j \in J_x}$ be the smallest sequence that satisfies the following conditions
 \[
 	x_0 = x \qquad
-	x_{j+1} = \sigma_{\ul{j}}^{-1}(x_i)
+	x_{j+1} = \sigma_{\ul{j}}^{-1}(x_j)
 \]
 where $j+1 \in J_x$ only if $\sigma_{\ul{j}}^{-1}(x_i)$ is defined. Then $J_x$ has finite cardinality.
 
@@ -82,7 +82,7 @@ for all $\gamma \geq \epsilon$ there are $v_1,\dots,v_\gamma$ satisfying
 	\qquad 
 	\Im(\rho_\gamma) \cap \rho(T) = \varnothing
 \]
-(Fix: $\rho_0(\weight{p_0}) \cap \rho_\gamma(T) = \varnothing$?)
+%(Fix: $\rho_0(\weight{p_0}) \cap \rho_\gamma(T) = \varnothing$?)
 \label{forgetT}
 \item
 %there is $\zeta$ such that, 
