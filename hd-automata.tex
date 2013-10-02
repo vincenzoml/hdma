@@ -17,10 +17,11 @@
 In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. Acceptance of an word $\alpha \in \names^\omega$ is defined in terms of the \emph{configuration graph} of $A$.
 
 \begin{definition}
- The set $\confs$ of \emph{configurations} of $A$ consists of the pairs $(q,\rho)$ such that $q \in Q$ and $\rho : \weight q \to \names$.
+ The set $\confs(A)$ of \emph{configurations} of $A$ consists of the pairs $(q,\rho)$ such that $q \in Q$ and $\rho : \weight q \inj \names$.
 \end{definition}
 
 \begin{definition}
+\label{def:config-graph}
  The \emph{configuration graph} of $A$ is a transition relation over triples $(q_1,\rho_1) \tr a (q_2,\rho_2)$ where the source and destination are configurations, and $a \in \names$. There is one such transition if and only if there is a transition $q_1 \htr l \sigma q_2$ in $A$ and either of the following happens: 
  \begin{itemize} 
   \item $l \in \weight{q_1}$, $\rho_1(l) = a$, and $\rho_2 = \rho_1 \circ \sigma$;
@@ -29,6 +30,13 @@ In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. 
 \end{definition}
 % 
 The definition deserves some explanation. Fix a configuration $(q_1,\rho_1)$. Say that name $a\in \names$ is \emph{assigned to} the register $i \in \weight{q_1}$ if $\rho_1(i) = a$. When $a$ is not assigned to any register, it is fresh for a given configuration. Then the transition $q_1 \htr l \sigma q_2$, under the assignment $\rho_1$, consumes a symbol as follows: either $l \in \weight{q_1}$ and $a$ is the name assigned to register $l$, or $l$ is $\star$ and $a$ is fresh. The destination assignment $\rho_2$ is defined using $\sigma$ as a binding between local registers of $q_2$ and local registers of $q_1$, therefore composing $\sigma$ with $\rho_1$ and eventually associating a freshly received name, whenever $\star$ is in the image of $\sigma$.
+
+We use the notation $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ to denote a path that spells $v$ in the the configuration graph. We have the following existence and uniqueness result for paths.
+%
+\begin{proposition}
+\label{prop:unique-path}
+Given $(q_1,\rho_1) \in \confs(A)$ and $v \in \names^\omega$, there exists a unique path $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ in the configuration graph of $A$.
+\end{proposition}
 
 % 
 % \begin{definition}
