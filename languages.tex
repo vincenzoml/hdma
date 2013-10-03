@@ -1,8 +1,12 @@
 %!TEX root=ndma.tex
 
-Traditionally, automata can be deterministic or non-deterministic. In order to extend previous results on closure under complementation and decidability, one needs to work with deterministic structures; therefore, in this paper, we introduce directly the deterministic structures.
+Traditionally, automata can be deterministic or non-deterministic. In the case of finite words, non-deterministic nominal automata are not closed under complementation (see \cite{TODO}), whereas the deterministic ones are. For each (nominal) automaton on finite words, it is not difficult to find an automaton on infinite words which is complementable if and only if the original automaton is. Thus, in order to extend previous results on closure under complementation and decidability, one needs to work with deterministic structures. We introduce deterministic automata directly, for this reason. 
 
-\begin{definition}
+\begin{remark} Using nominal sets, the \emph{alphabet} of an automaton, that is, the symbols constituting words, can be drawn from any nominal set; this includes classical finite alphabets, casted as nominal sets under trivial permutation action, the alphabet of \emph{names} $\names$, and more complex structures that can be thought of as \emph{symbols} with attached a list of names (similarly to \cite{MikBartekLICS}). Indeed, the cases where the alphabet is infinite are more interesting; however, it does not make a great difference, from the mathematical perspective, whether the alphabet has only one orbit having one name (the case of $\names$) or if there are more orbits and names. Thus, we assume that the alphabet is $\names$; this simplifies the presentation, especially in Section \ref{sec:hd-automata}. The more general case will be detailed in extended versions of this work.
+\end{remark}
+
+
+\begin{definition}\label{def:ndma}
  A \emph{nominal deterministic Muller automaton} (nDMA) is a tuple $(Q,\tr{},q_0,\acc)$ where:
  
   \begin{itemize}
@@ -12,9 +16,54 @@ Traditionally, automata can be deterministic or non-deterministic. In order to e
   
   \item $\acc \subseteq \Pow(\Orb(Q))$ is a set of sets of orbits, intended to be used as an accepting condition in the style of Muller automata.
   
-  \item $\htr{}{}$ is the \emph{transition relation}, made up of triples $q_1 \tr{l} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, \emph{label} $l \in \names$;
+  \item $\htr{}{}$ is the \emph{transition relation}, made up of triples $q_1 \tr{l} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, \emph{label} $a \in \names$;
   
-  \item the transition relation is \emph{deterministic}, that is, for each $q \in Q$ and label $l \in \names$ there is exactly one transition with source $q$ and label $l$.
+  \item the transition relation is \emph{deterministic}, that is, for each $q \in Q$ and label $l \in \names$ there is exactly one transition with source $q$ and label $a$; otherwise said, the transition relation is a function of type $Q \times \names \to Q$.
  \end{itemize}
 \end{definition}
 
+First of all, we note that the automata we defined are infinitary and infinite state, even if orbit finite. This is not a concern; for algorithmic operations, we will employ equivalent finite structures accepting the same languages (see Section \ref{sec:hd-automata}). However, the definition using infinite entities has the advantage of a simple definition of acceptance. In the following, fix an nDMA $A=(Q,\tr{},q_0,\acc)$.
+
+\begin{definition}
+ An infinite \emph{word} is a sequence $\alpha \in \names^\omega$, mapping natural numbers into symbols of the alphabet $\names$.
+\end{definition}
+
+\noindent Notice that, when $s$ is a sequence, we shall equivalently use the notations $s_i$ or $s(i)$ to denote its $i^{\mathit{th}}$ symbol.
+
+\begin{definition}\label{def:nominal-run}
+ Given a word $\alpha \in \names^\omega$, a \emph{run} of $\alpha$ from $q \in Q$ is a sequence of states $\run_i \in Q^\omega$, such that $\run_0 = q$, and for all $i$ we have $\run_i \tr{\alpha_i} \run_{i+1}$. 
+ By determinism (see Definition \ref{def:ndma}), for each infinite word $\alpha$, and each state $q$, there is exactly one run of $\alpha$ from $q$, that we call $\run^{\alpha,q}$, or simply $\run^{\alpha}$ when $q=q_0$.
+\end{definition}
+
+\begin{definition}
+ For $\run \in Q^\omega$, let $\inf(\run)$ be the (finite) set of \emph{orbits} that $\run$ traverses infinitely often. Formally, we let $\Orb(x) \in \inf(\run)$ if and only if, for all $i$, there is $j > i$ such that $\run_j = q$. 
+\end{definition}
+
+\begin{definition}
+ A word $\alpha$ is \emph{accepted} by state $q$ whenever $\Inf(\run^{\alpha,q}) \in \acc$. We let $\Lang_A,q$ be the set of all accepted words from $q$ in $A$; we omit $A$ when clear from the context, and $q$ when it is $q_0$, thus $\Lang_A$ is the language of the automaton $A$.
+\end{definition}
+
+\begin{example}
+ Consider the automaton in Figure \ref{fig:example-session}. 
+\end{example}
+
+\begin{figure}
+\begin{center}
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+                    semithick]
+  \tikzstyle{every state}=[]
+
+  \node[state] (q0)               {$q_0$};
+  \node[state] (q1) [right of=q0] {$q_1$};
+  
+  \path (q0) edge [bend left]  node {b} (q1)
+             edge [loop left]  node {a} (q0)
+        (q1) edge [bend left]  node {a} (q0)
+             edge [loop right] node {b} (q1);
+\end{tikzpicture}
+%
+$$\acc = \{ \{ q_0 \}, \{ q_1 \}\} \qquad \Lang_{q_0} = \Lang_{q_1} =
+(C^*)(a^\omega \cup b^\omega)$$
+\end{center}
+\caption{\label{fig:example-session} An automaton.}
+\end{figure}
