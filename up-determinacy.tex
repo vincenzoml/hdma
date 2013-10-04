@@ -1,47 +1,105 @@
 %!TEX root=ndma.tex
-
 %
-We write $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ for the path in the configuration graph that spells $v$. Notice that, being $A$ deterministic, there can only be one such path. Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
+%
+\tbox{Sezione 4?}
+{
+Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
+}
+%
+An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v \in \names^\star$.  It is well known that each non-empty $\omega$-regular language $\Lang$ contains at least one such word \cite{CalbrixNP93}. In fact, given any $\alpha \in \Lang$ and the run $r^\alpha$ in a Muller automaton for $\Lang$, there are two states $r^\alpha_i,r^\alpha_j$, $i<j$, such that $\{r^\alpha_i,r^\alpha_{i+1},\dots,r^\alpha_j\}$ is an accepting set and $r^\alpha_i = r^\alpha_j$. Intuitively: a loop through an accepting set of states is eventually encountered while recognizing $\alpha$. Call $u$ the word recognized until $r^\alpha_i$, and $v$ the word recognized along the loop, then we clearly have $uv^\omega \in \Lang$.
 
-We give two lemmata about paths.
-\begin{lemma}
-Given a path, there is always a word that follows that path.
-\end{lemma}
+In this section we prove an analogous result for nominal $\omega$-regular languages. This again involves finding a loop through accepting states and iterating it, but such loop must be in the configuration graph, i.e.\ it must be a path starting and ending with the same state \emph{and} register assignment. The following example gives evidence of this point.
+%To illustrate this point:
+%
+%, unfortunately, it may not be possible to recognize the same word in subsequent traversals of the loop. The figure... illustrates this point:
+%To illustrate this point, consider the \hdma{} in figure...
+
+\begin{example}
+Consider the automaton $A$ in \cref{fig:upwords}: it has a loop from $q_0$ to itself. Unlike ordinary Muller automata, the same symbol cannot be consumed by two subsequent iterations of the loop, because of the freshness requirement. However, the same symbol can be consumed after \emph{two} iterations, as illustrated by the following path in the configuration graph of $A$:
+\[
+	(q_0,x \mapsto c) \tr{a} (q_0,x \mapsto a) \tr{b} (q_0,x \mapsto b) \tr{a} (q_0,x \mapsto a) \dots
+\]
+\end{example}
 
 
+
+\begin{figure}[t]
+\begin{center}
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick]
+  \tikzstyle{every state}=[minimum size=10ex]
+  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
+	
+  \node[state] (q0) {}; 
+  \node (lab0) at (q0) {$q_0$};
+  \node[register,label={[xshift=3pt]left:$x$}] (reg) [below of=lab0,node distance=3ex] {};
+  \node [left=7ex of reg,inner sep=0pt] (c) {$c$};
+  \node[state,right of=q0] (q1) {$q_1$};  
+
+  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
+  \path (q0) edge [bend left] node {$x$} (q1);
+  \path (reg) edge[dashed,bend right=50] (star);
+  \path (reg) edge[dashed,bend left=40] (c);
+%  \draw[dashed,bend left] (reg) -- (star);
+%             edge [loop left]  node {a} (q0)
+%        (q1) edge [bend left]  node {a} (q0)
+%             edge [loop right] node {b} (q1);
+\end{tikzpicture}
+
+\[
+	\acc = \{ \{ q_0 \} \}
+	\qquad
+	%, \{ q_1 \}\} \qquad \Lang_{q_0} = \Lang_{q_1} =
+	%(C^*)(a^\omega \cup b^\omega)
+	\Lang = \{\epsilon \} \cup \{ a_0 a_1 a_2 \dots \mid a_0 \neq c, a_{i+1} \neq a_i,a_i \in \names,i \geq 0 \}
+\]
+\end{center}
+\caption{\label{fig:upwords} An automaton.}
+\end{figure}
+
+%, but the proof is more complicated due to the dicotomy between \hdma{} and it
+%This is not trivial, as traversing the same states in the same order, using the same transitions, does not ensure that 
+
+%In this section we show that every non-empty nominal $\omega$-regular language contains at least one such word. An intuitive justification is  that \hdmas{} are finite-state automata, so recognizing infinite necessarily involves passing through the same state at least once.
+%so at least one
+
+%We give two lemmata about paths.
+%\begin{lemma}
+%Given a path, there is always a word that follows that path.
+%\end{lemma}
+
+\tbox{Mettere nell'appendice?}
+{
 \begin{lemma}
 \label{lem:tr-names}
 For all edges in the configuration graph $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
 \end{lemma}
+}
 
-Now we analyze properties of \emph{loops}, i.e.\ sequences of transitions whose initial and final state coincide. Consider a loop $L := p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0$ in $A$. Let $\ul{i}$ denote $i \mod n$. Let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial functions given by
+Our goal is showing that, given a loop in the \hdma{}, a path as described always exists. From now on we fix a loop
+%Now we analyze properties of \emph{loops}, i.e.\ sequences of transitions whose initial and final state coincide. Consider a loop 
+\[
+	L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0
+\]
+We write $\ul{i}$ for $i \mod n$. Let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial functions obtained from $\sigma_i$ ignoring allocations\todosm{Il termine allocation on c'è da nessuna parte}, formally
 \[
 	\widehat{\sigma}_i := \sigma_i \setminus \{ (x,y) \in \sigma_i \mid y = \star \} 
 	\qquad (i=0,\dots,n-1)
 \]
-Intuitively, these are the maps between local names induced by $\sigma_i$ ignoring allocations. Let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their composition $\widehat{\sigma}_0 \circ \widehat{\sigma}_1 \dots \circ \widehat{\sigma}_{n-1}$. We define the set $I$ as the greatest subset of $\dom(\widehat{\sigma})$ such that
-\[
-	\widehat{\sigma}(I) = I \enspace ,
-\]
-i.e.\ $I$ contains those names that are just permuted along the loop. We denote by $T$ all the other names, namely 
-\[
-	T := \weight{p_0} \setminus I \enspace .
-\]
+and let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their composition $\widehat{\sigma}_0 \circ \widehat{\sigma}_1 \dots \circ \widehat{\sigma}_{n-1}$. We define the set $I$ as the greatest subset of $\dom(\widehat{\sigma})$ such that
+$
+	\widehat{\sigma}(I) = I,
+$
+i.e.\ the values assigned to $I$ are permuted along the loop. We denote by $T$ all the other registers, namely 
+$
+	T := \weight{p_0} \setminus I .
+$
 %
 We introduce some lemmata regarding these sets.
 %The following lemma says that names assigned to registers in $T$ are eventually forgotten.
 
-\begin{lemma}
-\label{lem:xI}
-Given $x \in \dom(\widehat{\sigma})$, suppose there is a positive integer $k$ such that $x = \widehat{\sigma}^k (x)$. Then $x \in I$.
-\end{lemma}
-\begin{proof}
-Suppose $x \notin I$. $I = \widehat{\sigma}(I)$ implies $I = \widehat{\sigma}^k(I)$, so $I \cup \{x\} = \widehat{\sigma}^k(I \cup \{x\})$, but this is against the assumption that $I$ is the largest set satisfying $I = \widehat{\sigma}(I)$.
-\qed
-\end{proof}
 
-The intuition for the following lemma is that names assigned to $T$ are eventually forgotten.
-
+The first lemma says that names assigned to $T$ are eventually discarded.
+%
 \begin{lemma}
 \label{lem:rho-forget}
 Given any $x \in T$, let $\{x_j\}_{j \in J_x}$ be the smallest sequence that satisfies the following conditions
@@ -52,126 +110,104 @@ Given any $x \in T$, let $\{x_j\}_{j \in J_x}$ be the smallest sequence that sat
 where $j+1 \in J_x$ only if $\sigma_{\ul{j}}^{-1}(x_i)$ is defined. Then $J_x$ has finite cardinality.
 
 \end{lemma}
-\begin{proof}
-Suppose $|J_x| \geq n$, otherwise the statement is trivially true. Observe that this sequence is such that $x_{kn} \neq x_{k'n}$, for all $k,k' \geq 0$ such that $k \neq k'$. In fact, suppose there are $x_{kn} = x_{k'n}$, with $k < k'$. Then we would have $x_{kn-1} = x_{k'n-1}$, because $\sigma_{n}$ is injective. In general, $x_{kn-l} = x_{k'n-l}$, for $0 \leq l \leq kn$, therefore $x = x_0 = x_{(k'-k)n}$. This means that $\widehat{\sigma}^{(k'-k)}(x) = x$ which, by \cref{lem:xI}, implies $x \in I$, against the hypothesis $x \in T$.
 
-Now, suppose that $J_x = \mathbb{N}$. Then we would have an infinite subsequence $\{x_{jn}\}_{j \in J_x}$ of pairwise distinct names that belong to $\weight{p_0}$, but $\weight{p_0}$ is finite, a contradiction.
-\qed
-\end{proof}
 %
+Now, consider a register assignment $\rrho_0 \colon \weight{p_0} \to \names$. The following lemma is about paths  starting from $(p_0,\rrho_0)$.
+It says that: (i) every path ends up in a configuration where the assignment to $I$ is the initial one, within the same number of iterations of $L$; (ii) after a certain number of iterations of $L$, we can always find a path ending up in a configuration where the initial values assigned to $T$ have been discarded.
 
 
+%, within a fixed number of iterations of $L$: (i) every path starting from $(p_0,\rrho_0)$ reaches a configuration where the assignment to $I$ is the same as $\rrho_0$; (ii) some paths starting from $(p_0,\rrho_0)$ end up in a configuration where the initial values assigned to $T$ have been discarded.
 
-\begin{lemma} Given any $\rho \colon \weight{p_0} \to \names$, there are $\theta,\epsilon,\zeta$ positive integers such that:
+% from the configuration $(p_0,\rrho_0)$: (ii) there is a number of iterations of $L$ 
+% and we go through paths induced by iterating $L$: (i) after a certain number of iterations the assignment to $I$ becomes the same as $\rrho_0$; (ii) 
+%
+% (i) every path induced by iterating $L$ a fixed number of times eventually reaches a configuration where the assignment to $I$ is the same as $\rrho_0$; (ii) there is a minimum number of iterations of $L$ after which one can always find an induced path where the initial values assigned to $T$ have been discarded.
+
+\begin{lemma} There are $\id,\forg$ positive integers such that:
 \label{lem:IT}
-\begin{enumerate}
+\begin{enumerate}[(i)]
 
 \item
-%there is $\theta \geq 1$ such that, 
-for all $v_1,\dots,v_\theta$ satisfying
+%there is $\id \geq 1$ such that, 
+for all $v_1,\dots,v_\id$ satisfying
 \[
-	(p_0,\rho) \TrP{v_1}{L} (p_0,\rho_1) \TrP{v_2}{L} \dots \TrP{v_{\theta}}{L} (p_0,\rho_\theta)
+	(p_0,\rrho_0) \TrP{v_1}{L} (p_0,\rrho_1) \TrP{v_2}{L} \dots \TrP{v_{\id}}{L} (p_0,\rrho_\id)
 \]
-we have $\restr{ \rho_\theta }{I} = \restr{ \rho }{I}$;
+we have $\restr{ \rrho_\id }{I} = \restr{ \rrho }{I}$;
 \label{idI}
 
-\item %there is $\epsilon \geq 1$ such that, 
-for all $\gamma \geq \epsilon$ there are $v_1,\dots,v_\gamma$ satisfying
+\item %there is $\forg \geq 1$ such that, 
+for all $\gamma \geq \forg$ there are $v_1,\dots,v_\gamma$ satisfying
 \[
-	(p_0,\rho) \TrP{v_1}{L} (p_0,\rho_1) \TrP{v_2}{L} \dots \TrP{v_\gamma}{L} (p_0,\rho_\gamma)
+	(p_0,\rrho_0) \TrP{v_1}{L} (p_0,\rrho_1) \TrP{v_2}{L} \dots \TrP{v_\gamma}{L} (p_0,\rrho_\gamma)
 	\qquad 
-	\Im(\rho_\gamma) \cap \rho(T) = \varnothing
+	\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing
 \]
-%(Fix: $\rho_0(\weight{p_0}) \cap \rho_\gamma(T) = \varnothing$?)
+%(Fix: $\rrho_0(\weight{p_0}) \cap \rrho_\gamma(T) = \varnothing$?)
 \label{forgetT}
-\item
-%there is $\zeta$ such that, 
-for any $\rho' \colon \weight{p_0} \to \names$ with $\Im(\rho) \cap \rho'(T) = \varnothing$, there are $v_1,\dots,v_\zeta$ satisfying
-\[
-	(p_0,\rho) \TrP{v_1}{L} (p_0,\rho_1) \TrP{v_2}{L} \dots \TrP{v_\zeta}{L} (p_0,\rho_\zeta)	
-	\qquad
-	\restr{\rho_\zeta}{T} = \restr{\rho'}{T}
-\]
-%and $\restr{\rho_\zeta}{T} = \restr{\rho'}{T}$.
-\label{initT}
+%there is $\ass$ such that, 
 \end{enumerate}
 \end{lemma}
-\begin{proof}\hfill
-\begin{enumerate}
+%
+%
+The third lemma says that, given any other assignment $\trho_0 \colon \weight{p_0} \to \names$ satisfying a compatibility condition with $\rrho_0$, there is at least one path from $(p_0,\trho_0)$ to a configuration where the assignment to $T$ is the same as $\rrho_0$. Moreover, all such pathsthe length of these paths is always the same, and independent from the chose $\trho_0$.
+%the initial assignment does not already assign those values.
 
+%there is a fixed number of iterations of $L$ that allow us to recover the same assignment to $T$ as $\rrho_0$, provided that we start from a configuration where no register is assigned those values.
+%such that we can find an induced path reaching a configuration where the assignment to $T$ is the same as $\rrho_0$, provided that the initial assignment 
 
-\item Let $\pi \colon I \to I$ be the function $\restr{\widehat{\sigma}}{I}$ with its codomain restricted to $I$. Then $\pi$ is an element of the symmetric group on $I$, so it has an order $\theta$, that is a positive integer such that $\pi^\theta = id_I$\todosm{Dovrebbe funzionare sempre con $\theta = |I|!$, cioè con l'ordine del gruppo}. Hence $\restr{ \rho_\theta }{ I } =\restr{ \rho }{I} \circ \pi^\theta = \restr{ \rho }{I}$.
-
-
-\item
-Let $\mathcal{J}$ be
+% after is a fixed number of 
+%given any other $\trho_0 \colon \weight{p_0} \to \names$ which assigns values different from the ones $\rrho_0$ assigns to $T$, 
+%
+\begin{lemma}
+There is a positive integer $\ass$ such that,
+for any $\trho_0 \colon \weight{p_0} \to \names$ with $\Im(\trho_0) \cap \rrho_0(T) = \varnothing$, there are $v_1,\dots,v_\ass$ satisfying
 \[
-	\mathcal{J} := \max \{ |J_x|\mid x \in T \} + 1 .
+	(p_0,\trho_0) \TrP{v_1}{L} (p_0,\trho_1) \TrP{v_2}{L} \dots \TrP{v_\ass}{L} (p_0,\trho_\ass)	
+	\qquad
+	\restr{\trho_\ass}{T} = \restr{\rrho_0}{T} \enspace .
 \]
-This gives the number of transitions it takes to forget all the names stored in $T$. Let $\epsilon$ be $\lceil \frac{\mathcal{J}}{n} \rceil$. For any $\gamma \geq \epsilon$, we can choose $v_1,\dots,v_\gamma$ as any $\gamma$-tuple of words that are recognized by the loop and such that, whenever $l_j = \star$, then $(v_i)_j$ is different from $\Im(\rho)$ and all the previous symbols in $v_1,\dots,v_i$, for all $i=1,\dots,\gamma$ and $j=1,\dots,n$. Let us verify $\Im(\rho_\gamma) \cap \rho(T) = \varnothing$ separately on $I$ and $T$ (recall $I \cup T = \weight{p_0})$: we have $\rho_\gamma(T) \cap \rho(T) = \varnothing$, because all the names assigned to $T$ have been replaced by fresh ones; and we have $\rho_\gamma(I) = \rho(I)$, so $\rho_\gamma(I) \cap \rho(T) = \varnothing$.
+%and $\restr{\trho_\ass}{T} = \restr{\rrho_0}{T}$.
+\label{lem:initT}
+\end{lemma}
 
-\item For each name $x \in T$ define a tuple $(x,i,j)$ where $i$ is the index of the transition where $x$ is allocated and $j$ is the number of loop traversals needed to allocate it, i.e.\ $j$ is the smallest integer such that there are $x_{jn},\dots,x_1$ defined as follows
+
+Finally, we combine the above lemmata. We construct a path where: (1) the values assigned to $T$ are forgotten and then recovered (2) the values assigned to $I$ are swapped, but the initial assignment is periodically regained. Therefore, the length of such path should allow (1) and (2) to ``synchronize'', so that the initial assignment of registers is reached.
+
+\begin{theorem}
+\label{thm:loop}
+
+
+There are $v_1,\dots,v_n$ such that
 \[
-	x_{jn} = x \qquad \sigma_\ul{k+1}(x_{k+1}) = x_k \qquad \sigma_i(x_1) = \star
+	(p_0, \rrho_0) \TrP{v_1}{L} (p_0, \rrho_1) \TrP{v_2}{L} \cdots \TrP{v_n}{L} (p_0,\rrho_0) \enspace .
 \]
-Let $X$ be the set of such tuples and let $\zeta := \max \{ j \mid (x,i,j) \in X \}$. Then we can construct $v_1,\dots,v_\zeta$ as follows
-\[
-	(v_k)_i :=
-	\begin{cases}
-		\text{$y$ fresh} & l_i = \star \land i \notin \pi_2(X) \\
-		\rho'(x) & (x,i,\zeta - k + 1)\footnotemark \in X
-		 \\
-		\rho(l_0) & l_0 \neq \star \\
-		\rho_{k-1}(l_i) & i > 0 , l_i \neq \star
-	\end{cases}
-\]
-
-where by $y$ fresh we mean different from elements of $\Im(\rho) \cup \Im(\rho')$ and previous symbols in $v_1,\dots,v_{k}$.
-
-The second case in the definition of $(v_k)_i$ is justified as follows. Suppose $\rho_{k,i}$ is the register assignment for the transition $(p_i,\rho_{k,i}) \tr{(v_k)_i} \dots$, then we have to show $(v_k)_i = \rho'(x) \notin \Im(\rho_{k,i})$. Suppose, by contradiction, that $\rho'(x) \in \Im(\rho_{k,i})$, then by \cref{lem:tr-names} $\rho'(x) \in \Im(\rho) \cup F$, where $F$ are all the fresh names allocated so far. But $F \cap \Im(\rho') = \varnothing$, by construction, so $\rho'(x) \in \Im(\rho)$, which implies $\rho'(T) \cap \Im(\rho) \neq \varnothing$, due to $x \in T$, against our hypothesis.
-
-It is easy to see that $\rho_\zeta$ satisfies the statement by construction.
-
-\end{enumerate}
-\qed
-\end{proof}
-
-
-\newcommand{\rrho}{\hat \rho}
-\begin{proposition}
-\label{prop:loop}
-
-For any $\hat{\rho} \colon \weight{p_0} \to \names$ there are $v_1,\dots,v_n$ such that
-\[
-	(p_0, \rrho) \TrP{v_1}{L} (p_0, \rrho_1) \TrP{v_2}{L} \cdots \TrP{v_n}{L} (p_0,\rrho) \enspace .
-\]
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
 We can take any path of the form
 \[
-	(p_0,\rrho) \TrP{v_1}{L} (p_0,\rrho_1) \TrP{v_2}{L} \cdots \TrP{v_{\gamma}}{L} (p_0,\rrho_\gamma) \TrP{v_{\gamma+1}}{L} \cdots \TrP{v_{\gamma + \zeta}}{L} (p_0,\rrho_{\gamma + 
-	 \zeta})
+	(p_0,\rrho_0) \TrP{v_1}{L} (p_0,\rrho_1) \TrP{v_2}{L} \cdots \TrP{v_{\gamma}}{L} (p_0,\rrho_\gamma) \TrP{v_{\gamma+1}}{L} \cdots \TrP{v_{\gamma + \ass}}{L} (p_0,\rrho_{\gamma + 
+	 \ass})
 \]
-where the subpath from $(p_0,\rrho)$ to $(p_0,\rrho_\gamma)$ is given by \ref{forgetT} of \cref{lem:IT} and the remaining subpath is given by \ref{initT} of the same lemma, with $\rho = \rrho_\gamma$ and $\rho' = \rrho$. The only constraint about $\gamma$ is that there should be a positive integer $\lambda$ such that $\gamma + \zeta = \lambda \theta$, where $\theta$ is given by \ref{idI} of \cref{lem:IT}. Thanks to the lemma we have $\restr{\rrho_{\gamma + \zeta}}{T} = \restr{\rho}{T}$ and 
-$\restr{\rrho_{\gamma + \zeta}}{I} = \restr{\rho}{I}$ which, together with $I \cup T = \weight{p_0}$, imply $\rrho_{\gamma + \zeta} = \rrho$.
+where the part from $(p_0,\rrho_0)$ to $(p_0,\rrho_\gamma)$ is given by \eqref{forgetT} of \cref{lem:IT} and the remaining subpath is given by \cref{lem:initT}, with $\trho_0 = \rrho_\gamma$. The only constraint about $\gamma$ is that there should be a positive integer $\lambda$ such that $\gamma + \ass = \lambda \id$, where $\id$ is given by \eqref{idI} of \cref{lem:IT}. The claim follows from $\restr{\rrho_{\gamma + \ass}}{T} = \restr{\rrho_0}{T}$ and 
+$\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I \cup T = \weight{p_0}$, imply $\rrho_{\gamma + \ass} = \rrho_0$.
 \qed
 \end{proof}
 
 
 \begin{theorem}
-Every non-empty language $\lang$ recognized by a HDMA $A$ has an ultimately periodic fragment.
+Every non-empty language $\Lang$ recognized by a \hdma{} $A$ has an ultimately periodic fragment.
 \end{theorem}
 \begin{proof}
-
-Take any string $\alpha$ accepted by $A$ and let $I = Inf(q_0,\alpha)$, so $I \in \acc$. A path spelling $\alpha$ in the configuration graph must \todo{Spiegare meglio perchè ``must''?} begin with
+Take any $\alpha \in \Lang$ and let $I = Inf(q_0,\alpha)$, so $I \in \acc$. A path spelling $\alpha$ in the configuration graph of $A$ must \todo{Spiegare meglio perchè ``must''?} begin with
 \[
 	(q_0,\rho_0) \Tr{u} (q_1,\rho_1) \TrP{v}{P} (q_1,\rho_2)
 \]
-where $q_1 \in I$ and $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ is a path, induced by some sequence of transitions $P$ in $A$, that goes through all the states in $I$. Since $P$ is a loop, we can replace its induced path with a new one given by \cref{prop:loop} 
+where $q_1 \in I$ and $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ is such that $P$ goes through all the states in $I$. Since $P$ is a loop, we can replace its induced path with a new one given by \cref{thm:loop} 
 \[
 	(q_0,\rho_0) \Tr{u} (q_1,\rho_1) \TrP{v_1}{P} \cdots \TrP{v_n}{P} (q_1,\rho_1) \enspace .
 \]
-This subpath can be traversed any number of times, so we have $u(v_1\dots v_n)^\omega \in \lang$.
+This subpath can be traversed any number of times, so we have $u(v_1\dots v_n)^\omega \in \Lang$.
 \qed
 \end{proof}
