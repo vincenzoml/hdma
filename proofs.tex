@@ -1,0 +1,62 @@
+%!TEX root=ndma.tex
+
+\begin{lemma}
+\label{lem:xI}
+Given $x \in \dom(\widehat{\sigma})$, suppose there is a positive integer $k$ such that $x = \widehat{\sigma}^k (x)$. Then $x \in I$.
+\end{lemma}
+\begin{proof}
+Suppose $x \notin I$. $I = \widehat{\sigma}(I)$ implies $I = \widehat{\sigma}^k(I)$, so $I \cup \{x\} = \widehat{\sigma}^k(I \cup \{x\})$, but this is against the assumption that $I$ is the largest set satisfying $I = \widehat{\sigma}(I)$.
+\qed
+\end{proof}
+
+
+\begin{proof}[of \cref{lem:rho-forget}]
+Suppose $|J_x| \geq n$, otherwise the statement is trivially true. Observe that this sequence is such that $x_{kn} \neq x_{k'n}$, for all $k,k' \geq 0$ such that $k \neq k'$. In fact, suppose there are $x_{kn} = x_{k'n}$, with $k < k'$. Then we would have $x_{kn-1} = x_{k'n-1}$, because $\sigma_{n}$ is injective. In general, $x_{kn-l} = x_{k'n-l}$, for $0 \leq l \leq kn$, therefore $x = x_0 = x_{(k'-k)n}$. This means that $\widehat{\sigma}^{(k'-k)}(x) = x$ which, by \cref{lem:xI}, implies $x \in I$, against the hypothesis $x \in T$.
+
+Now, suppose that $J_x = \mathbb{N}$. Then we would have an infinite subsequence $\{x_{jn}\}_{j \in J_x}$ of pairwise distinct names that belong to $\weight{p_0}$, but $\weight{p_0}$ is finite, a contradiction.
+\qed
+\end{proof}
+
+
+\begin{proof}[of \cref{lem:IT}]\hfill
+\begin{enumerate}[(i)]
+
+
+\item Let $\pi \colon I \to I$ be the function $\restr{\widehat{\sigma}}{I}$ with its codomain restricted to $I$. Then $\pi$ is an element of the symmetric group on $I$, so it has an order $\id$, that is a positive integer such that $\pi^\id = id_I$\todosm{Dovrebbe funzionare sempre con $\id = |I|!$, cioè con l'ordine del gruppo}. Hence $\restr{ \rrho_\id }{ I } =\restr{ \rrho_0 }{I} \circ \pi^\id = \restr{ \rrho_0 }{I}$.
+
+
+\item
+Let $\mathcal{J}$ be
+\[
+	\mathcal{J} := \max \{ |J_x|\mid x \in T \} + 1 .
+\]
+This gives the number of transitions it takes to forget all the names stored in $T$. Let $\forg$ be $\lceil \frac{\mathcal{J}}{n} \rceil$. For any $\gamma \geq \forg$, we can choose $v_1,\dots,v_\gamma$ as any $\gamma$-tuple of words that are recognized by the loop and such that, whenever $l_j = \star$, then $(v_i)_j$ is different from $\Im(\rrho_0)$ and all the previous symbols in $v_1,\dots,v_i$, for all $i=1,\dots,\gamma$ and $j=1,\dots,n$. Let us verify $\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing$ separately on $I$ and $T$ (recall $I \cup T = \weight{p_0})$: we have $\rrho_\gamma(T) \cap \rrho_0(T) = \varnothing$, because all the names assigned to $T$ have been replaced by fresh ones; and we have $\rrho_\gamma(I) = \rrho_0(I)$, so $\rrho_\gamma(I) \cap \rrho_0(T) = \varnothing$.
+\end{enumerate}
+\qed
+\end{proof}
+
+
+\begin{proof}[of \cref{lem:initT}]
+For each name $x \in T$ define a tuple $(x,i,j)$ where $i$ is the index of the transition where $x$ is allocated and $j$ is the number of loop traversals needed to allocate it, i.e.\ $j$ is the smallest integer such that there are $x_{jn},\dots,x_1$ defined as follows
+\[
+	x_{jn} = x \qquad \sigma_\ul{k+1}(x_{k+1}) = x_k \qquad \sigma_i(x_1) = \star
+\]
+Let $X$ be the set of such tuples and let $\ass := \max \{ j \mid (x,i,j) \in X \}$. Then we can construct $v_1,\dots,v_\ass$ as follows
+\[
+	(v_k)_i :=
+	\begin{cases}
+		\text{$y$ fresh} & l_i = \star \land i \notin \pi_2(X) \\
+		\rrho_0(x) & (x,i,\ass - k + 1)\footnotemark \in X
+		 \\
+		%\trho_0(l_0) & l_0 \neq \star \\
+		\trho_{k-1}(l_i) & l_i \neq \star
+	\end{cases}
+\]
+
+where by $y$ fresh we mean different from elements of $\Im(\trho_0) \cup \Im(\rrho_0)$ and previous symbols in $v_1,\dots,v_{k}$.
+
+The second case in the definition of $(v_k)_i$ is justified as follows. Suppose $\trho_{k,i}$ is the register assignment for the transition $(p_i,\trho_{k,i}) \tr{(v_k)_i} \dots$, then we have to show $(v_k)_i = \rrho_0(x) \notin \Im(\trho_{k,i})$. Suppose, by contradiction, that $\rrho_0(x) \in \Im(\trho_{k,i})$, then by \cref{lem:tr-names} we have $\rrho_0(x) \in \Im(\trho_0) \cup F$, where $F$ are all the fresh names allocated so far. But $F \cap \Im(\rrho_0) = \varnothing$, by construction, so $\rrho_0(x) \in \Im(\trho_0)$, which implies $\rrho_0(T) \cap \Im(\trho_0) \neq \varnothing$, due to $x \in T$, against our hypothesis.
+
+It is easy to see that $\trho_\ass$ satisfies the statement by construction.
+\qed
+\end{proof}
