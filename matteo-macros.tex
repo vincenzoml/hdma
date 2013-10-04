@@ -1,4 +1,4 @@
-\usepackage{cleveref,todonotes,mathpartir}
+\usepackage{cleveref,todonotes,mathpartir,enumerate}
 \usepackage[all]{xy}
 \usepackage[utf8]{inputenc}
 
@@ -8,7 +8,7 @@
 
 \newcommand{\todosm}[1]{\todo[size=\tiny]{#1}}
 
-\newcommand{\autom}{\mathcal{A}}
+\newcommand{\autom}{A}
 \newcommand{\hdma}{hDMA}
 \newcommand{\hdmas}{\hdma s}
 
@@ -22,7 +22,30 @@
 \newcommand{\pto}{\rightharpoonup}
 \newcommand{\ul}[1]{{\underline{#1}}}
 \newcommand{\restr}[2]{\ensuremath{\left.#1\right|_{#2}}}
-\newcommand{\lang}{\mathcal{L}}
 \newcommand{\syncp}{\otimes}
 
 \newcommand{\tstr}{\mathcal{T}}
+
+
+% Symbols for ultimately periodic words
+\newcommand{\regPerm}{I}
+\newcommand{\regForg}{T}
+\newcommand{\id}{\theta}
+\newcommand{\forg}{\epsilon}
+\newcommand{\ass}{\zeta}
+
+\newcommand{\rrho}{\hat{\rho}}
+\newcommand{\trho}{\tilde{\rho}}
+
+
+
+%% Box
+\newcommand{\tbox}[2]{
+\medskip
+\noindent%
+\marginpar{#1}%
+\fbox{%
+\parbox{\linewidth}{#2}
+}%
+\medskip
+}
