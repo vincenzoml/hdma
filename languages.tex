@@ -1,9 +1,7 @@
 %!TEX root=ndma.tex
 
-Traditionally, automata can be deterministic or non-deterministic. In the case of finite words, non-deterministic nominal automata are not closed under complementation (see \cite{TODO}), whereas the deterministic ones are. For each (nominal) automaton on finite words, it is not difficult to find an automaton on infinite words which is complementable if and only if the original automaton is. Thus, in order to extend previous results on closure under complementation and decidability, one needs to work with deterministic structures. We introduce deterministic automata directly, for this reason. 
+In the following, we extend \emph{Muller automata} to the case of nominal alphabets. Traditionally, automata can be deterministic or non-deterministic. In the case of finite words, non-deterministic nominal automata are not closed under complementation (see \cite{TODO}), whereas the deterministic ones are. For each (nominal) automaton on finite words, it is not difficult to find an automaton on infinite words which is complementable if and only if the original automaton is. Thus, in order to extend previous results on closure under complementation and decidability, we work with deterministic structures.
 
-\begin{remark} Using nominal sets, the \emph{alphabet} of an automaton, that is, the symbols constituting words, can be drawn from any nominal set; this includes classical finite alphabets, casted as nominal sets under trivial permutation action, the alphabet of \emph{names} $\names$, and more complex structures that can be thought of as \emph{symbols} with attached a list of names (similarly to \cite{MikBartekLICS}). Indeed, the cases where the alphabet is infinite are more interesting; however, it does not make a great difference, from the mathematical perspective, whether the alphabet has only one orbit having one name (the case of $\names$) or if there are more orbits and names. Thus, we assume that the alphabet is $\names$; this simplifies the presentation, especially in Section \ref{sec:hd-automata}. The more general case will be detailed in extended versions of this work.
-\end{remark}
 
 
 \begin{definition}\label{def:ndma}
@@ -14,21 +12,21 @@ Traditionally, automata can be deterministic or non-deterministic. In the case o
   
   \item $q_0 \in Q$ is the \emph{initial state};
   
-  \item $\acc \subseteq \Pow(\Orb(Q))$ is a set of sets of orbits, intended to be used as an accepting condition in the style of Muller automata.
+  \item $\acc \subseteq \Pow(\orb(Q))$ is a set of sets of orbits, intended to be used as an acceptance condition in the style of Muller automata.
   
-  \item $\htr{}{}$ is the \emph{transition relation}, made up of triples $q_1 \tr{l} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, \emph{label} $a \in \names$;
+  \item $\htr{}{}$ is the \emph{transition relation}, made up of triples $q_1 \tr{a} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, \emph{label} $a \in \names$;
   
-  \item the transition relation is \emph{deterministic}, that is, for each $q \in Q$ and label $l \in \names$ there is exactly one transition with source $q$ and label $a$; otherwise said, the transition relation is a function of type $Q \times \names \to Q$.
+  \item the transition relation is \emph{deterministic}, that is, for each $q \in Q$ and $a \in \names$ there is exactly one transition with source $q$ and label $a$;
+  
+  \item the transition relation is \emph{equivariant}, that is, invariant under permutation: there is a transition $q_1 \tr a q_2$ if and only if, for all $\pi$, also the transition $\pi \cdot q_1 \tr{\pi(a)} \pi \cdot q_2$ is present.
  \end{itemize}
 \end{definition}
 
-First of all, we note that the automata we defined are infinitary and infinite state, even if orbit finite. This is not a concern; for algorithmic operations, we will employ equivalent finite structures accepting the same languages (see Section \ref{sec:hd-automata}). However, the definition using infinite entities has the advantage of a simple definition of acceptance. In the following, fix an nDMA $A=(Q,\tr{},q_0,\acc)$.
+In nominal sets terminology, the transition relation is an \emph{equivariant function} of type $Q \times \names \to Q$ (as in \cite{MikBartekLICS}).  Notice that nDMA are infinite state, infinitely branching machines, even if orbit finite. This is not a concern: for effective constructions we will employ equivalent finite structures (see Section \ref{sec:hd-automata}). However, Definition \ref{def:ndma} has the advantage of a simple definition of acceptance, very close to the classical one. In the following, fix an nDMA $A=(Q,\tr{},q_0,\acc)$.
 
 \begin{definition}
  An infinite \emph{word} is a sequence $\alpha \in \names^\omega$, mapping natural numbers into symbols of the alphabet $\names$.
 \end{definition}
-
-\noindent Notice that, when $s$ is a sequence, we shall equivalently use the notations $s_i$ or $s(i)$ to denote its $i^{\mathit{th}}$ symbol.
 
 \begin{definition}\label{def:nominal-run}
  Given a word $\alpha \in \names^\omega$, a \emph{run} of $\alpha$ from $q \in Q$ is a sequence of states $\run_i \in Q^\omega$, such that $\run_0 = q$, and for all $i$ we have $\run_i \tr{\alpha_i} \run_{i+1}$. 
@@ -36,34 +34,49 @@ First of all, we note that the automata we defined are infinitary and infinite s
 \end{definition}
 
 \begin{definition}
- For $\run \in Q^\omega$, let $\inf(\run)$ be the (finite) set of \emph{orbits} that $\run$ traverses infinitely often. Formally, we let $\Orb(x) \in \inf(\run)$ if and only if, for all $i$, there is $j > i$ such that $\run_j = q$. 
+ For $\run \in Q^\omega$, let $\Inf(\run)$ be the (finite) set of \emph{orbits} that $\run$ traverses infinitely often. Formally, we let $\orb(q) \in \Inf(\run)$ if and only if, for all $i$, there is $j > i$ such that $\run_j \in \orb(q)$. By determinism, we also speak of $\Inf(\alpha)$ for a word $\alpha$; this is a shorth$\Inf(\run^\alpha)$.
 \end{definition}
 
 \begin{definition}
- A word $\alpha$ is \emph{accepted} by state $q$ whenever $\Inf(\run^{\alpha,q}) \in \acc$. We let $\Lang_A,q$ be the set of all accepted words from $q$ in $A$; we omit $A$ when clear from the context, and $q$ when it is $q_0$, thus $\Lang_A$ is the language of the automaton $A$.
+ A word $\alpha$ is \emph{accepted} by state $q$ whenever $\Inf(\run^{\alpha,q}) \in \acc$. We let $\Lang_{A,q}$ be the set of all accepted words by $q$ in $A$; we omit $A$ when clear from the context, and $q$ when it is $q_0$, thus $\Lang_A$ is the language of the automaton $A$.
 \end{definition}
 
-\begin{example}
- Consider the automaton in Figure \ref{fig:example-session}. 
+\begin{remark}\label{rem:simple-alphabet} Using nominal sets, the \emph{alphabet} of an automaton, that is, the symbols constituting words, could be any orbit-finite nominal set; this includes classical finite alphabets, casted as nominal sets under trivial permutation action, the alphabet of \emph{names} $\names$, and more complex structures that can be thought of as \emph{symbols} with attached a list of names (similarly to \cite{MikBartekLICS}). Indeed, the cases where the alphabet is infinite are more interesting; however, it does not make a great difference, from the mathematical perspective, whether the alphabet has only one orbit having one name (the case of $\names$) or if there are more orbits and names. In particular, the definition of automaton and acceptance are the same. We assume that the alphabet is $\names$; this simplifies the presentation, especially in Section \ref{sec:hd-automata}. The general case will be detailed in extended revisions of this work.
+\end{remark}
+
+\begin{example}\label{exa:session}
+ Consider the set of states $\{q_0\} \cup \{q_a \mid a \in \names\}$, with permutation action $\pi \cdot q_0 = q_0$, $\pi \cdot q_a = q_{\pi(a)}$. We have $\supp(q_0) = \emptyset$, and $\supp(q_a) = \{ a \}$. For all $a$, let $q_0 \tr{a} q_a$, $q_a \tr{a} q_0$, and for $b \neq a$, $q_a \tr b q_a$. There are two orbits, namely $\orb_0 = \{ q_0 \}$ and $\orb_1 = \{ q_a \mid a \in \names \} $. Finally, let $\acc = \{ \{ \orb_0, \orb_1 \} \}$. A word $\alpha$ belongs to $\Lang_{q_0}$ if and only if, for any name $a$, and for each prefix $u$ of $\alpha$, whenver the number of occurrences of $a$ in $u$ is odd, then there is a longer prefix $u'$ containing one more $a$. See Figure \ref{fig:example-session}. This is an idealized version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Odd occurrences of symbols are the ``access'' actions for each user, and even occurrences are ``leave''. Indeed, one could use more a more complex alphabet with at least two infinite orbits, to make a distinction between the two kinds of action (see Remark \ref{rem:simple-alphabet}). Another option is to add to the alphabet two special symbols without names, say, ``access'' and ``leave'', and additional states and transitions, to appear before the two distinct usages of a symbol.
 \end{example}
 
 \begin{figure}
 \begin{center}
- \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
-                    semithick]
-  \tikzstyle{every state}=[]
-
+ \begin{tikzpicture}[->,auto,node distance=2.8cm]  
   \node[state] (q0)               {$q_0$};
-  \node[state] (q1) [right of=q0] {$q_1$};
+  \node[state] (qa) [above left of = q0] {$q_a$};
+  \node[state] (qb) [below left of = q0] {$q_b$};
+  \node[state] (qc) [below right of = q0] {$q_c$};
+  \node (qany) [above right of = q0] {$\ldots$};
   
-  \path (q0) edge [bend left]  node {b} (q1)
-             edge [loop left]  node {a} (q0)
-        (q1) edge [bend left]  node {a} (q0)
-             edge [loop right] node {b} (q1);
+  
+  \path (q0) edge [bend left]  node {$a$} (qa);
+  \path (q0) edge [bend left]  node {$b$} (qb);
+  \path (q0) edge [bend left]  node {$c$} (qc);
+  \path (q0) edge [bend left]  node {$\ldots$} (qany);
+  
+  \path (qa) edge [bend left]  node {$a$} (q0)
+             edge [loop left] node {$b,c,d,\ldots$} (qa);
+  
+  \path (qb) edge [bend left]  node {$b$} (q0)
+             edge [loop left] node {$a,c,d,\ldots$} (qb);
+  
+  \path (qc) edge [bend left]  node {$c$} (q0)
+             edge [loop right] node {$a,b,d,\ldots$} (qc);
+  
+  \path (qany) edge [bend left]  node {$\ldots$} (q0);
+             edge [loop right] node {} (qany);
+             
 \end{tikzpicture}
 %
-$$\acc = \{ \{ q_0 \}, \{ q_1 \}\} \qquad \Lang_{q_0} = \Lang_{q_1} =
-(C^*)(a^\omega \cup b^\omega)$$
 \end{center}
-\caption{\label{fig:example-session} An automaton.}
+\caption{\label{fig:example-session} The nDMA of Example \ref{exa:session}, with acceptance condition $\acc = \{ \{ q_0 \}, \{ q_a \mid a \in \names \}\}$.}
 \end{figure}
