@@ -1,1 +1,19 @@
 %!TEX root=ndma.tex
+\newcommand{\compl}[1]{\overline{#1}}
+ 
+In this section we discuss $\omega$-regularity of nominal languages obtained via boolean operations. Fix two languages $\Lang_1$ and $\Lang_2$, let $\autom_1$ and $\autom_2$ be their \hdmas. The automata recognizing the intersection is $(\tstr_1 \syncp \tstr_2, \acc_{\land})$
+%
+\begin{align*}
+	\acc_{\land} &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{ (q_1,q_2,R) \mid q_1 \in S_1 \land q_2 \in S_2 \}\} \\
+	%\acc_{\lor} &:= \{(q_1,q_2,R) \mid q_1 \in \acc_1 \lor q_2 \in \acc_2 \} \\
+	%\acc_{\setminus} &:= \{ (q_1,q_2,R) \mid q_1 \in \acc_\omega \land q_2 \notin \acc_2 \}
+\end{align*}
+
+
+\begin{theorem}
+Let $\Lang_1,\Lang_2$ be two $\omega$-regular nominal languages. Then $\Lang_1 \cup \Lang_2$, $\Lang_1 \cap \Lang_2$, $\Lang_1 \setminus \Lang_2$, $\compl{\Lang_1}$ are $\omega$-regular nominal languages.
+\end{theorem}
+
+%\begin{proof}
+%Let $\autom_i = (Q,\weight{-}_i,q_0^i,\rho_0^i,\trarrow_i)$ be the \hdma{} accepting $\Lang_i$, for $i=1,2$.
+%\end{proof}

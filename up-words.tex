@@ -6,7 +6,7 @@
 Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
 }
 %
-An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v \in \names^\star$.  It is well known that each non-empty $\omega$-regular language $\Lang$ contains at least one such word \cite{CalbrixNP93}. In fact, given any $\alpha \in \Lang$ and the run $r^\alpha$ in a Muller automaton for $\Lang$, there are two states $r^\alpha_i,r^\alpha_j$, $i<j$, such that $\{r^\alpha_i,r^\alpha_{i+1},\dots,r^\alpha_j\}$ is an accepting set and $r^\alpha_i = r^\alpha_j$. Intuitively: a loop through an accepting set of states is eventually encountered while recognizing $\alpha$. Call $u$ the word recognized until $r^\alpha_i$, and $v$ the word recognized along the loop, then we clearly have $uv^\omega \in \Lang$.
+An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v \in \names^\star$.  It is well known that each non-empty $\omega$-regular language $\Lang$ contains at least one such word \cite{CalbrixNP93}. In fact, given any $\alpha \in \Lang$, the run $r^\alpha$ in a Muller automaton for $\Lang$ goes through two states $r^\alpha_i,r^\alpha_j$, $i<j$, such that $\{r^\alpha_i,r^\alpha_{i+1},\dots,r^\alpha_j\}$ is an accepting set and $r^\alpha_i = r^\alpha_j$. Intuitively: a loop through an accepting set of states is eventually encountered while recognizing $\alpha$. Call $u$ the word recognized until $r^\alpha_i$, and $v$ the word recognized along the loop, then we clearly have $uv^\omega \in \Lang$.
 
 In this section we prove an analogous result for nominal $\omega$-regular languages. This again involves finding a loop through accepting states and iterating it, but such loop must be in the configuration graph, i.e.\ it must be a path starting and ending with the same state \emph{and} register assignment. The following example gives evidence of this point.
 %To illustrate this point:
@@ -15,30 +15,49 @@ In this section we prove an analogous result for nominal $\omega$-regular langua
 %To illustrate this point, consider the \hdma{} in figure...
 
 \begin{example}
-Consider the automaton $A$ in \cref{fig:upwords}: it has a loop from $q_0$ to itself. Unlike ordinary Muller automata, the same symbol cannot be consumed by two subsequent iterations of the loop, because of the freshness requirement. However, the same symbol can be consumed after \emph{two} iterations, as illustrated by the following path in the configuration graph of $A$:
+Consider the automaton $A$ in \cref{fig:upwords}: it has a loop from $q_0$ to itself. Unlike ordinary Muller automata, the same symbol cannot be consumed by two subsequent iterations of the loop, because of the freshness requirement. However, the same symbol can be consumed after (at least) \emph{two} iterations, as illustrated by the following path in the configuration graph of $A$:
 \[
 	(q_0,x \mapsto c) \tr{a} (q_0,x \mapsto a) \tr{b} (q_0,x \mapsto b) \tr{a} (q_0,x \mapsto a) \dots
 \]
 \end{example}
 
 
-
 \begin{figure}[t]
 \begin{center}
- \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick]
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
   \tikzstyle{every state}=[minimum size=10ex]
   \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
 	
-  \node[state] (q0) {}; 
+  \node[state,initial] (q0) {$q_0$}; 
+  \node[right=10ex of q0] {$\acc_\omega = \{ \{q_0 \}\}$ };
+
+  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
+%  \draw[dashed,bend left] (reg) -- (star);
+%             edge [loop left]  node {a} (q0)
+%        (q1) edge [bend left]  node {a} (q0)
+%             edge [loop right] node {b} (q1);
+\end{tikzpicture}
+
+\end{center}
+\caption{\label{fig:upwords} Automaton $\autom_\omega$ recognizing $\names^\omega$.}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
+  \tikzstyle{every state}=[minimum size=10ex]
+  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
+	
+  \node[state,initial] (q0) {}; 
   \node (lab0) at (q0) {$q_0$};
-  \node[register,label={[xshift=3pt]left:$x$}] (reg) [below of=lab0,node distance=3ex] {};
-  \node [left=7ex of reg,inner sep=0pt] (c) {$c$};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$x$}] (reg) [below=2ex of lab0] {};
+  \node [left=10ex of reg,inner sep=0pt] (c) {$c$};
   \node[state,right of=q0] (q1) {$q_1$};  
 
   \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
   \path (q0) edge [bend left] node {$x$} (q1);
   \path (reg) edge[dashed,bend right=50] (star);
-  \path (reg) edge[dashed,bend left=40] (c);
+  \path (reg) edge[dashed] (c);
 %  \draw[dashed,bend left] (reg) -- (star);
 %             edge [loop left]  node {a} (q0)
 %        (q1) edge [bend left]  node {a} (q0)
@@ -75,12 +94,12 @@ For all edges in the configuration graph $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we h
 \end{lemma}
 }
 
-Our goal is showing that, given a loop in the \hdma{}, a path as described always exists. From now on we fix a loop
+Our aim is showing that, given a loop in the \hdma{}, a path as described always exists. From now on we fix a loop
 %Now we analyze properties of \emph{loops}, i.e.\ sequences of transitions whose initial and final state coincide. Consider a loop 
 \[
 	L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0
 \]
-We write $\ul{i}$ for $i \mod n$. Let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial functions obtained from $\sigma_i$ ignoring allocations\todosm{Il termine allocation on c'è da nessuna parte}, formally
+We write $\ul{i}$ for $i \mod n$. Let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial maps telling the history of old registers and ignoring the new ones, formally
 \[
 	\widehat{\sigma}_i := \sigma_i \setminus \{ (x,y) \in \sigma_i \mid y = \star \} 
 	\qquad (i=0,\dots,n-1)
@@ -89,31 +108,39 @@ and let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their compos
 $
 	\widehat{\sigma}(I) = I,
 $
-i.e.\ the values assigned to $I$ are permuted along the loop. We denote by $T$ all the other registers, namely 
+i.e.\ $I$ are the registers that ``survive'' along $L$. We denote by $T$ all the other registers, namely 
 $
 	T := \weight{p_0} \setminus I .
 $
+These are registers whose content is eventually discarded (not necessarily within a single loop traversal), as the following lemma states.
 %
-We introduce some lemmata regarding these sets.
-%The following lemma says that names assigned to registers in $T$ are eventually forgotten.
-
-
-The first lemma says that names assigned to $T$ are eventually discarded.
 %
 \begin{lemma}
 \label{lem:rho-forget}
-Given any $x \in T$, let $\{x_j\}_{j \in J_x}$ be the smallest sequence that satisfies the following conditions
-\[
-	x_0 = x \qquad
-	x_{j+1} = \sigma_{\ul{j}}^{-1}(x_j)
-\]
+Given any $x \in T$, let $\{x_j\}_{j \in J_x}$ be the smallest sequence that satisfies the following conditions:
+$
+	x_0 = x
+$
+and
+$
+	x_{j+1} = \sigma_{\ul{j}}^{-1}(x_j),
+$
 where $j+1 \in J_x$ only if $\sigma_{\ul{j}}^{-1}(x_i)$ is defined. Then $J_x$ has finite cardinality.
 
 \end{lemma}
 
 %
-Now, consider a register assignment $\rrho_0 \colon \weight{p_0} \to \names$. The following lemma is about paths  starting from $(p_0,\rrho_0)$.
-It says that: (i) every path ends up in a configuration where the assignment to $I$ is the initial one, within the same number of iterations of $L$; (ii) after a certain number of iterations of $L$, we can always find a path ending up in a configuration where the initial values assigned to $T$ have been discarded.
+Now, consider any assignment $\rrho_0 \colon \weight{p_0} \to \names$. We give a lemma about paths that start from $(p_0,\rrho_0)$ and are induced by consecutive traversals of $L$.
+% The following lemma is about paths  starting from $(p_0,\rrho_0)$.
+It says that: (i) the assignment for $I$ given by $\rrho_0$ is always recovered after a fixed number of traversals of $L$, regardless of which symbols are consumed;
+% final configuration is always such that values  regardless of the symbols consumed;
+(ii) there is a minimum number of traversals of $L$ ensuring that a configuration can be reached where no register is assigned one of the values assigned to $T$ by $\rrho_0$.
+
+%registers are not assigned any value $\rrho_0$ assigned to $T$.
+
+
+%, where all registers are assigned values that are different from those assigned to $T$ by $\rrho_0$.
+% existence of a path where registers are assigned values different from those $\rrho_0$ assigns to $T$.
 
 
 %, within a fixed number of iterations of $L$: (i) every path starting from $(p_0,\rrho_0)$ reaches a configuration where the assignment to $I$ is the same as $\rrho_0$; (ii) some paths starting from $(p_0,\rrho_0)$ end up in a configuration where the initial values assigned to $T$ have been discarded.
@@ -150,15 +177,8 @@ for all $\gamma \geq \forg$ there are $v_1,\dots,v_\gamma$ satisfying
 \end{lemma}
 %
 %
-The third lemma says that, given any other assignment $\trho_0 \colon \weight{p_0} \to \names$ satisfying a compatibility condition with $\rrho_0$, there is at least one path from $(p_0,\trho_0)$ to a configuration where the assignment to $T$ is the same as $\rrho_0$. Moreover, all such pathsthe length of these paths is always the same, and independent from the chose $\trho_0$.
-%the initial assignment does not already assign those values.
+We give another lemma, in some sense dual to $(ii)$ of the previous one: if we start from a configuration such as the final one of $(ii)$, where registers are assigned value all fresh w.r.t.\ those $\rrho_0$ assigns to $T$, then this assignment for $T$ can be recovered in a fixed number of traversals of $L$, regardless of the initial assignment.
 
-%there is a fixed number of iterations of $L$ that allow us to recover the same assignment to $T$ as $\rrho_0$, provided that we start from a configuration where no register is assigned those values.
-%such that we can find an induced path reaching a configuration where the assignment to $T$ is the same as $\rrho_0$, provided that the initial assignment 
-
-% after is a fixed number of 
-%given any other $\trho_0 \colon \weight{p_0} \to \names$ which assigns values different from the ones $\rrho_0$ assigns to $T$, 
-%
 \begin{lemma}
 There is a positive integer $\ass$ such that,
 for any $\trho_0 \colon \weight{p_0} \to \names$ with $\Im(\trho_0) \cap \rrho_0(T) = \varnothing$, there are $v_1,\dots,v_\ass$ satisfying
@@ -172,7 +192,7 @@ for any $\trho_0 \colon \weight{p_0} \to \names$ with $\Im(\trho_0) \cap \rrho_0
 \end{lemma}
 
 
-Finally, we combine the above lemmata. We construct a path where: (1) the values assigned to $T$ are forgotten and then recovered (2) the values assigned to $I$ are swapped, but the initial assignment is periodically regained. Therefore, the length of such path should allow (1) and (2) to ``synchronize'', so that the initial assignment of registers is reached.
+Finally, we combine the above lemmata. We construct a path where: (1) the values assigned to $T$ are forgotten and then recovered (2) the values assigned to $I$ are swapped, but the initial assignment is periodically regained. Therefore, the length of such path should allow (1) and (2) to ``synchronize'', so that the final assignment is again $\rrho_0$.
 
 \begin{theorem}
 \label{thm:loop}
@@ -194,8 +214,9 @@ where the part from $(p_0,\rrho_0)$ to $(p_0,\rrho_\gamma)$ is given by \eqref{f
 $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I \cup T = \weight{p_0}$, imply $\rrho_{\gamma + \ass} = \rrho_0$.
 \qed
 \end{proof}
-
-
+%
+Finally we have the main theorem.
+%
 \begin{theorem}
 Every non-empty language $\Lang$ recognized by a \hdma{} $A$ has an ultimately periodic fragment.
 \end{theorem}
