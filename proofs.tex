@@ -30,48 +30,47 @@ Let $\mathcal{J}$ be
 \[
 	\mathcal{J} := \max \{ |J_x|\mid x \in T \} + 1 .
 \]
-This gives the number of transitions it takes to forget all the names stored in $T$. Let $\forg$ be $\lceil \frac{\mathcal{J}}{n} \rceil$. For any $\gamma \geq \forg$, we can choose $v_1,\dots,v_\gamma$ as any $\gamma$-tuple of words that are recognized by the loop and such that, whenever $l_j = \star$, then $(v_i)_j$ is different from $\Im(\rrho_0)$ and all the previous symbols in $v_1,\dots,v_i$, for all $i=1,\dots,\gamma$ and $j=1,\dots,n$. Let us verify $\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing$ separately on $I$ and $T$ (recall $I \cup T = \weight{p_0})$: we have $\rrho_\gamma(T) \cap \rrho_0(T) = \varnothing$, because all the names assigned to $T$ have been replaced by fresh ones; and we have $\rrho_\gamma(I) = \rrho_0(I)$, so $\rrho_\gamma(I) \cap \rrho_0(T) = \varnothing$.
+This gives the number of transitions it takes to forget all the names assigned to $T$. Let $\forg$ be $\lceil \frac{\mathcal{J}}{n} \rceil$. For any $\gamma \geq \forg$, we can choose $v_0,\dots,v_{\gamma-1}$ as any $\gamma$-tuple of words that are recognized by the loop and such that, whenever $l_j = \star$, then $(v_i)_j$ is different from $\Im(\rrho_0)$ and all the previous symbols in $v_1,\dots,v_i$, for all $i=0,\dots,\gamma-1$ and $j=0,\dots,n-1$. Let us verify $\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing$ separately on $I$ and $T$ (recall $I \cup T = \weight{p_0})$: we have $\rrho_\gamma(T) \cap \rrho_0(T) = \varnothing$, because all the names assigned to $T$ have been replaced by fresh ones; and we have $\rrho_\gamma(I) = \rrho_0(I)$, so $\rrho_\gamma(I) \cap \rrho_0(T) = \varnothing$.
 \end{enumerate}
 \qed
 \end{proof}
 
 
 \begin{proof}[of \cref{lem:initT}]
-For each name $x \in T$ define a tuple $(x,i,j)$ where $i$ is the index of the transition where $x$ is allocated and $j$ is the number of loop traversals needed to allocate it, i.e.\ $j$ is the smallest integer such that there are $x_{jn},\dots,x_1$ defined as follows
+For each name $x \in T$, define a tuple $(x,i,j)$ where $i$ is the index of the transition that consumes the fresh name that will be assigned to $x$, and $j$ is how many traversals of $L$ it takes for this assignment to happen (including the one where the transition $i$ is performed). Formally, $j$ is the smallest integer such that there are $x_{jn},\dots,x_i$ defined as follows
 \[
-	x_{jn} = x \qquad \sigma_\ul{k+1}(x_{k+1}) = x_k \qquad \sigma_i(x_1) = \star
+	x_{jn} = x \qquad \sigma_\ul{k+1}(x_{k+1}) = x_k \qquad \sigma_i(x_i) = \star \enspace .
 \]
-Let $X$ be the set of such tuples and let $\ass := \max \{ j \mid (x,i,j) \in X \}$. Then we can construct $v_1,\dots,v_\ass$ as follows
+Let $X$ be the set of such tuples and let $\ass := \max \{ j \mid (x,i,j) \in X \}$. Then we can construct $v_0,\dots,v_{\ass-1}$ as follows
 \[
 	(v_k)_i :=
 	\begin{cases}
 		\text{$y$ fresh} & l_i = \star \land i \notin \pi_2(X) \\
-		\rrho_0(x) & (x,i,\ass - k + 1)\footnotemark \in X
+		\rrho_0(x) & (x,i,\ass - k) \in X
 		 \\
 		%\trho_0(l_0) & l_0 \neq \star \\
-		\trho_{k-1}(l_i) & l_i \neq \star
+		\trho_{k}(l_i) & l_i \neq \star
 	\end{cases}
 \]
+%
+where by $y$ fresh we mean different from elements of $\Im(\trho_0) \cup \Im(\rrho_0)$ and previous symbols in $v_0,\dots,v_{k}$.
 
-where by $y$ fresh we mean different from elements of $\Im(\trho_0) \cup \Im(\rrho_0)$ and previous symbols in $v_1,\dots,v_{k}$.
+The second case in the definition of $(v_k)_i$ is justified as follows. Suppose $\trho_{k,i}$ is the register assignment for $(p_i,\trho_{k,i}) \tr{(v_k)_i} \dots$, then we have to show $(v_k)_i = \rrho_0(x) \notin \Im(\trho_{k,i})$. Suppose, by contradiction, that $\rrho_0(x) \in \Im(\trho_{k,i})$, then by \cref{lem:tr-names} we have $\rrho_0(x) \in \Im(\trho_0) \cup F$, where $F$ are all the fresh names consumed so far. But $F \cap \Im(\rrho_0) = \varnothing$, by construction, so $\rrho_0(x) \in \Im(\trho_0)$, which implies $\rrho_0(T) \cap \Im(\trho_0) \neq \varnothing$, due to $x \in T$, against our hypothesis.
 
-The second case in the definition of $(v_k)_i$ is justified as follows. Suppose $\trho_{k,i}$ is the register assignment for the transition $(p_i,\trho_{k,i}) \tr{(v_k)_i} \dots$, then we have to show $(v_k)_i = \rrho_0(x) \notin \Im(\trho_{k,i})$. Suppose, by contradiction, that $\rrho_0(x) \in \Im(\trho_{k,i})$, then by \cref{lem:tr-names} we have $\rrho_0(x) \in \Im(\trho_0) \cup F$, where $F$ are all the fresh names allocated so far. But $F \cap \Im(\rrho_0) = \varnothing$, by construction, so $\rrho_0(x) \in \Im(\trho_0)$, which implies $\rrho_0(T) \cap \Im(\trho_0) \neq \varnothing$, due to $x \in T$, against our hypothesis.
-
-It is easy to see that $\trho_\ass$ satisfies the statement by construction.
+It is easy to see that $\trho_\ass$ satisfies the statement by construction.\todo{Dire meglio?}
 \qed
 \end{proof}
 
 \begin{proof}[of \cref{prop:edges-correspondence}]
 Let $C = ((q_1,q_2,R),\rho)$ and $\cproj_i(C) = (q_i,\rho_i)$, $i=1,2$.
 
-\paragraph{Part (i).}
+\paragraph{Part \eqref{sync-to-each}.}
  
-Let $C' = ((q_1',q_2',R'),\rho')$, $\cproj_i(C) = (q_i,\rho_i)$, for $i=1,2$, and let 
+Let $C' = ((q_1',q_2',R'),\rho')$ and let 
 \[
 	(q_1,q_2,R) \syncHtr{l}{\sigma} (q_1',q_2',S_2)
 \] 
 be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used to infer this transition:
-% in $\tstr_1 \syncp \tstr_2$ that induces $((q_1,q_2,R),\rho) \tr{a} ((q_1',q_2',S),\rho')$:
 \begin{itemize}
 	\item (\textsc{Reg}): then the transition is inferred from $q_i \htrind{l_i}{\sigma_i}{i} q_i'$, $i=1,2$, such that either $l_1$ or $l_2$ is in $\names$. Suppose, w.l.o.g., $l_1 \in \names$. Then $l = [l_1]_{R^*}$ and $\rho_i(l_1) = \rho([l_1]_{R^*}) = a$, so there is an edge $(q_1,\rho_1) \trind{a}{1} (q_1',\rho_1')$ in the configuration graph of $\tstr_1$. The following chain of equations shows that $\pi_1(C') = (q_1',\rho'_1)$:%we have
 	\begin{equation}
@@ -95,7 +94,7 @@ be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used t
 		%
 		\item If $l_2 = \star$, then $a$ should be fresh, so we have to check $a \notin \Im(\rho_2)$. Suppose, by contradiction, that there is $x \in \weight{q_2}_2$ such that $\rho_2(x) = a$, then $\rho([x]_{R^*}) = a = \rho([l_1]_{R^*})$, by definition of $\rho$, which implies $[x]_{R^*} = [l_1]_{R^*}$, by injectivity of $\rho$, i.e. $\{l_1,l_2\} \in [l_1]_{R^*}$, but the premise of the rule states $[l_1]_R = \{l_1,\star\} \cap \names = \{l_1\}$, hence the contradiction. 
 	\end{itemize}
-	Now we have to check that $\rho_2'$ satisfies the claim. Since we have $\rho'_2(x) = (\rho_2 \circ \sigma_2)\sub{a}{\sigma_2^{-1}(\star)}(x)$, for $x \neq \sigma_2^{-1}(\star)$ the equations \eqref{eq:rho} hold. For $x =  \sigma_2^{-1}(\star)$ we have:
+	Now we have to check $\cproj_2(C') = (q_2',\rho_2')$. Since we have $\rho'_2(x) = (\rho_2 \circ \sigma_2)\sub{a}{\sigma_2^{-1}(\star)}(x)$, for $x \neq \sigma_2^{-1}(\star)$ the equations \eqref{eq:rho} hold. For $x =  \sigma_2^{-1}(\star)$ we have:
 	\begin{align*}
 		\rho'_2(x) &= (\rho_2 \circ \sigma_2)\sub{a}{x}(x) \\
 		&= a \\
@@ -126,24 +125,10 @@ be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used t
 \end{itemize} 
 
 
-\paragraph{Part (ii).}
+\paragraph{Part \eqref{each-to-sync}.} 
+Since $\tstr_1 \syncp \tstr_2$ is deterministic, there certainly is $C \tr{a} C'$, for any $a \in \names$. This edge, by the previous part of the proof, has a corresponding edge $\cproj_i(C) \trind{a}{i} \cproj_i(C')$, for each $i=1,2$. But then $\cproj_i(C') = C_i$, by determinism of $\tstr_i$.
+%Then we must have $\pi(C') = C_i$
 
-Let $(q_i,\rho_i) \trind{a}{i} C_i = (q_i',\rho_i')$ be the edges in the statement, for $i=1,2$. We have to find the transitions in $\tstr_1$ and $\tstr_2$ yielding these edges, and use them to compute a transition of $\tstr_1 \syncp \tstr_2$ and the corresponding edge in the configuration graph. We have three cases: 
-\begin{itemize} 
-	\item Suppose there are $l_1 \in \weight{q_1}_1$ and $l_2 \in \weight{q_2}_2$ such that $\rho_1(l_1) = \rho_j(l_2) = a$, then there are two transitions $q_1 \htrind{l_1}{\sigma_1}{1} q_1'$ and $q_2 \htrind{l_2}{\sigma_2}{2} q_2'$. Since $[l_1]_{R^*} = \{l_1,l_2\}$, we can apply \regrule{} and get $(q_1,q_2,R) \syncHtr{[l_1]_{R*}}{\sigma} (q_1',q_2',S)$. Since $\rho([l_1])_{R^*} = a$, this transition induces the edge $((q_1,q_2,R),\rho) \tr{a} ((q_1',q_2',S),\rho')$, where, for $x' \in \weight{q_i'}_i$:
-	\begin{align*}
-		\rho'([x]_{S^*}) &= \rho(\sigma([x]_{S^*})) \\
-		&= \rho([\sigma_i(x)]_{R^*}) \\
-		&= \rho_i(\sigma_i(x)) \\
-		&= \rho_i'(x)
-	\end{align*}
-	%
-	\item Suppose $l_i = \star$ and $l_j \in \weight{q_j}_j$.
-	%
-	\item Suppose $l_i = l_j = \star$.
-	%
-\end{itemize}
-
-
+% edge in the configuration graph of $\tstr_i$
 \qed
 \end{proof}

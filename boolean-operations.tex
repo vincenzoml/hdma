@@ -1,19 +1,28 @@
 %!TEX root=ndma.tex
 \newcommand{\compl}[1]{\overline{#1}}
  
-In this section we discuss $\omega$-regularity of nominal languages obtained via boolean operations. Fix two languages $\Lang_1$ and $\Lang_2$, let $\autom_1$ and $\autom_2$ be their \hdmas. The automata recognizing the intersection is $(\tstr_1 \syncp \tstr_2, \acc_{\land})$
+In this section we discuss closure of $\omega$-regular nominal languages under boolean operations. Let $\Lang_1$ and $\Lang_2$ be $\omega$-regular nominal languages, and let $\autom_1 = (\tstr_1,\acc_1)$  and $\autom_2 = (\tstr_2,\acc_2)$ be automata for these languages, where $\tstr_1$ and $\tstr_2$ are the underlying transition structures.
+The crucial tool is \cref{thm:inf-correspondence}: it says that constructing an automaton for a boolean combination of $\Lang_1$ and $\Lang_2$ amounts to defining an appropriate accepting set for $\tstr_1 \syncp \tstr_2$.
+
+The accepting sets for intersection, union and difference are:
 %
 \begin{align*}
-	\acc_{\land} &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{ (q_1,q_2,R) \mid q_1 \in S_1 \land q_2 \in S_2 \}\} \\
-	%\acc_{\lor} &:= \{(q_1,q_2,R) \mid q_1 \in \acc_1 \lor q_2 \in \acc_2 \} \\
-	%\acc_{\setminus} &:= \{ (q_1,q_2,R) \mid q_1 \in \acc_\omega \land q_2 \notin \acc_2 \}
+	\acc_\cap &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{ (q_1,q_2,R) \mid q_1 \in S_1 \land q_2 \in S_2 \}\} 
+	\\
+	\acc_\cup &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{(q_1,q_2,R) \mid q_1 \in S_1 \lor q_2 \in S_2 \}\} 
+	\\
+	\acc_{\setminus} &:= \bigcup_{S_1 \in \acc_1} \{\{ (q_1,q_2,R) \mid q_1 \in S_1 \land \forall S_2 \in \acc_2 : q_2 \notin S_2 \}\}
 \end{align*}
+%
+The automaton for $\compl{\Lang_1}$ can be obtained by complementing $\acc_1$, but also as the automaton for $\names^\omega \setminus \Lang_1$ (see \cref{fig:nomega-automaton} for the automaton accepting $\names^\omega$).
 
 
 \begin{theorem}
-Let $\Lang_1,\Lang_2$ be two $\omega$-regular nominal languages. Then $\Lang_1 \cup \Lang_2$, $\Lang_1 \cap \Lang_2$, $\Lang_1 \setminus \Lang_2$, $\compl{\Lang_1}$ are $\omega$-regular nominal languages.
+$\Lang_1 \cap \Lang_2$, $\Lang_1 \cup \Lang_2$, $\Lang_1 \setminus \Lang_2$, $\compl{\Lang_1}$ are $\omega$-regular nominal languages.
+\label{thm:bool-closure}
 \end{theorem}
-
-%\begin{proof}
-%Let $\autom_i = (Q,\weight{-}_i,q_0^i,\rho_0^i,\trarrow_i)$ be the \hdma{} accepting $\Lang_i$, for $i=1,2$.
-%\end{proof}
+%
+\begin{proof}
+We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\autom_\cap$ be the \hdma{} $(\tstr_1 \syncp \tstr_2,\acc_\cap)$. Given $\alpha \in \names^\omega$, let $r^\alpha_\land$,$r_1^\alpha$ and $r_2^\alpha$ be the runs for $\alpha$ in the configuration graphs of $\autom_\cap,A_1$ and $A_2$, respectively. Then, by \cref{thm:inf-correspondence}, we have $\cproj_i(\Inf(r^\alpha_\land)) = \Inf(r^\alpha_i)$, for each $i=1,2$. From this, and the definition of $\acc_\cap$, we have that $\Inf(r^\alpha_\land) \in \acc_\cap$ if and only if $\Inf(r^\alpha_1) \in \acc_1$ and $\Inf(r^\alpha_2) \in \acc_2$, i.e.\ $\alpha \in \Lang_{\autom_\cap}$ if and only if $\alpha \in \Lang_{\autom_1}$ and $\alpha \in\Lang_{\autom_2}$.
+\qed
+\end{proof}
