@@ -3,11 +3,11 @@
 
 We shall now briefly introduce nominal sets; we refer the reader to \cite{GabbayPitts?} for more details on the subject. We assume an infinite set of names $\names$, and we write $Perm$ for the group of finite-kernel permutations of $\names$, namely those bijections $\pi \colon \names \to \names$ such that the set $\{ a \mid \pi(a) \neq a \}$ is finite.
 \begin{definition}
-A \emph{nominal set} is a set $X$ along with an action for $Perm$, that is a function $\cdot \colon Perm \times X \to X$ such that, for all $x \in X$ and $\pi,\pi' \in Perm$, $x \cdot id_\names = x$ and $(\pi \circ \pi') \cdot x = \pi \cdot (\pi' \cdot x)$. Also, it is required that each $x \in X$ has \emph{finite support}, meaning that there exists a finite $S \subseteq \names$ such that, for all $\pi \in Perm$, $\restr{\pi}{S} = id_S$ implies $\pi \cdot x = x$. We denote the least such $S$ with $\supp(x)$.
+A \emph{nominal set} is a set $X$ along with an action for $Perm$, that is a function $\cdot \colon Perm \times X \to X$ such that, for all $x \in X$ and $\pi,\pi' \in Perm$, $x \cdot id_\names = x$ and $(\pi \circ \pi') \cdot x = \pi \cdot (\pi' \cdot x)$. Also, it is required that each $x \in X$ has \emph{finite support}, meaning that there exists a finite $S \subseteq \names$ such that, for all $\pi \in Perm$, $\restr{\pi}{S} = id_S$ implies $\pi \cdot x = x$. We denote the least such $S$ with $\supp(x)$. An \emph{equivariant function} from nominal set $X$ to nominal set $Y$ is a function $f : X \to Y$ such that, for all $\pi$ and $x$, $f(\pi \cdot x) = \pi \cdot f(x)$.
 \end{definition}
 %
 \begin{definition}
-Given $x \in X$, the \emph{orbit} of $x$, denotedy $\orb(x) $, is the set $\{ \pi \cdot x \mid \pi \in Perm\} \subseteq X$. We write $\orb(X)$ for $\{ \orb(x) \mid x \in X\}$. 
+Given $x \in X$, the \emph{orbit} of $x$, denotedy $\orb(x) $, is the set $\{ \pi \cdot x \mid \pi \in Perm\} \subseteq X$. For $S \subseteq X$, we write $\orb(S)$ for $\{ \orb(x) \mid x \in S\}$. 
 \end{definition}
 
 Notice that $\orb(X)$ is a partition of $X$. The prototypical nominal set is $\names$ under the natural permutation action $\pi \cdot a = \pi(a)$, is a nominal set. For each $a$, we have $\supp(a) = \{a\}$; furthermore, there is just one orbit coinciding with $\names$.

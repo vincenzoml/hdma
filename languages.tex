@@ -33,7 +33,7 @@ In nominal sets terminology, the transition relation is an \emph{equivariant fun
  By determinism (see Definition \ref{def:ndma}), for each infinite word $\alpha$, and each state $q$, there is exactly one run of $\alpha$ from $q$, that we call $\run^{\alpha,q}$, or simply $\run^{\alpha}$ when $q=q_0$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def:inf-set}
  For $\run \in Q^\omega$, let $\Inf(\run)$ be the (finite) set of \emph{orbits} that $\run$ traverses infinitely often. Formally, we let $\orb(q) \in \Inf(\run)$ if and only if, for all $i$, there is $j > i$ such that $\run_j \in \orb(q)$. By determinism, we also speak of $\Inf(\alpha)$ for a word $\alpha$; this is a shorthand for $\Inf(\run^\alpha)$.
 \end{definition}
 
@@ -80,3 +80,7 @@ In nominal sets terminology, the transition relation is an \emph{equivariant fun
 \end{center}
 \caption{\label{fig:example-session} The nDMA of Example \ref{exa:session}, with acceptance condition $\acc = \{ \{ q_0 \}, \{ q_a \mid a \in \names \}\}$.}
 \end{figure}
+
+\todo{
+ Theorems? First of all, finite support of languages. Also: observation that streams are not finitely supported, but languages are. In the example, what are the finitely supported accepted streams (and how do they differ from the infinitely supported ones?). Can we explain in words the ``finite memory determinacy'' of languages?
+}
