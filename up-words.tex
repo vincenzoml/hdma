@@ -1,26 +1,6 @@
 %!TEX root=ndma.tex
 %
 %
-\tbox{Sezione 4?}
-{
-Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
-}
-%
-An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v \in \names^\star$.  It is well known that each non-empty $\omega$-regular language $\Lang$ contains at least one such word \cite{CalbrixNP93}. In fact, given any $\alpha \in \Lang$, the run $r^\alpha$ in a Muller automaton for $\Lang$ goes through two states $r^\alpha_i,r^\alpha_j$, $i<j$, such that $\{r^\alpha_i,r^\alpha_{i+1},\dots,r^\alpha_j\}$ is an accepting set and $r^\alpha_i = r^\alpha_j$. Intuitively: a loop through an accepting set of states is eventually encountered while recognizing $\alpha$. Call $u$ the word recognized until $r^\alpha_i$, and $v$ the word recognized along the loop, then we clearly have $uv^\omega \in \Lang$.
-
-In this section we prove an analogous result for nominal $\omega$-regular languages. This again involves finding a loop through accepting states and iterating it, but such loop must be in the configuration graph, i.e.\ it must be a path starting and ending with the same state \emph{and} register assignment. The following example gives evidence of this point.
-%To illustrate this point:
-%
-%, unfortunately, it may not be possible to recognize the same word in subsequent traversals of the loop. The figure... illustrates this point:
-%To illustrate this point, consider the \hdma{} in figure...
-
-%\begin{example}
-%Consider the automaton $A$ in \cref{fig:upwords}: it has a loop from $q_0$ to itself. Unlike ordinary Muller automata, the same symbol cannot be consumed by two subsequent iterations of the loop, because of the freshness requirement. However, the same symbol can be consumed after (at least) \emph{two} iterations, as illustrated by the following path in the configuration graph of $A$:
-%\[
-%	(q_0,x \mapsto c) \tr{a} (q_0,x \mapsto a) \tr{b} (q_0,x \mapsto b) \tr{a} (q_0,x \mapsto a) \dots
-%\]
-%\end{example}
-
 
 \begin{figure}[t]
 \begin{center}
@@ -39,43 +19,60 @@ In this section we prove an analogous result for nominal $\omega$-regular langua
 \label{fig:nomega-automaton}
 \end{figure}
 
-%\begin{figure}[t]
-%\begin{center}
-% \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
-%  \tikzstyle{every state}=[minimum size=10ex]
-%  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
-%	
-%  \node[state,initial] (q0) {}; 
-%  \node (lab0) at (q0) {$q_0$};
-%  \node[register,label={[shift={(2pt,-2pt)}]above:$x$}] (reg) [below=2ex of lab0] {};
-%  \node [left=10ex of reg,inner sep=0pt] (c) {$c$};
-%  \node[state,right of=q0] (q1) {$q_1$};  
-%
-%  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
-%  \path (q0) edge [bend left] node {$x$} (q1);
-%  \path (reg) edge[dashed,bend right=50] (star);
-%  \path (reg) edge[dashed] (c);
-%\end{tikzpicture}
-%
-%\[
-%	\acc = \{ \{ q_0 \} \}
-%	\qquad
-%	\Lang = \{ a_0 a_1 a_2 \ldots \mid a_0 \neq c, a_{i+1} \neq a_i,a_i \in \names,i \geq 0 \}
-%\]
-%\end{center}
-%\caption{\label{fig:upwords} An automaton.}
-%\end{figure}
+\begin{figure}[t]
+\begin{center}
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
+  \tikzstyle{every state}=[minimum size=8ex]
+  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
+	
+  \node[state,initial] (q0) {$q_0$}; 
+  \node[state,right of=q0] (q1) {};  
+  \node (lab1) at (q1) {$q_1$};
+  \node[register,label={[xshift=-2pt]right:$x$}] (reg) [above=1pt of lab1] {};
+  \node [right=5ex of q1] {$\acc = \{ \{ q_0,q_1 \} \}$};
 
 
-\tbox{Mettere nell'appendice?}
+  \path (q0) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q1);
+  \path (q1) edge [bend left] node {$x$} (q0);
+  \path (reg) edge[densely dashed,bend right] (star);
+\end{tikzpicture}
+\end{center}
+\caption{\label{fig:upwords} Automaton for the language of \cref{exa:session}.}
+\end{figure}
+
+\tbox{Sezione 4?}
 {
-\begin{lemma}
-\label{lem:tr-names}
-For all edges in the configuration graph $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
-\end{lemma}
+Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
 }
+%
+An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v \in \names^\star$.  It is well known that each non-empty $\omega$-regular language $\Lang$ contains at least one such word \cite{CalbrixNP93}. In fact, given any $\alpha \in \Lang$, the run $r^\alpha$ in a Muller automaton for $\Lang$ goes through two states $r^\alpha_i,r^\alpha_j$, $i<j$, such that $\{r^\alpha_i,r^\alpha_{i+1},\dots,r^\alpha_j\}$ is an accepting set and $r^\alpha_i = r^\alpha_j$. Intuitively: a loop through an accepting set of states is eventually encountered while recognizing $\alpha$. Call $u$ the word recognized until $r^\alpha_i$, and $v$ the word recognized along the loop, then we clearly have $uv^\omega \in \Lang$.
 
-Our aim is showing that, given a loop in the \hdma{}, a path as described always exists. From now on we fix a loop
+In this section we prove an analogous result for nominal $\omega$-regular languages. This again involves finding a loop through accepting states and iterating it, but such loop must be in the configuration graph, i.e.\ it must be a path starting and ending with the same state \emph{and} register assignment.
+%The following example gives evidence of this point.
+%To illustrate this point:
+%
+%, unfortunately, it may not be possible to recognize the same word in subsequent traversals of the loop. The figure... illustrates this point:
+%To illustrate this point, consider the \hdma{} in figure...
+%
+%\begin{example}
+%Consider the automaton $A$ in \cref{fig:upwords}: it has a loop from $q_0$ to itself. Unlike ordinary Muller automata, the same symbol cannot be consumed by two subsequent iterations of the loop, because of the freshness requirement. However, the same symbol can be consumed after (at least) \emph{two} iterations, as illustrated by the following path in the configuration graph of $A$:
+%\[
+%	(q_0,x \mapsto c) \tr{a} (q_0,x \mapsto a) \tr{b} (q_0,x \mapsto b) \tr{a} (q_0,x \mapsto a) \dots
+%\]
+%\end{example}
+%
+%
+%\tbox{Mettere nell'appendice?}
+%{
+%\begin{lemma}
+%\label{lem:tr-names}
+%For all edges in the configuration graph $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
+%\end{lemma}
+%}
+%
+Most of this section will be spent in showing that, given a loop in a \hdma, we can always find a path as required, induced by consecutive traversals of the loop.
+
+From now on we fix a loop (the specific \hdma{} is unrelevant)
 \[
 	L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0
 \]
@@ -85,7 +82,7 @@ We write $\ul{i}$ for $i \mod n$. Let $\widehat{\sigma}_i \colon \weight{p_\ul{i
 	\qquad (i=0,\dots,n-1)
 \]
 and let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their composition $\widehat{\sigma}_0 \circ \widehat{\sigma}_1 \dots \circ \widehat{\sigma}_{n-1}$. We define the set $I$ as the greatest subset of $\dom(\widehat{\sigma})$ such that $ \widehat{\sigma}(I) = I$,
-i.e.\ $I$ are the registers whose content ``survives'' along $L$. We denote by $T$ all the other registers, namely $T := \weight{p_0} \setminus I$. These are registers whose content is eventually discarded (not necessarily within a single loop traversal), as the following lemma states.
+i.e.\ $I$ are the registers of $p_0$ that ``survive'' along $L$. We denote by $T$ all the other registers, namely $T := \weight{p_0} \setminus I$. These are registers whose content is eventually discarded (not necessarily within a single loop traversal), as the following lemma states.
 %
 %
 \begin{lemma}
@@ -101,40 +98,39 @@ $
 where $j+1 \in J_x$ only if $\sigma_{\ul{j}}^{-1}(x_i)$ is defined. Then $J_x$ has finite cardinality.
 \end{lemma}
 %
-Now, consider any assignment $\rrho_0 \colon \weight{p_0} \to \names$. We give a lemma about paths that start from $(p_0,\rrho_0)$ and are induced by consecutive traversals of $L$. It says that: (i) the assignment for $I$ given by $\rrho_0$ is always recovered after a fixed number of traversals of $L$, regardless of which symbols are consumed; (ii) there is a minimum number of traversals of $L$ ensuring that a configuration can be reached where no register is assigned one of the values assigned to $T$ by $\rrho_0$.
+Now, consider any assignment $\rrho_0 \colon \weight{p_0} \to \names$. We give some lemmata about paths that start from $(p_0,\rrho_0)$ and are induced by consecutive traversals of $L$. The first one says that the assignment for $I$ given by $\rrho_0$ is always recovered after a fixed number of traversals of $L$, regardless of which symbols are consumed.
 %
-\begin{lemma} There are $\id,\forg$ positive integers such that:
-\label{lem:IT}
-\begin{enumerate}[(i)]
-
-\item
+\begin{lemma} 
+\label{lem:idI}
+There is $\id \geq 1$ such that,
 %there is $\id \geq 1$ such that, 
 for all $v_0,\dots,v_{\id-1}$ satisfying
 \[
 	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \dots \TrP{v_{\id-1}}{L} (p_0,\rrho_\id)
 \]
-we have $\restr{ \rrho_\id }{I} = \restr{ \rrho }{I}$;
-\label{idI}
-
-\item %there is $\forg \geq 1$ such that, 
-for all $\gamma \geq \forg$ there are $v_0,\dots,v_{\gamma-1}$ satisfying
+we have $\restr{ \rrho_\id }{I} = \restr{ \rrho_0 }{I}$.
+\end{lemma}
+%
+The second one says that, after a minimum number of traversals of $L$, a configuration can be reached where the initial values of $T$, namely those assigned by $\rrho_0$, cannot be found in any of the registers.
+%
+\begin{lemma}
+There is $\forg \geq 1$ such that, for all $\gamma \geq \forg$ ,there are $v_0,\dots,v_{\gamma-1}$ satisfying
 \[
 	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \dots \TrP{v_{\gamma-1}}{L} (p_0,\rrho_\gamma)
 	\qquad 
-	\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing
+	\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing \enspace .
 \]
 %(Fix: $\rrho_0(\weight{p_0}) \cap \rrho_\gamma(T) = \varnothing$?)
-\label{forgetT}
+\label{lem:forgetT}
 %there is $\ass$ such that, 
-\end{enumerate}
 \end{lemma}
 %
-\vspace{-5ex}
+%\vspace{-5ex}
 %
-We give another lemma, in some sense dual to $(ii)$ of the previous one: if we start from a configuration such as the final one of $(ii)$, where registers are assigned value all fresh w.r.t.\ those $\rrho_0$ assigns to $T$, then this assignment for $T$ can be recovered in a fixed number of traversals of $L$, regardless of the initial assignment.
+Finally, we give the dual of the previous lemma: if we start from a configuration where registers are not assigned values in $\rrho_0(T)$, then these values can be assigned back to $T$ in a fixed number of traversals of $L$, regardless of the initial assignment.
 
 \begin{lemma}
-There is a positive integer $\ass$ such that,
+There is $\ass \geq 1$ such that,
 for any $\trho_0 \colon \weight{p_0} \to \names$ with $\Im(\trho_0) \cap \rrho_0(T) = \varnothing$, there are $v_0,\dots,v_{\ass-1}$ satisfying
 \[
 	(p_0,\trho_0) \TrP{v_0}{L} (p_0,\trho_1) \TrP{v_1}{L} \dots \TrP{v_{\ass-1}}{L} (p_0,\trho_\ass)	
@@ -165,7 +161,7 @@ We can take any path of the form
 	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \cdots \TrP{v_{\gamma-1}}{L} (p_0,\rrho_\gamma) \TrP{v_{\gamma}}{L} \cdots \TrP{v_{\gamma + \ass - 1}}{L} (p_0,\rrho_{\gamma + 
 	 \ass})
 \]
-where the part from $(p_0,\rrho_0)$ to $(p_0,\rrho_\gamma)$ is given by \eqref{forgetT} of \cref{lem:IT} and the remaining subpath is given by \cref{lem:initT}, with $\trho_0 = \rrho_\gamma$. The only constraint about $\gamma$ is that there should be a positive integer $\lambda$ such that $\gamma + \ass = \lambda \id$, where $\id$ is given by \eqref{idI} of \cref{lem:IT}. The claim follows from $\restr{\rrho_{\gamma + \ass}}{T} = \restr{\rrho_0}{T}$ and 
+where the part from $(p_0,\rrho_0)$ to $(p_0,\rrho_\gamma)$ is given by \cref{lem:forgetT} and the remaining subpath is given by \cref{lem:initT}, with $\trho_0 = \rrho_\gamma$. The only constraint about $\gamma$ is that there should be a positive integer $\lambda$ such that $\gamma + \ass = \lambda \id$, where $\id$ is given by \cref{lem:idI}. The claim follows from $\restr{\rrho_{\gamma + \ass}}{T} = \restr{\rrho_0}{T}$ and 
 $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I \cup T = \weight{p_0}$, imply $\rrho_{\gamma + \ass} = \rrho_0$.
 \qed
 \end{proof}
@@ -238,12 +234,12 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
 \caption{\label{fig:upwords-ex} An example automaton. Some transitions are not shown: they are all assumed to end up in a sink state without registers.}
 \end{figure}
 
-\begin{example} We motivate the above construction on the automaton in \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting set, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
+\begin{example} We justify the above construction on the automaton in \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting set, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
 We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
 \[
 	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) \tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}]) \tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])
 \]
-where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped according to the permutation $(a \; b)$, and $d$ is assigned to $z_0$. Our aim is to recover $\rho_0$ again. According to \eqref{idI} of \cref{lem:IT}, $x_0$ and $y_0$ get their assignment back in $\theta = 2$ traversals of $L$ (in fact $(a\; b)^2 = (a\; b)$). As for $z_0$, its assignment is established in the second transition, but $c$ should not be assigned to any register of $q_1$ in order for it to be consumed during this transition. This is where \eqref{forgetT} of \cref{lem:IT} comes into play: it says that in at least $\epsilon = 1$ traversals of $L$ the name $c$ is discarded. This is exactly what happens in the path shown above. Then we can assign $c$ to $z_0$ in another $\zeta = 1$ traversal of $L$, according to \cref{lem:initT}. Since $\epsilon + \zeta  = \theta = 2$, traversing $L$ twice is enough. For instance, we can take the path spelling $cdbdca$.
+where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped according to the permutation $(a \; b)$, and $d$ is assigned to $z_0$. Our aim is to recover $\rho_0$ again. According to \cref{lem:idI}, $x_0$ and $y_0$ get their assignment back in $\theta = 2$ traversals of $L$ (in fact $(a\; b)^2 = (a\; b)$). As for $z_0$, its assignment is established in the second transition, but $c$ should not be assigned to any register of $q_1$ in order for it to be consumed during this transition. This is where \cref{lem:forgetT} comes into play: it says that in at least $\epsilon = 1$ traversals of $L$ the name $c$ is discarded. This is exactly what happens in the path shown above. Then we can assign $c$ to $z_0$ in another $\zeta = 1$ traversal of $L$, according to \cref{lem:initT}. Since $\epsilon + \zeta  = \theta = 2$, traversing $L$ twice is enough. For instance, we can take the path spelling $cdbdca$.
 \end{example}
 
 

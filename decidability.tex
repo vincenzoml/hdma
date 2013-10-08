@@ -2,15 +2,3 @@
 
 %\todo{Quick introduction to \cite{CV12}}
 % not really needed
-\begin{theorem}
-It is decidable whether $\Lang$ is the empty language.
-\label{thm:emptiness}
-\end{theorem}
-
-\begin{theorem}
-It is decidable whether $\Lang_1 = \Lang_2$.
-\end{theorem}
-
-\begin{proof}
-Consider the language $\Lang = (\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2 )$. This is $\omega$-regular nominal, thanks to \cref{thm:bool-closure}. Then we just have to check the emptiness of $\Lang$, which is decidable by \cref{thm:emptiness}.
-\end{proof}
