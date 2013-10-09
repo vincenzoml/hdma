@@ -45,34 +45,11 @@
 Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
 }
 %
-An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v \in \names^\star$.  It is well known that each non-empty $\omega$-regular language $\Lang$ contains at least one such word \cite{CalbrixNP93}. In fact, given any $\alpha \in \Lang$, the run $r^\alpha$ in a Muller automaton for $\Lang$ goes through two states $r^\alpha_i,r^\alpha_j$, $i<j$, such that $\{r^\alpha_i,r^\alpha_{i+1},\dots,r^\alpha_j\}$ is an accepting set and $r^\alpha_i = r^\alpha_j$. Intuitively: a loop through an accepting set of states is eventually encountered while recognizing $\alpha$. Call $u$ the word recognized until $r^\alpha_i$, and $v$ the word recognized along the loop, then we clearly have $uv^\omega \in \Lang$.
+An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v$ finite words. Given a $\omega$-regular language $\Lang$, let $UP(\Lang)$ be its ultimately periodic fragment, namely $\{ \alpha \in \Lang \mid \alpha = uv^\omega \land u,v \; \text{are finite} \}$. Then, for every two languages $\Lang_1$ and $\Lang_2$, $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$ \cite{CalbrixNP93}, in words: $\omega$-regular languages are characterized by their ultimately periodic fragments.
 
-In this section we prove an analogous result for nominal $\omega$-regular languages. This again involves finding a loop through accepting states and iterating it, but such loop must be in the configuration graph, i.e.\ it must be a path starting and ending with the same state \emph{and} register assignment.
-%The following example gives evidence of this point.
-%To illustrate this point:
-%
-%, unfortunately, it may not be possible to recognize the same word in subsequent traversals of the loop. The figure... illustrates this point:
-%To illustrate this point, consider the \hdma{} in figure...
-%
-%\begin{example}
-%Consider the automaton $A$ in \cref{fig:upwords}: it has a loop from $q_0$ to itself. Unlike ordinary Muller automata, the same symbol cannot be consumed by two subsequent iterations of the loop, because of the freshness requirement. However, the same symbol can be consumed after (at least) \emph{two} iterations, as illustrated by the following path in the configuration graph of $A$:
-%\[
-%	(q_0,x \mapsto c) \tr{a} (q_0,x \mapsto a) \tr{b} (q_0,x \mapsto b) \tr{a} (q_0,x \mapsto a) \dots
-%\]
-%\end{example}
-%
-%
-%\tbox{Mettere nell'appendice?}
-%{
-%\begin{lemma}
-%\label{lem:tr-names}
-%For all edges in the configuration graph $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
-%\end{lemma}
-%}
-%
-Most of this section will be spent in showing that, given a loop in a \hdma, we can always find a path as required, induced by consecutive traversals of the loop.
+In this section we aim to extend this result to the nominal setting. The preliminary result to establish, as in the classical case, is that every non-empty $\omega$-regular language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states and iterating it. In our case this is not enough, because it may not be possible to consume the same name in consecutive traversals of the same transition due to freshness. The first part of this section will be spent in showing that, given a loop in a \hdma{}, one can always a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. This implies that such path can be taken an arbitrary number of times.
 
-From now on we fix a loop (the specific \hdma{} is unrelevant)
+We fix a loop (the specific \hdma{} is unrelevant)
 \[
 	L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0
 \]
@@ -102,9 +79,7 @@ Now, consider any assignment $\rrho_0 \colon \weight{p_0} \to \names$. We give s
 %
 \begin{lemma} 
 \label{lem:idI}
-There is $\id \geq 1$ such that,
-%there is $\id \geq 1$ such that, 
-for all $v_0,\dots,v_{\id-1}$ satisfying
+There is $\id \geq 1$ such that, for all $v_0,\dots,v_{\id-1}$ satisfying
 \[
 	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \dots \TrP{v_{\id-1}}{L} (p_0,\rrho_\id)
 \]
@@ -120,12 +95,9 @@ There is $\forg \geq 1$ such that, for all $\gamma \geq \forg$ ,there are $v_0,\
 	\qquad 
 	\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing \enspace .
 \]
-%(Fix: $\rrho_0(\weight{p_0}) \cap \rrho_\gamma(T) = \varnothing$?)
 \label{lem:forgetT}
-%there is $\ass$ such that, 
 \end{lemma}
 %
-%\vspace{-5ex}
 %
 Finally, we give the dual of the previous lemma: if we start from a configuration where registers are not assigned values in $\rrho_0(T)$, then these values can be assigned back to $T$ in a fixed number of traversals of $L$, regardless of the initial assignment.
 
@@ -137,7 +109,6 @@ for any $\trho_0 \colon \weight{p_0} \to \names$ with $\Im(\trho_0) \cap \rrho_0
 	\qquad
 	\restr{\trho_\ass}{T} = \restr{\rrho_0}{T} \enspace .
 \]
-%and $\restr{\trho_\ass}{T} = \restr{\rrho_0}{T}$.
 \label{lem:initT}
 \end{lemma}
 %
@@ -173,13 +144,6 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
   \tikzstyle{every state}=[minimum size=10ex]
   \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
 	
-  %\node[state,right of=q0] (q1) {};
-  %\node[state,right of=q1] (q2) {};
-
-  %\node (lab0) at (q0) {$q_0$};
-  %\node (lab1) at (q1) {$q_1$};
-  %\node (lab2) at (q2) {$q_2$};
-
   \node[register,label={[shift={(2pt,-2pt)}]above:$x_0$}] (reg00) {};
   \node[register,label={[shift={(2pt,-2pt)}]above:$y_0$}] (reg01) [right=10pt of reg00] {};
   \node[register,label={[shift={(2pt,-2pt)}]above:$z_0$}] (reg02) [right=10pt of reg01] {};
@@ -189,7 +153,6 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
   \node[register,label={[shift={(2pt,-2pt)}]above:$z_1$}] (reg12) [right=10pt of reg11] {};
 
   \node[register,label={[shift={(2pt,-2pt)}]above:$y_2$}] (reg21) at ($(reg02)!0.5!(reg10)$) [yshift=-15ex] {};
-%[right=10pt of reg20] {};
 
   \node[register,label={[shift={(2pt,-2pt)}]above:$x_2$}] (reg20) [left=10pt of reg21] {};
   \node[register,label={[shift={(2pt,-2pt)}]above:$z_2$}] (reg22) [right=10pt of reg21] {};
@@ -197,14 +160,11 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
 
 
   \node[state,initial,fit={(reg00) (reg01) (reg02)},inner sep=2ex] (q0) {};
-  \node[above left=-1ex of q0] (lab0) {$q_0$};
-%,label={[anchor=north west]above:$q_0$}] (q0) {$q_0$}; 
+  \node[above left=-1ex of q0] (lab0) {$q_0$}; 
   \node[state,fit={(reg10) (reg11) (reg12)},inner sep=2ex] (q1) {};
   \node[above right=-1ex of q1] (lab1) {$q_1$}; 
   \node[state,fit={(reg20) (reg21) (reg22)},inner sep=2ex] (q2) {};
   \node[below=1pt of q2] (lab2) {$q_2$}; 
-%  \node [left=10ex of reg,inner sep=0pt] (c) {$c$};
-  %\node[state,right of=q0] (q1) {$q_1$};  
 
   \path (q0) edge [bend left] node {$z_0$} (q1);
   \path (q1) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q2);
@@ -222,12 +182,6 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
   \path (reg21) edge[densely dashed,shorten <=5pt] (reg01);
   \path (reg22) edge[densely dashed,shorten <=5pt] (reg02);
 
-%  \path (reg00) edge[dashed,bend right=50] (star);
- % \path (reg00) edge[dashed] (c);
-%  \draw[dashed,bend left] (reg) -- (star);
-%             edge [loop left]  node {a} (q0)
-%        (q1) edge [bend left]  node {a} (q0)
-%             edge [loop right] node {b} (q1);
 \end{tikzpicture}
 
 \end{center}
@@ -236,16 +190,18 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
 
 \begin{example} We justify the above construction on the automaton in \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting set, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
 We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
-\[
-	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) \tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}]) \tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])
-\]
+\begin{align*}
+	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) &\tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}]) \\
+	&\tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])
+\end{align*}
 where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped according to the permutation $(a \; b)$, and $d$ is assigned to $z_0$. Our aim is to recover $\rho_0$ again. According to \cref{lem:idI}, $x_0$ and $y_0$ get their assignment back in $\theta = 2$ traversals of $L$ (in fact $(a\; b)^2 = (a\; b)$). As for $z_0$, its assignment is established in the second transition, but $c$ should not have been assigned to any register of $q_1$ in order for it to be consumed during this transition. This is where \cref{lem:forgetT} comes into play: it says that in at least $\epsilon = 1$ traversals of $L$ the name $c$ is discarded. This is exactly what happens in the path shown above. Then we can assign $c$ to $z_0$ in another $\zeta = 1$ traversal of $L$, according to \cref{lem:initT}. Since $\epsilon + \zeta  = \theta = 2$, traversing $L$ twice is enough. For instance, we can take the path spelling $cdbdca$.
 \end{example}
 
 
-Finally we have the main theorem.
+Finally we have the main results.
 %
 \begin{theorem}
+\label{thm:up-fragment}
 Every non-empty $\omega$-regular nominal language $\Lang$ has an ultimately periodic fragment.
 \end{theorem}
 \begin{proof}
@@ -259,4 +215,11 @@ where $q_1 \in I$ and $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ is such that $P$ go
 \]
 This subpath can be traversed any number of times, so we have $u(v_0\dots v_n)^\omega \in \Lang$.
 \qed
+\end{proof}
+
+\begin{theorem}
+Let $\Lang_1,\Lang_2$ be $\omega$-regular nominal languages. Then $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$.
+\end{theorem}
+\begin{proof}
+Consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_2 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a $\omega$-regular nominal language. Suppose it is not empty, i.e.\ $\Lang_1 \neq \Lang_2$. Then, by \cref{thm:up-fragment}, it must contain at least one ultimately periodic word, so also $UP(\Lang_1) \neq UP(\Lang_2)$, a contradiction.
 \end{proof}
