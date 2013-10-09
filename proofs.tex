@@ -1,5 +1,14 @@
 %!TEX root=ndma.tex
 
+We give one straightforward lemma about configuration graphs.
+%
+\begin{lemma}
+\label{lem:tr-names}
+For all edges $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
+\end{lemma}
+%
+The following lemma is about $I$ defined in \cref{sec:up-words}.
+%
 \begin{lemma}
 \label{lem:xI}
 Given $x \in \dom(\widehat{\sigma})$, suppose there is a positive integer $k$ such that $x = \widehat{\sigma}^k (x)$. Then $x \in I$.
@@ -9,14 +18,12 @@ Suppose $x \notin I$. $I = \widehat{\sigma}(I)$ implies $I = \widehat{\sigma}^k(
 \qed
 \end{proof}
 
-\begin{lemma}
-\label{lem:tr-names}
-For all edges in the configuration graph $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
-\end{lemma}
+
 
 
 \begin{proof}[of \cref{lem:rho-forget}]
-Suppose $|J_x| \geq n$, otherwise the statement is trivially true. Observe that this sequence is such that $x_{kn} \neq x_{k'n}$, for all $k,k' \geq 0$ such that $k \neq k'$. In fact, suppose there are $x_{kn} = x_{k'n}$, with $k < k'$. Then we would have $x_{kn-1} = x_{k'n-1}$, because $\sigma_{n}$ is injective. In general, $x_{kn-l} = x_{k'n-l}$, for $0 \leq l \leq kn$, therefore $x = x_0 = x_{(k'-k)n}$. This means that $\widehat{\sigma}^{(k'-k)}(x) = x$ which, by \cref{lem:xI}, implies $x \in I$, against the hypothesis $x \in T$.
+%Suppose $|J_x| \geq n$, otherwise the statement is trivially true. 
+Observe that this sequence is such that $x_{kn} \neq x_{k'n}$, for all $k,k' \geq 0$ such that $k \neq k'$. In fact, suppose there are $x_{kn} = x_{k'n}$, with $k < k'$. Then we would have $x_{kn-1} = x_{k'n-1}$, because $\sigma_{n}$ is injective. In general, $x_{kn-l} = x_{k'n-l}$, for $0 \leq l \leq kn$, therefore $x = x_0 = x_{(k'-k)n}$. This means that $\widehat{\sigma}^{(k'-k)}(x) = x$ which, by \cref{lem:xI}, implies $x \in I$, against the hypothesis $x \in T$.
 
 Now, suppose that $J_x = \mathbb{N}$. Then we would have an infinite subsequence $\{x_{jn}\}_{j \in J_x}$ of pairwise distinct names that belong to $\weight{p_0}$, but $\weight{p_0}$ is finite, a contradiction.
 \qed
@@ -25,7 +32,7 @@ Now, suppose that $J_x = \mathbb{N}$. Then we would have an infinite subsequence
 
 \begin{proof}[of \cref{lem:idI}]\hfill
 
-\item Let $\pi \colon I \to I$ be the function $\restr{\widehat{\sigma}}{I}$ with its codomain restricted to $I$. Then $\pi$ is an element of the symmetric group on $I$, so it has an order $\id$, that is a positive integer such that $\pi^\id = id_I$\todosm{Dovrebbe funzionare sempre con $\id = |I|!$, cioè con l'ordine del gruppo}. Hence $\restr{ \rrho_\id }{ I } =\restr{ \rrho_0 }{I} \circ \pi^\id = \restr{ \rrho_0 }{I}$.
+\item Let $\pi \colon I \to I$ be the function $\restr{\widehat{\sigma}}{I}$ with its codomain restricted to $I$. Then $\pi$ is an element of the symmetric group on $I$, so it has an order $\id$, that is a positive integer such that $\pi^\id = id_I$. Hence $\restr{ \rrho_\id }{ I } =\restr{ \rrho_0 }{I} \circ \pi^\id = \restr{ \rrho_0 }{I}$.
 \qed
 \end{proof}
 
@@ -34,7 +41,7 @@ Let $\mathcal{J}$ be
 \[
 	\mathcal{J} := \max \{ |J_x|\mid x \in T \} + 1 .
 \]
-This gives the number of transitions it takes to forget all the names assigned to $T$. Let $\forg$ be $\lceil \frac{\mathcal{J}}{n} \rceil$. For any $\gamma \geq \forg$, we can choose $v_0,\dots,v_{\gamma-1}$ as any $\gamma$-tuple of words that are recognized by the loop and such that, whenever $l_j = \star$, then $(v_i)_j$ is different from $\Im(\rrho_0)$ and all the previous symbols in $v_1,\dots,v_i$, for all $i=0,\dots,\gamma-1$ and $j=0,\dots,n-1$. Let us verify $\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing$ separately on $I$ and $T$ (recall $I \cup T = \weight{p_0})$: we have $\rrho_\gamma(T) \cap \rrho_0(T) = \varnothing$, because all the names assigned to $T$ have been replaced by fresh ones; and we have $\rrho_\gamma(I) = \rrho_0(I)$, so $\rrho_\gamma(I) \cap \rrho_0(T) = \varnothing$.
+This gives the number of transitions it takes to forget all the names assigned to $T$. Let $\forg$ be $\lceil \frac{\mathcal{J}}{n} \rceil$. For any $\gamma \geq \forg$, we can choose $v_0,\dots,v_{\gamma-1}$ as any $\gamma$-tuple of words that are recognized by the loop and such that, whenever $l_j = \star$, then $(v_i)_j$ is different from $\Im(\rrho_0)$ and all the previous symbols in $v_0,\dots,v_i$, for all $i=0,\dots,\gamma-1$ and $j=0,\dots,n-1$. Let us verify $\Im(\rrho_\gamma) \cap \rrho_0(T) = \varnothing$ separately on $I$ and $T$ (recall $I \cup T = \weight{p_0})$: we have $\rrho_\gamma(T) \cap \rrho_0(T) = \varnothing$, because all the names assigned to $T$ have been replaced by fresh ones; and we have $\rrho_\gamma(I) = \rrho_0(I)$, so $\rrho_\gamma(I) \cap \rrho_0(T) = \varnothing$.
 \qed
 \end{proof}
 
@@ -58,9 +65,15 @@ Let $X$ be the set of such tuples and let $\ass := \max \{ j \mid (x,i,j) \in X 
 %
 where by $y$ fresh we mean different from elements of $\Im(\trho_0) \cup \Im(\rrho_0)$ and previous symbols in $v_0,\dots,v_{k}$.
 
-The second case in the definition of $(v_k)_i$ is justified as follows. Suppose $\trho_{k,i}$ is the register assignment for $(p_i,\trho_{k,i}) \tr{(v_k)_i} \dots$, then we have to show $(v_k)_i = \rrho_0(x) \notin \Im(\trho_{k,i})$. Suppose, by contradiction, that $\rrho_0(x) \in \Im(\trho_{k,i})$, then by \cref{lem:tr-names} we have $\rrho_0(x) \in \Im(\trho_0) \cup F$, where $F$ are all the fresh names consumed so far. But $F \cap \Im(\rrho_0) = \varnothing$, by construction, so $\rrho_0(x) \in \Im(\trho_0)$, which implies $\rrho_0(T) \cap \Im(\trho_0) \neq \varnothing$, due to $x \in T$, against our hypothesis.
+The second case in the definition of $(v_k)_i$ is justified as follows. Suppose $\trho_{k,i}$ is the register assignment for $(p_i,\trho_{k,i}) \tr{(v_k)_i} \dots$, then we have to show $(v_k)_i = \rrho_0(x) \notin \Im(\trho_{k,i})$. Suppose, by contradiction, that $\rrho_0(x) \in \Im(\trho_{k,i})$, then by \cref{lem:tr-names} and by how we defined the symbols consumed we have $\rrho_0(x) \in \Im(\trho_0) \cup Y \cup \rrho_0(T')$, for some $T' \subseteq T$, and some set of fresh (in the mentioned sense) names $Y$.
+%, where $F$ are all the fresh names consumed so far. In particular, $F$ is made of globally fresh names
+%But $F \cap \Im(\rrho_0) = \varnothing$, 
+But $\rrho_0(x) \notin Y$, by construction, and $x$ cannot already be in $T'$, because there cannot be two distinct tuples in $X$ that coincide on the first component. Therefore we must have
+$\rrho_0(x) \in \Im(\trho_0)$, which implies $\rrho_0(T) \cap \Im(\trho_0) \neq \varnothing$, because $x \in T$, but this contradicts our hypothesis.
+% \cap \Im(\rrho_0) = \varnothing$
 
-It is easy to see that $\trho_\ass$ satisfies the statement by construction.\todo{Dire meglio?}
+It is easy to check that this constructions reaches a configuration where all $x \in T$ have been assigned the desired value. 
+% $\trho_\ass$ satisfies the statement by construction.\todo{Dire meglio?}
 \qed
 \end{proof}
 
@@ -71,7 +84,7 @@ Let $C = ((q_1,q_2,R),\rho)$ and $\cproj_i(C) = (q_i,\rho_i)$, $i=1,2$.
  
 Let $C' = ((q_1',q_2',R'),\rho')$ and let 
 \[
-	(q_1,q_2,R) \syncHtr{l}{\sigma} (q_1',q_2',S_2)
+	(q_1,q_2,R) \syncHtr{l}{\sigma} (q_1',q_2',S)
 \] 
 be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used to infer this transition:
 \begin{itemize}
@@ -83,7 +96,7 @@ be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used t
 				\rho'_1(x) &= \rho_1 (\sigma_1 (x) ) \\
 				&= \rho([\sigma_1(x)]_{R^*}) \\
 				%&& \text{(by definition of $\rho_i$)}\\
-				&= \rho(\sigma([x]_{S^*})) \\
+				&= \rho(\sigma_r([x]_{S^*})) \\
 				%&& \text{(by definition of $\sigma$)}\\
 				&= \rho'([x]_{S^*}) 
 				%&& \text{(by definition of $\rho'$)}
@@ -93,16 +106,16 @@ be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used t
 	\end{equation}
 	To prove the existence of an edge $(q_2,\rho_2) \trind{a}{2} (q_2',\rho_2')$ in the configuration graph of $\tstr_2$, we have to consider the following two cases:
 	\begin{itemize}
-		\item If $l_2 \in \names$, then $\rho_2(l_2) = \rho([l_2]_{R^*}) = \rho([l_1]_{R^*}) = a$, by the rule premise $[l_2]_{R^*} = \{l_1,l_1\}$;
+		\item If $l_2 \in \names$, then $\rho_2(l_2) = \rho([l_2]_{R^*}) = \rho([l_1]_{R^*}) = a$, by the rule premise $[l_2]_{R^*} = \{l_1,l_2\}$;
 		%
-		\item If $l_2 = \star$, then $a$ should be fresh, so we have to check $a \notin \Im(\rho_2)$. Suppose, by contradiction, that there is $x \in \weight{q_2}_2$ such that $\rho_2(x) = a$, then $\rho([x]_{R^*}) = a = \rho([l_1]_{R^*})$, by definition of $\rho$, which implies $[x]_{R^*} = [l_1]_{R^*}$, by injectivity of $\rho$, i.e. $\{l_1,l_2\} \in [l_1]_{R^*}$, but the premise of the rule states $[l_1]_R = \{l_1,\star\} \cap \names = \{l_1\}$, hence the contradiction. 
+		\item If $l_2 = \star$, then $a$ should be fresh, so we have to check $a \notin \Im(\rho_2)$. Suppose, by contradiction, that there is $x \in \weight{q_2}_2$ such that $\rho_2(x) = a$, then $\rho([x]_{R^*}) = a = \rho([l_1]_{R^*})$, by definition of $\rho$, which implies $[x]_{R^*} = [l_1]_{R^*}$, by injectivity of $\rho$, i.e. $\{l_1,x\} \in [l_1]_{R^*}$, but the premise of the rule states $[l_1]_{R^*} = \{l_1,\star\} \cap \names = \{l_1\}$, so we have a contradiction. 
 	\end{itemize}
 	Now we have to check $\cproj_2(C') = (q_2',\rho_2')$. Since we have $\rho'_2(x) = (\rho_2 \circ \sigma_2)\sub{a}{\sigma_2^{-1}(\star)}(x)$, for $x \neq \sigma_2^{-1}(\star)$ the equations \eqref{eq:rho} hold. For $x =  \sigma_2^{-1}(\star)$ we have:
 	\begin{align*}
 		\rho'_2(x) &= (\rho_2 \circ \sigma_2)\sub{a}{x}(x) \\
 		&= a \\
 		&= \rho([l_1]_{R^*}) \\
-		&= (\rho \circ \sigma)([x]_{S^*}) \\
+		&= (\rho \circ \sigma_r)([x]_{S^*}) \\
 		& = \rho'([x]_{S^*})
 	\end{align*}	
 	%All the equations just apply the definitions of the involved functions.
@@ -114,8 +127,8 @@ be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used t
 	\begin{align*}
 		\rho'_i(x) &= (\rho_i \circ \sigma_i)\sub{a}{x}(x) \\
 		&= a \\
-		&= (\rho \circ \sigma_\star) \sub{a}{\sigma_\star^{-1}(\star)}(\sigma_\star^{-1}(\star)) \\
-		&= (\rho \circ \sigma_\star) \sub{a}{[x]_{S^*}}([x]_{S^*}) \\
+		&= (\rho \circ \sigma_a) \sub{a}{\sigma_a^{-1}(\star)}(\sigma_a^{-1}(\star)) \\
+		&= (\rho \circ \sigma_a) \sub{a}{[x]_{S^*}}([x]_{S^*}) \\
 		%&& \text{(by $[\sigma_1^{-1}(\star)]_{S^*} = [\sigma_i(\star)^{-1}]_{S^*}$)} \\
 		%& = (\rho \circ \sigma) \sub{a}{[\sigma_i^{-1}(\star)]_{S^*}}([\sigma_i^{-1}(\star)]_{S^*}) && \text{(definition of $R'$)} \\
 		&= \rho'([x]_{S^*})
