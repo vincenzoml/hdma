@@ -37,6 +37,7 @@ Emptiness of $\Lang$ is decidable
 \end{theorem}
 \begin{proof}
 Let $A = (Q,\weight{-},q_0,\rho_0,\htr{}{},\acc)$ be a \hdma{} for $\Lang$. Consider the set $\Sigma_A = \{ (l,\sigma) \mid \exists q,q' \in Q : q \htr{l}{\sigma} q' \}$. This is finite, so we can use it as the alphabet of an ordinary deterministic Muller automaton $M_A = (Q \cup \{\delta\}, q_0,\tr{}_s,\acc)$, where $\delta \notin Q$ is a dummy state, and the transition function is defined as follows: $q \tr{(l,\sigma)}_s q'$ if and only if $q \htr{l}{\sigma} q'$, and $q \tr{(l,\sigma)}_s \delta$ for all other pairs $(l,\sigma) \in \Sigma_A$. Clearly $\Lang_{M_A} = \varnothing$ if and only if $\Lang = \varnothing$, as words in $\Lang_{M_A}$ are sequence of transitions of $A$ that go through accepting states infinitely often, and thus produce a word in $\Lang$, and viceversa. The claim follows by decidability of emptiness for ordinary deterministic Muller automata.
+\qed
 \end{proof}
 
 \begin{theorem}
@@ -44,5 +45,6 @@ It is decidable whether $\Lang_1 = \Lang_2$.
 \end{theorem}
 
 \begin{proof}
-The language $\Lang = (\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2 )$ is $\omega$-regular nominal, thanks to \cref{thm:bool-closure}. Then we just have to check the emptiness of $\Lang$, which is decidable by \cref{thm:emptiness}.
+The language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2 )$ is $\omega$-regular nominal, thanks to \cref{thm:bool-closure}. Then we just have to check its emptiness, which is decidable by \cref{thm:emptiness}.
+\qed
 \end{proof}

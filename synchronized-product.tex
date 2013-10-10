@@ -29,7 +29,9 @@ Given two transition structures $\tstr_i = (Q_i,\weight{-}_i,q_0^i,\rho_0^i,\tra
 \label{def:syncp}
 $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncInit,\syncAss,\syncTr{\quad})$ defined as follows:
 \begin{itemize}
-	\item $\syncQ := \bigcup_{q_1 \in Q_1,q_2 \in Q_2} \{(q_1,q_2)\} \times Reg(q_1,q_2)$;
+	\item 
+	%$\syncQ := \bigcup_{q_1 \in Q_1,q_2 \in Q_2} \{(q_1,q_2)\} \times Reg(q_1,q_2)$;
+	$\syncQ := \{ (q_1,q_2,R) \mid q_1 \in Q_1,q_2 \in Q_2,R \in Reg(q_1,q_2)\}$;
 	%
 	\item $\syncW{(q_1,q_2,R)} := (\weight{q_1}_1 \cup \weight{q_2}_2)_{/R^*}$, for $(q_1,q_2,R) \in \syncQ$;
 	%
@@ -69,7 +71,7 @@ $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncIni
 %\end{itemize}
 \end{definition}
 %
-The definition of $\syncInit$ motivates the presence of relations in states: $R_0$-related registers are the ones that are assigned the same value by $\rho_0^1$ and $\rho_0^2$; these form the same register of $\syncInit$, so $\syncAss$ is well-defined. The relation $S$ is well defined, i.e.\ it belongs to $Eq(q_1',q_2')$: the addition of $\{(l_1,l_2)\}$ to $R$ is harmless, as will be explained in the following, and $\sigma_1$ and $\sigma^{-1}_2$ can never map the same value to two different values (as they are functions) or viceversa (as they are injective).
+The definition of $\syncInit$ motivates the presence of relations in states: $R_0$-related registers are the ones that are assigned the same value by $\rho_0^1$ and $\rho_0^2$; these form the same register of $\syncInit$, so $\syncAss$ is well-defined. The relation $S$ is well defined, i.e.\ it belongs to $Reg(q_1',q_2')$: the addition of $\{(l_1,l_2)\}$ to $R$ is harmless, as will be explained in the following, and $\sigma_1$ and $\sigma^{-1}_2$ can never map the same value to two different values (as they are functions) or viceversa (as they are injective).
 
 The synchronization mechanism is implemented by rules \regrule{} and \allrule{}: they compute transitions of $(q_1,q_2,R) \in \syncQ$ from those of $q_1$ and $q_2$ as follows.
 If the transitions of $q_1$ and $q_2$ are both labelled by registers, say $l_1$ and $l_2$, and these registers correspond to the same one in $(q_1,q_2,R)$ (condition $[l_i]_{R^*} = \{l_1,l_2\}$), then \regrule{} infers a transition labelled with $[l_i]_{R^*}$ (the specific $i$ is unrelevant). The target state of this transition is made of those of the transitions from $q_1$ and $q_2$, plus a relation $S$ obtained by translating $R$-related registers to $S$-related registers via $\sigma_1$ and $\sigma_2$. The pair $(l_1,l_2)$ added to $R$ in the definition of $S$ has no effect, as it is already in $R$; it will be useful in the following. The inferred history $\sigma_r$ just combines $\sigma_1$ and $\sigma_2$, consistently with $S^*$.
