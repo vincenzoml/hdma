@@ -22,9 +22,10 @@ In the following, we extend \emph{Muller automata} to the case of nominal alphab
  \end{itemize}
 \end{definition}
 
-In nominal sets terminology, the transition relation is an \emph{equivariant function} of type $Q \times \names \to Q$.  Notice that nDMA are infinite state, infinitely branching machines, even if orbit finite. This is not a concern: for effective constructions we will employ equivalent finite structures (see Section \ref{sec:hd-automata}). However, Definition \ref{def:ndma} has the advantage of a simple definition of acceptance, very close to the classical one. In the following, fix an nDMA $A=(Q,\tr{},q_0,\acc)$.
+In nominal sets terminology, the transition relation is an \emph{equivariant function} of type $Q \times \names \to Q$.  Notice that nDMA are infinite state, infinitely branching machines, even if orbit finite. This is not a concern: for effective constructions we will employ equivalent finite structures (see Section \ref{sec:hd-automata}). However, Definition \ref{def:ndma} has the advantage of a simple definition of acceptance, very close to the classical one. In the following, fix a nDMA $A=(Q,\tr{},q_0,\acc)$.
 
 \begin{definition}
+\label{def:inf-word}
  An infinite \emph{word} $\alpha \in \names^\omega$ is an infinite sequence of symbols in $\names$. Words have \emph{point-wise} permutation action, namely $(\pi \cdot \alpha)_i = \pi(\alpha_i)$, making a word finitely supported if and only it contains finitely many different symbols. 
 \end{definition}
 
@@ -50,9 +51,11 @@ Using $\names$ simplifies the presentation, especially in Section \ref{sec:hd-au
 \end{remark}
 
 \begin{example}\label{exa:session}
- Consider the nDMA in Figure \ref{fig:example-session}. We have $Q = \{q_0\} \cup \{q_a \mid a \in \names\}$. For all $\pi$, we let $\pi \cdot q_0 = q_0$, $\pi \cdot q_a = q_{\pi(a)}$. We have $\supp(q_0) = \emptyset$, and $\supp(q_a) = \{ a \}$. For all $a$, let $q_0 \tr{a} q_a$, $q_a \tr{a} q_0$, and for $b \neq a$, $q_a \tr b q_a$. Each of the infinite ``legs'' of the automaton rooted in $q_0$ remembers a different name, and returns to $q_0$ when the same name is encountered again. There are two orbits, namely $\orb_0 = \{ q_0 \}$ and $\orb_1 = \{ q_a \mid a \in \names \}$. We let $\acc = \{ \{ \orb_0, \orb_1 \} \}$. For acceptance, a word needs to cross both orbits infinitely often. Thus, $\Lang_{q_0}=\{aua \mid a \in \names, u \in (\names\setminus\{a\})^* \}^\omega$. 
+ Consider the nDMA in Figure \ref{fig:example-session}. We have $Q = \{q_0\} \cup \{q_a \mid a \in \names\}$. For all $\pi$, we let $\pi \cdot q_0 = q_0$, $\pi \cdot q_a = q_{\pi(a)}$. We have $\supp(q_0) = \emptyset$, and $\supp(q_a) = \{ a \}$. For all $a$, let $q_0 \tr{a} q_a$, $q_a \tr{a} q_0$, and for $b \neq a$, $q_a \tr b q_a$. Each of the infinite ``legs'' of the automaton rooted in $q_0$ remembers a different name, and returns to $q_0$ when the same name is encountered again. There are two orbits, namely $\orb_0 = \{ q_0 \}$ and $\orb_1 = \{ q_a \mid a \in \names \}$. We let $\acc = \{ \{ \orb_0, \orb_1 \} \}$. For acceptance, a word needs to cross both orbits infinitely often. Thus, $\Lang_{A,q_0}=\{aua \mid a \in \names, u \in (\names\setminus\{a\})^* \}^\omega$. \todo{$\Lang_{q_0} => \Lang_{A,q_0}$, per def.7}
 % 
- This is an idealised version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Infinitely often, an arbitrary symbol occurs, representing an ``access'' action; the next time the same symbol appears denotes a ``leave''. Indeed, one could use an  alphabet with at least two infinite orbits, to distinguish the two kinds of action (see Remark \ref{rem:simple-alphabet}), or just reserve two distinguished names of $\names$ to be used as ``brackets'' 	to appear in words right before the different occurrences of other names, making the automaton more complex.
+This is an idealised version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Infinitely often, an arbitrary symbol occurs, representing an ``access'' action; the next occurrence of the same symbol denotes a ``leave''. Indeed, one could use an  alphabet with at least two infinite orbits to distinguish the two kinds of action (see Remark \ref{rem:simple-alphabet}), or just reserve two distinguished names of $\names$ to be used as ``brackets'' 	
+%to appear in words 
+right before the different occurrences of other names, making the automaton more complex.
  %Another option is to add to the alphabet two special symbols without names, say, ``access'' and ``leave'', and additional states and transitions, to appear before the two distinct usages of a symbol.
 \end{example}
 
@@ -86,7 +89,7 @@ Using $\names$ simplifies the presentation, especially in Section \ref{sec:hd-au
 \end{tikzpicture}
 %
 \end{center}
-\caption{\label{fig:example-session} The nDMA of Example \ref{exa:session}, with acceptance condition $\acc = \{ \{ q_0 \}, \{ q_a \mid a \in \names \}\}$.}
+\caption{\label{fig:example-session} The nDMA of \cref{exa:session}, with acceptance condition $\acc = \{ \{ q_0 \}, \{ q_a \mid a \in \names \}\}$.}
 \end{figure}
 
 \noindent Accepted words may fail to be finitely supported. However, languages are; this is the language-theoretical counterpart of the idea that we want to study the interactive behaviour of machines with finite memory, that never halt.
