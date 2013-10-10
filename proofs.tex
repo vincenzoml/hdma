@@ -1,6 +1,5 @@
 %!TEX root=ndma.tex
 
-<<<<<<< HEAD
 \begin{proof}[of theorem \ref{thm:languages-finitely-supported}]
 % Let $2=\{0,1\}$ with $\pi\cdot 0 = 0$, $\pi\cdot 1 = 1$, thus $\supp(0)=\supp(1)=\emptyset$. Let $h : Q \times \names^\omega \to 2$ be such that $h(q,\alpha) = 1$ if and only if $\alpha \in \Lang_q$. 
 By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $f(x)$ is finitely supported with $\supp(f(x))\subseteq \supp(x)$. Let $h : Q \to \Pow(\names^\omega)$ be the function mapping each $q$ to $\Lang_q$. We need to show that $h$ is equivariant, that is, $h(\pi \cdot q) = \{ \pi \cdot \alpha \mid \alpha \in \Lang_q\}$. Without loss of generality, we shall prove the right-to-left inclusion. Then, since $\pi$ and $q$ are arbitrary, one can prove the left-to-right inclusion starting from the state $\pi \cdot q$ and the permutation $\pi^{-1}$. Let $\alpha \in \Lang_q$. We shall prove that $\pi\cdot\alpha \in \Lang_{\pi\cdot q}$. Consider the unique (accepting) run $r$ of $\alpha$ from $q$, and  the unique run $r'$ of $\pi \cdot \alpha$ from $\pi \cdot q$. By equivariance of the transition function, and definition of run, for all $i$, we have $r'_i = \pi \cdot r_i$, thus $\orb(r'_i)=\orb(r_i)$, therefore $\Inf(r')= \Inf(r)$. 
@@ -8,7 +7,6 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
 \end{proof}
 
 
-=======
 We give one straightforward lemma about configuration graphs.
 %
 \begin{lemma}
@@ -18,7 +16,6 @@ For all edges $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq 
 %
 The following lemma is about $I$ defined in \cref{sec:up-words}.
 %
->>>>>>> 272556498633391d994ee911ef76dd69f0b97468
 \begin{lemma}
 \label{lem:xI}
 Given $x \in \dom(\widehat{\sigma})$, suppose there is a positive integer $k$ such that $x = \widehat{\sigma}^k (x)$. Then $x \in I$.
