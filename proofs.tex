@@ -6,12 +6,11 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
 \qed 
 \end{proof}
 %
-We give one straightforward lemma about configuration graphs.
-%
-\begin{lemma}
-\label{lem:tr-names}
-For all edges $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
-\end{lemma}
+\begin{proof}[of \cref{lem:deterministic-configuration-graph}]
+ For each $a$, if $a \in \Im(\rho_1)$, recalling that $\rho_1$ is injective, there is $l \in \weight{q_1}$ with $\rho_1(l) = a$. By definition of \hdma, there is exactly one transition labelled with $l$, let it be $q_1 \htr{l}{\sigma} q_2$. Then by definition of configuration graph, we have $(q_1,\rho_1) \tr a (q_2,\rho_1 \circ \sigma)$. Since $\rho_1$ is injective, there can not be other transitions labelled with $a$ in the configuration graph. If $a \notin \Im(\rho_1)$, consider the only transition with label $\star$ from $q_1$, namely $q_1 \htr{\star}{\sigma} q_2$.  Then we have $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ in the configuration graph, and this is the only transition encompassed by the definition.
+%\todo{"unique by definition?" Non sono sicuro che "encompassed" qui sia giusto}
+\end{proof}
+
 
 \begin{proof}[of \cref{thm:bool-closure}]
 We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\autom_\cap$ be $(\tstr_1 \syncp \tstr_2,\acc_\cap)$; this is a proper \hdma{}, thanks to \cref{rem:syncp-fin-det}. Given $\alpha \in \names^\omega$, let $r_\cap$,$r_1$ and $r_2$ be the runs for $\alpha$ in the configuration graphs of $\autom_\cap,A_1$ and $A_2$, respectively. Then, by \cref{thm:inf-correspondence}, we have $\cproj_i(\Inf(r_\cap)) = \Inf(r_i)$, for each $i=1,2$. From this, and the definition of $\acc_\cap$, we have that $\Inf(r_\cap) \in \acc_\cap$ if and only if $\Inf(r_1) \in \acc_1$ and $\Inf(r_2) \in \acc_2$, i.e.\ $\alpha \in \Lang_{\autom_\cap}$ if and only if $\alpha \in \Lang_{\autom_1}$ and $\alpha \in\Lang_{\autom_2}$.
@@ -22,6 +21,13 @@ We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\au
 Let $A = (Q,\weight{-},q_0,\rho_0,\htr{}{},\acc)$ be a \hdma{} for $\Lang$. Consider the set $\Sigma_A = \{ (l,\sigma) \mid \exists q,q' \in Q : q \htr{l}{\sigma} q' \}$. This is finite, so we can use it as the alphabet of an ordinary deterministic Muller automaton $M_A = (Q \cup \{\delta\}, q_0,\tr{}_s,\acc)$, where $\delta \notin Q$ is a dummy state, and the transition function is defined as follows: $q \tr{(l,\sigma)}_s q'$ if and only if $q \htr{l}{\sigma} q'$, and $q \tr{(l,\sigma)}_s \delta$ for all other pairs $(l,\sigma) \in \Sigma_A$. Clearly $\Lang_{M_A} = \varnothing$ if and only if $\Lang = \varnothing$, as words in $\Lang_{M_A}$ are sequence of transitions of $A$ that go through accepting states infinitely often, and thus produce a word in $\Lang$, and viceversa. The claim follows by decidability of emptiness for ordinary deterministic Muller automata.
 \qed
 \end{proof}
+%
+We give one straightforward lemma about configuration graphs.
+%
+\begin{lemma}
+\label{lem:tr-names}
+For all edges $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
+\end{lemma}
 %
 We give one additional lemma about $I$ defined in \cref{sec:up-words}.
 %
