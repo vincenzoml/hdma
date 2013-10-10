@@ -1,8 +1,8 @@
 %!TEX root=ndma.tex
 
-In the following, we extend \emph{Muller automata} to the case of nominal alphabets. Traditionally, automata can be deterministic or non-deterministic. In the case of finite words, non-deterministic nominal automata are not closed under complementation (see \cite{TODO}), whereas the deterministic ones are. For each (nominal) automaton on finite words, it is not difficult to find an automaton on infinite words which is complementable if and only if the original automaton is. Thus, in order to extend previous results on closure under complementation and decidability, we work with deterministic structures.
-
-
+In the following, we extend \emph{Muller automata} to the case of nominal alphabets. Traditionally, automata can be deterministic or non-deterministic. In the case of finite words, non-deterministic nominal automata are not closed under complementation (see \cite{TODO}), whereas the deterministic ones are. Thus, we adopt the deterministic setting in order to retain complementation.
+\todo{Questo NON dimostra che i Muller automata non-deterministici nominali non siano chiusi rispetto a complementazione!}
+%For each (nominal) automaton on finite words, it is not difficult to find an automaton \todo{not clear} on infinite words which is complementable if and only if the original automaton is. Thus, in order to extend previous results on closure under complementation and decidability, we work with deterministic structures.
 
 \begin{definition}\label{def:ndma}
  A \emph{nominal deterministic Muller automaton} (nDMA) is a tuple $(Q,\tr{},q_0,\acc)$ where:
@@ -22,10 +22,10 @@ In the following, we extend \emph{Muller automata} to the case of nominal alphab
  \end{itemize}
 \end{definition}
 
-In nominal sets terminology, the transition relation is an \emph{equivariant function} of type $Q \times \names \to Q$ (as in \cite{MikBartekLICS}).  Notice that nDMA are infinite state, infinitely branching machines, even if orbit finite. This is not a concern: for effective constructions we will employ equivalent finite structures (see Section \ref{sec:hd-automata}). However, Definition \ref{def:ndma} has the advantage of a simple definition of acceptance, very close to the classical one. In the following, fix an nDMA $A=(Q,\tr{},q_0,\acc)$.
+In nominal sets terminology, the transition relation is an \emph{equivariant function} of type $Q \times \names \to Q$.  Notice that nDMA are infinite state, infinitely branching machines, even if orbit finite. This is not a concern: for effective constructions we will employ equivalent finite structures (see Section \ref{sec:hd-automata}). However, Definition \ref{def:ndma} has the advantage of a simple definition of acceptance, very close to the classical one. In the following, fix an nDMA $A=(Q,\tr{},q_0,\acc)$.
 
 \begin{definition}
- An infinite \emph{word} is a sequence $\alpha \in \names^\omega$, mapping natural numbers into symbols of the alphabet $\names$.
+ An infinite \emph{word} $\alpha \in \names^\omega$ is an infinite sequence of symbols in $\names$. Words have \emph{point-wise} permutation action, namely $(\pi \cdot \alpha)_i = \pi(\alpha_i)$, making a word finitely supported if and only it contains finitely many different symbols. 
 \end{definition}
 
 \begin{definition}\label{def:nominal-run}
@@ -34,18 +34,26 @@ In nominal sets terminology, the transition relation is an \emph{equivariant fun
 \end{definition}
 
 \begin{definition}\label{def:inf-set}
- For $\run \in Q^\omega$, let $\Inf(\run)$ be the (finite) set of \emph{orbits} that $\run$ traverses infinitely often. Formally, we let $\orb(q) \in \Inf(\run)$ if and only if, for all $i$, there is $j > i$ such that $\run_j \in \orb(q)$. By determinism, we also speak of $\Inf(\alpha)$ for a word $\alpha$; this is a shorthand for $\Inf(\run^\alpha)$.
+ For $\run \in Q^\omega$, let $\Inf(\run)$ be the (finite) set of \emph{orbits} that $\run$ traverses infinitely often. Formally, we let $\orb(q) \in \Inf(\run)$ if and only if, for all $i$, there is $j > i$ such that $\run_j \in \orb(q)$.
 \end{definition}
 
 \begin{definition}
  A word $\alpha$ is \emph{accepted} by state $q$ whenever $\Inf(\run^{\alpha,q}) \in \acc$. We let $\Lang_{A,q}$ be the set of all accepted words by $q$ in $A$; we omit $A$ when clear from the context, and $q$ when it is $q_0$, thus $\Lang_A$ is the language of the automaton $A$.
 \end{definition}
 
-\begin{remark}\label{rem:simple-alphabet} Using nominal sets, the \emph{alphabet} of an automaton, that is, the symbols constituting words, could be any orbit-finite nominal set; this includes classical finite alphabets, casted as nominal sets under trivial permutation action, the alphabet of \emph{names} $\names$, and more complex structures that can be thought of as \emph{symbols} with attached a list of names (similarly to \cite{MikBartekLICS}). Indeed, the cases where the alphabet is infinite are more interesting; however, it does not make a great difference, from the mathematical perspective, whether the alphabet has only one orbit having one name (the case of $\names$) or if there are more orbits and names. In particular, the definition of automaton and acceptance are the same. We assume that the alphabet is $\names$; this simplifies the presentation, especially in Section \ref{sec:hd-automata}. The general case will be detailed in extended revisions of this work.
+\begin{remark}\label{rem:simple-alphabet} We use $\names$ as alphabet. One can chose any orbit-finite nominal set; the definitions of automata and acceptance are unchanged, and finite representations are similar.
+%this includes classical finite alphabets, cast as nominal sets under trivial permutation action, the alphabet of \emph{names} $\names$, and more complex structures that can be thought of as \emph{symbols} with attached a list of names and some information about their symmetry (similarly to \cite{MikBartekLICS}). Indeed, the cases where the alphabet is infinite are more interesting; however, 
+%
+%However, it does not make a great difference, from the mathematical perspective, whether the alphabet has only one orbit having one name (the case of $\names$) or if there are more orbits and names. 
+%The definition of automaton and acceptance would be the same, and finite representation would exist.e. 
+Using $\names$ simplifies the presentation, especially in Section \ref{sec:hd-automata}.
 \end{remark}
 
 \begin{example}\label{exa:session}
- Consider the set of states $\{q_0\} \cup \{q_a \mid a \in \names\}$, with permutation action $\pi \cdot q_0 = q_0$, $\pi \cdot q_a = q_{\pi(a)}$. We have $\supp(q_0) = \emptyset$, and $\supp(q_a) = \{ a \}$. For all $a$, let $q_0 \tr{a} q_a$, $q_a \tr{a} q_0$, and for $b \neq a$, $q_a \tr b q_a$. There are two orbits, namely $\orb_0 = \{ q_0 \}$ and $\orb_1 = \{ q_a \mid a \in \names \} $. Finally, let $\acc = \{ \{ \orb_0, \orb_1 \} \}$. A word $\alpha$ belongs to $\Lang_{q_0}$ if and only if, for any name $a$, and for each prefix $u$ of $\alpha$, whenver the number of occurrences of $a$ in $u$ is odd, then there is a longer prefix $u'$ containing one more $a$. See Figure \ref{fig:example-session}. This is an idealized version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Odd occurrences of symbols are the ``access'' actions for each user, and even occurrences are ``leave''. Indeed, one could use more a more complex alphabet with at least two infinite orbits, to make a distinction between the two kinds of action (see Remark \ref{rem:simple-alphabet}). Another option is to add to the alphabet two special symbols without names, say, ``access'' and ``leave'', and additional states and transitions, to appear before the two distinct usages of a symbol.
+ Consider the nDMA in Figure \ref{fig:example-session}. We have $Q = \{q_0\} \cup \{q_a \mid a \in \names\}$. For all $\pi$, we let $\pi \cdot q_0 = q_0$, $\pi \cdot q_a = q_{\pi(a)}$. We have $\supp(q_0) = \emptyset$, and $\supp(q_a) = \{ a \}$. For all $a$, let $q_0 \tr{a} q_a$, $q_a \tr{a} q_0$, and for $b \neq a$, $q_a \tr b q_a$. Each of the infinite ``legs'' of the automaton rooted in $q_0$ remembers a different name, and returns to $q_0$ when the same name is encountered again. There are two orbits, namely $\orb_0 = \{ q_0 \}$ and $\orb_1 = \{ q_a \mid a \in \names \}$. We let $\acc = \{ \{ \orb_0, \orb_1 \} \}$. For acceptance, a word needs to cross both orbits infinitely often. Thus, $\Lang_{q_0}=\{aua \mid a \in \names, u \in (\names\setminus\{a\})^* \}^\omega$. 
+% 
+ This is an idealised version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Infinitely often, an arbitrary symbol occurs, representing an ``access'' action; the next time the same symbol appears denotes a ``leave''. Indeed, one could use an  alphabet with at least two infinite orbits, to distinguish the two kinds of action (see Remark \ref{rem:simple-alphabet}), or just reserve two distinguished names of $\names$ to be used as ``brackets'' 	to appear in words right before the different occurrences of other names, making the automaton more complex.
+ %Another option is to add to the alphabet two special symbols without names, say, ``access'' and ``leave'', and additional states and transitions, to appear before the two distinct usages of a symbol.
 \end{example}
 
 \begin{figure}
@@ -80,6 +88,12 @@ In nominal sets terminology, the transition relation is an \emph{equivariant fun
 \end{center}
 \caption{\label{fig:example-session} The nDMA of Example \ref{exa:session}, with acceptance condition $\acc = \{ \{ q_0 \}, \{ q_a \mid a \in \names \}\}$.}
 \end{figure}
+
+\noindent Accepted words may fail to be finitely supported. However, languages are; this is the language-theoretical counterpart of the idea that we want to study the interactive behaviour of machines with finite memory, that never halt.
+
+\begin{theorem}\label{thm:languages-finitely-supported}
+ For $\Lang$ a language, and $\pi\in \Perm$, let $\pi\cdot \Lang = \{\pi \cdot \alpha \mid \alpha \in \Lang\}$. For each state $q$ of an nDMA, $\Lang_{q}$ is finitely supported.
+\end{theorem}
 
 \todo{
  Theorems? First of all, finite support of languages. Also: observation that streams are not finitely supported, but languages are. In the example, what are the finitely supported accepted streams (and how do they differ from the infinitely supported ones?). Can we explain in words the ``finite memory determinacy'' of languages?
