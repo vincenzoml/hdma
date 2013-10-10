@@ -1,45 +1,6 @@
 %!TEX root=ndma.tex
 %
 %
-
-\begin{figure}[t]
-\begin{center}
- \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
-  \tikzstyle{every state}=[minimum size=10ex]
-  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
-	
-  \node[state,initial] (q0) {$q_0$}; 
-  \node[right=10ex of q0] {$\acc_\omega = \{ \{q_0 \}\}$ };
-
-  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
-\end{tikzpicture}
-
-\end{center}
-\caption{Automaton $\autom_\omega$ for $\names^\omega$.}
-\label{fig:nomega-automaton}
-\end{figure}
-
-\begin{figure}[t]
-\begin{center}
- \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
-  \tikzstyle{every state}=[minimum size=8ex]
-  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
-	
-  \node[state,initial] (q0) {$q_0$}; 
-  \node[state,right of=q0] (q1) {};  
-  \node (lab1) at (q1) {$q_1$};
-  \node[register,label={[xshift=-2pt]right:$x$}] (reg) [above=1pt of lab1] {};
-  \node [right=5ex of q1] {$\acc = \{ \{ q_0,q_1 \} \}$};
-
-
-  \path (q0) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q1);
-  \path (q1) edge [bend left] node {$x$} (q0);
-  \path (reg) edge[densely dashed,bend right] (star);
-\end{tikzpicture}
-\end{center}
-\caption{\label{fig:upwords} Automaton for the language of \cref{exa:session}.}
-\end{figure}
-
 \tbox{Sezione 4?}
 {
 Given a sequence $P$ of transitions in $A$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
