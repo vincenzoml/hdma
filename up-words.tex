@@ -179,8 +179,13 @@ This subpath can be traversed any number of times, so we have $u(v_0\dots v_n)^\
 \end{proof}
 
 \begin{theorem}
+\label{thm:up-determinacy}
 Let $\Lang_1,\Lang_2$ be $\omega$-regular nominal languages. Then $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$.
 \end{theorem}
 \begin{proof}
 Consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_2 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a $\omega$-regular nominal language. Suppose it is not empty, i.e.\ $\Lang_1 \neq \Lang_2$. Then, by \cref{thm:up-fragment}, it must contain at least one ultimately periodic word, so also $UP(\Lang_1) \neq UP(\Lang_2)$, a contradiction.
 \end{proof}
+% 
+A concluding remark: this theorem can be rephrased as ``every $\omega$-regular nominal language is characterized by its finitely-supported fragment'' (recall that the support of $uv^\omega$ just contains the symbols in $u$ and $v$). This is a very appealing result, as finite support has a central role in the nominal setting.\todo{Marketing: che ne pensi? :D}
+
+%, because it implies that every nominal language, even those containing infinitely-supported words, are characterized by their 

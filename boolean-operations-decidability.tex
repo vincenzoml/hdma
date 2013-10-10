@@ -16,29 +16,20 @@ The accepting sets for intersection, union and difference are:
 	\acc_{\setminus} &:= \bigcup_{S_1 \in \acc_1} \{\{ (q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \land \forall S_2 \in \acc_2 : q_2 \notin S_2 \}\}
 \end{align*}
 %
-The automaton for $\compl{\Lang_1}$ can be obtained by complementing $\acc_1$, but also as the automaton for $\names^\omega \setminus \Lang_1$ (see \cref{fig:nomega-hdma} for the automaton accepting $\names^\omega$).
+The automaton for $\compl{\Lang_1}$ can be obtained by complementing $\acc_1$, but also as the automaton for $\names^\omega \setminus \Lang_1$ (see \cref{ex:nomega-hdma} for the automaton accepting $\names^\omega$).
 
 
 \begin{theorem}
 $\Lang_1 \cap \Lang_2$, $\Lang_1 \cup \Lang_2$, $\Lang_1 \setminus \Lang_2$, $\compl{\Lang_1}$ are $\omega$-regular nominal languages.
 \label{thm:bool-closure}
 \end{theorem}
-%
-\begin{proof}
-We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\autom_\cap$ be $(\tstr_1 \syncp \tstr_2,\acc_\cap)$; this is a proper \hdma{}, thanks to \cref{rem:syncp-fin-det}. Given $\alpha \in \names^\omega$, let $r^\alpha_\cap$,$r_1^\alpha$ and $r_2^\alpha$ be the runs for $\alpha$ in the configuration graphs of $\autom_\cap,A_1$ and $A_2$, respectively. Then, by \cref{thm:inf-correspondence}, we have $\cproj_i(\Inf(r^\alpha_\cap)) = \Inf(r^\alpha_i)$, for each $i=1,2$. From this, and the definition of $\acc_\cap$, we have that $\Inf(r^\alpha_\cap) \in \acc_\cap$ if and only if $\Inf(r^\alpha_1) \in \acc_1$ and $\Inf(r^\alpha_2) \in \acc_2$, i.e.\ $\alpha \in \Lang_{\autom_\cap}$ if and only if $\alpha \in \Lang_{\autom_1}$ and $\alpha \in\Lang_{\autom_2}$.
-\qed
-\end{proof}
-%
+%%
 Now we give decidability results.
 %
 \begin{theorem}
 Emptiness of $\Lang$ is decidable
 \label{thm:emptiness}
 \end{theorem}
-\begin{proof}
-Let $A = (Q,\weight{-},q_0,\rho_0,\htr{}{},\acc)$ be a \hdma{} for $\Lang$. Consider the set $\Sigma_A = \{ (l,\sigma) \mid \exists q,q' \in Q : q \htr{l}{\sigma} q' \}$. This is finite, so we can use it as the alphabet of an ordinary deterministic Muller automaton $M_A = (Q \cup \{\delta\}, q_0,\tr{}_s,\acc)$, where $\delta \notin Q$ is a dummy state, and the transition function is defined as follows: $q \tr{(l,\sigma)}_s q'$ if and only if $q \htr{l}{\sigma} q'$, and $q \tr{(l,\sigma)}_s \delta$ for all other pairs $(l,\sigma) \in \Sigma_A$. Clearly $\Lang_{M_A} = \varnothing$ if and only if $\Lang = \varnothing$, as words in $\Lang_{M_A}$ are sequence of transitions of $A$ that go through accepting states infinitely often, and thus produce a word in $\Lang$, and viceversa. The claim follows by decidability of emptiness for ordinary deterministic Muller automata.
-\qed
-\end{proof}
 
 \begin{theorem}
 It is decidable whether $\Lang_1 = \Lang_2$.

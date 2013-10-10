@@ -5,16 +5,25 @@
 By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $f(x)$ is finitely supported with $\supp(f(x))\subseteq \supp(x)$. Let $h : Q \to \Pow(\names^\omega)$ be the function mapping each $q$ to $\Lang_q$. We need to show that $h$ is equivariant, that is, $h(\pi \cdot q) = \{ \pi \cdot \alpha \mid \alpha \in \Lang_q\}$. Without loss of generality, we shall prove the right-to-left inclusion. Then, since $\pi$ and $q$ are arbitrary, one can prove the left-to-right inclusion starting from the state $\pi \cdot q$ and the permutation $\pi^{-1}$. Let $\alpha \in \Lang_q$. We shall prove that $\pi\cdot\alpha \in \Lang_{\pi\cdot q}$. Consider the unique (accepting) run $r$ of $\alpha$ from $q$, and  the unique run $r'$ of $\pi \cdot \alpha$ from $\pi \cdot q$. By equivariance of the transition function, and definition of run, for all $i$, we have $r'_i = \pi \cdot r_i$, thus $\orb(r'_i)=\orb(r_i)$, therefore $\Inf(r')= \Inf(r)$. 
 \qed 
 \end{proof}
-
-
+%
 We give one straightforward lemma about configuration graphs.
 %
 \begin{lemma}
 \label{lem:tr-names}
 For all edges $(p_1,\rho_1) \tr{a} (p_2,\rho_2)$ we have $\Im(\rho_2) \subseteq \Im(\rho_1) \cup \{ a \}$.
 \end{lemma}
+
+\begin{proof}[of \cref{thm:bool-closure}]
+We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\autom_\cap$ be $(\tstr_1 \syncp \tstr_2,\acc_\cap)$; this is a proper \hdma{}, thanks to \cref{rem:syncp-fin-det}. Given $\alpha \in \names^\omega$, let $r_\cap$,$r_1$ and $r_2$ be the runs for $\alpha$ in the configuration graphs of $\autom_\cap,A_1$ and $A_2$, respectively. Then, by \cref{thm:inf-correspondence}, we have $\cproj_i(\Inf(r_\cap)) = \Inf(r_i)$, for each $i=1,2$. From this, and the definition of $\acc_\cap$, we have that $\Inf(r_\cap) \in \acc_\cap$ if and only if $\Inf(r_1) \in \acc_1$ and $\Inf(r_2) \in \acc_2$, i.e.\ $\alpha \in \Lang_{\autom_\cap}$ if and only if $\alpha \in \Lang_{\autom_1}$ and $\alpha \in\Lang_{\autom_2}$.
+\qed
+\end{proof}
 %
-The following lemma is about $I$ defined in \cref{sec:up-words}.
+\begin{proof}[of \cref{thm:emptiness}]
+Let $A = (Q,\weight{-},q_0,\rho_0,\htr{}{},\acc)$ be a \hdma{} for $\Lang$. Consider the set $\Sigma_A = \{ (l,\sigma) \mid \exists q,q' \in Q : q \htr{l}{\sigma} q' \}$. This is finite, so we can use it as the alphabet of an ordinary deterministic Muller automaton $M_A = (Q \cup \{\delta\}, q_0,\tr{}_s,\acc)$, where $\delta \notin Q$ is a dummy state, and the transition function is defined as follows: $q \tr{(l,\sigma)}_s q'$ if and only if $q \htr{l}{\sigma} q'$, and $q \tr{(l,\sigma)}_s \delta$ for all other pairs $(l,\sigma) \in \Sigma_A$. Clearly $\Lang_{M_A} = \varnothing$ if and only if $\Lang = \varnothing$, as words in $\Lang_{M_A}$ are sequence of transitions of $A$ that go through accepting states infinitely often, and thus produce a word in $\Lang$, and viceversa. The claim follows by decidability of emptiness for ordinary deterministic Muller automata.
+\qed
+\end{proof}
+%
+We give one additional lemma about $I$ defined in \cref{sec:up-words}.
 %
 \begin{lemma}
 \label{lem:xI}
