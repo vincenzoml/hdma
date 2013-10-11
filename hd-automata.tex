@@ -1,6 +1,6 @@
 %!TEX root=ndma.tex
 
-In this section, we introduce finite representations of nDMAs. These are similar to classical finite-state automata, but each state is equipped with local registers. There is a notion of assignment to registers, and it is possible to accept new symbols, and eventually store those registers. Technically, the structures we define extend \emph{history-dependent automata} (see \cite{TODO}), in order to let these machines accept infinite words. We overload notation (e.g., for the inf-set or the unique run of a word) from Section \ref{sec:languages}, as it will be always clear from the context whether we are referring to an nDMA or to an \hdma.
+In this section, we introduce finite representations of nDMAs. These are similar to classical finite-state automata, but each state is equipped with local registers. There is a notion of assignment to registers, and it is possible to accept, and eventually store, \emph{fresh} symbols. Technically, these structures extend \emph{history-dependent automata} (see \cite{TODO}), introducing acceptance of infinite words.
 
 \begin{definition}\label{def:hdma}
  An \emph{history-dependent deterministic Muller automaton} (\hdma) is a tuple $(Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$
@@ -18,11 +18,11 @@ In this section, we introduce finite representations of nDMAs. These are similar
 %
 
 \begin{remark}
-To keep the notation lightweight, we do not introduce the notion of a \emph{symmetry} attached to states of an \hdma. It is well known (see \cite{PistoreThesis?}) that this would be required for minimization. However, notice that minimization of (classical) Muller automata up-to language equivalence is not possible. A solution is to represent languages using two-sorted structures \cite{CV12}. Applying the same idea to hDMAs is not straightforward, and requires further investigation (more about this in the conclusions), thus symmetry would not be used in this work anyway. \todo{more about this in the conclusions!}
+To keep the notation lightweight, we do not use a \emph{symmetry} attached to states of an \hdma. It is well known (see \cite{PistoreThesis?}) that symmetries are needed for existence of canonical representatives; we consider this aspect out of the scope of this work. Note that (classical) Muller automata do not have canonical representatives up-to language equivalence. To obtain those, one can use two-sorted structures as in \cite{CV12}. Even though this idea could be applied to hDMAs, this is not straightforward, and requires further investigation.
 \label{rem:no-symmetry}
 \end{remark}
 %
-In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. Acceptance of an word $\alpha \in \names^\omega$ is defined in terms of the \emph{configuration graph} of $A$.
+In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. We overload notation (e.g., for the inf-set or the unique run of a word) from \cref{sec:languages}, as it will be always clear from the context whether we are referring to an nDMA or to an \hdma. Acceptance of $\alpha \in \names^\omega$ is defined using the \emph{configuration graph} of $A$.
 
 \begin{definition}
  The set $\confs(A)$ of \emph{configurations} of $A$ consists of the pairs $(q,\rho)$ such that $q \in Q$ and $\rho : \weight q \inj \names$ is an injective \emph{assignment} of names to registers.
@@ -30,7 +30,7 @@ In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. 
 
 \begin{definition}
 \label{def:config-graph}
-The \emph{configuration graph} of $A$ is a transition relation  over triples \todo{is a graph with edges of the form ... } 
+The \emph{configuration graph} of $A$ is a is a graph with edges of the form  
 $(q_1,\rho_1) \tr a (q_2,\rho_2)$ where the source and destination are configurations, and $a \in \names$. There is one such transition if and only if there is a transition $q_1 \htr l \sigma q_2$ in $A$ and either of the following happens: 
  \begin{itemize} 
   \item $l \in \weight{q_1}$, $\rho_1(l) = a$, and $\rho_2 = \rho_1 \circ \sigma$;
@@ -38,12 +38,12 @@ $(q_1,\rho_1) \tr a (q_2,\rho_2)$ where the source and destination are configura
  \end{itemize}
 \end{definition}
 % 
-\todo{Throughout the paper, change all ref to cref for consistency}
-The definition deserves some explanation. Fix a configuration $(q_1,\rho_1)$. Say that name $a\in \names$ is \emph{assigned to} the register $x \in \weight{q_1}$ if $\rho_1(x) = a$. When $a$ is not assigned to any register, it is fresh for a given configuration. Then the transition $q_1 \htr l \sigma q_2$, under the assignment $\rho_1$, consumes a symbol as follows: either $l \in \weight{q_1}$ and $a$ is the name assigned to register $l$, or $l$ is $\star$ and $a$ is fresh. The destination assignment $\rho_2$ is defined using $\sigma$ as a binding between local registers of $q_2$ and local registers of $q_1$, therefore composing $\sigma$ with $\rho_1$ and eventually associating a freshly received name, whenever $\star$ is in the image of $\sigma$. The following lemma clarifies the notion of determinism that we use.
+
+The definition deserves some explanation. Fix a configuration $(q_1,\rho_1)$. Say that name $a\in \names$ is \emph{assigned to} the register $x \in \weight{q_1}$ if $\rho_1(x) = a$. When $a$ is not assigned to any register, it is \emph{fresh} for a given configuration. Then the transition $q_1 \htr l \sigma q_2$, under the assignment $\rho_1$, consumes a symbol as follows: either $l \in \weight{q_1}$ and $a$ is the name assigned to register $l$, or $l$ is $\star$ and $a$ is fresh. The destination assignment $\rho_2$ is defined using $\sigma$ as a binding between local registers of $q_2$ and local registers of $q_1$, therefore composing $\sigma$ with $\rho_1$ and eventually adding a freshly received name, whenever $\star$ is in the image of $\sigma$. For readability, we assume that the functional update $\sub{a}{\sigma^{-1}(\star)}$ is void when $\star \notin \Im(\sigma)$. The following lemma clarifies the notion of determinism that we use.
 
 \begin{lemma}
 \label{lem:deterministic-configuration-graph}
- The configuration graph is deterministic, that is, for each configuration $(q_1,\rho_1)$ and symbol $a \in \names$, there is exactly one configuration $(q_2,\rho_2)$ such that $(q_1,\rho_1) \tr a (q_2,\rho_2)$ in the configuration graph.
+ For each configuration $(q_1,\rho_1)$ and symbol $a \in \names$, there is exactly one configuration $(q_2,\rho_2)$ such that $(q_1,\rho_1) \tr a (q_2,\rho_2)$.
 \end{lemma}
 %
 We use the notation $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ to denote a path that spells $v$ in the the configuration graph. Furthermore, we define runs of infinite words.
@@ -53,7 +53,7 @@ We use the notation $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ to denote a path that spe
  A \emph{run} $\run$ of an infinite word $\alpha \in \names^\omega$ from configuration $(q,\rho)$ is a sequence $(q_i,\rho_i)$ of configurations, indexed by $\omega$, such that $(q_0,\rho_0)=(q,\rho)$ and for all $i$, in the configuration graph, we have $(q_i,\rho_i) \tr{\alpha_i} (q_{i+1},\rho_{i+1})$. 
 \end{definition}
 
-\noindent We have the following existence and uniqueness result for paths and runs, which is a simple corollary of  \cref{lem:deterministic-configuration-graph}.
+\noindent The following is a simple corollary of  \cref{lem:deterministic-configuration-graph}.
 
 \begin{proposition}
 \label{prop:unique-path}
@@ -63,7 +63,8 @@ Given $(q_1,\rho_1) \in \confs(A)$ and $v \in \names^\omega$, there exists a uni
 \noindent Finally, we define acceptance of \hdmas. 
 
 \begin{definition}\label{def:acceptance-of-hdmas}
- Consider the unique run $\run$ of an infinite word $\alpha$ from configuration $(q,\rho)$. Call $I(\run)$ the set of configuration appearing infinitely often along $\run$ (the formal definition is as in \ref{def:inf-set}). Let $\Inf(\run)$ denote the first projection of $I(\run)$, that is, the (finite) set of states that appear infinitely often along $\run$. The automaton $A$ accepts $\alpha$ whenever $\Inf(r) \in \acc$. In this case, we speak of the \emph{language} $\Lang_A$ of words accepted by the automaton.
+ Consider the unique run $\run$ of an infinite word $\alpha$ from configuration $(q,\rho)$. 
+ Let $\Inf(\run)$ denote the set  of states that appear infinitely often in the first component of $\run$. By finiteness of $Q$, $\Inf(\run)$ is not empty. The automaton $A$ accepts $\alpha$ whenever $\Inf(r) \in \acc$. In this case, we speak of the \emph{language} $\Lang_A$ of words accepted by the automaton.
 \end{definition}
 %
 %\begin{figure}[t]
@@ -116,8 +117,9 @@ As an example, the language $\names^\omega$ of all infinite words over $\names$ 
 in \cref{fig:hd-names-omega}; the initial assignment $\rho_0$ is necessarily empty, and so is the history $\sigma$ along the transition.
 %
 %
-Differently from nDMAs, \hdmas\ have finite states. The configuration graph is deterministic, even if still infinite-state and infinite-branching.
-Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deeper than expected, as stated in the following propositions. These are derived from the equivalence results in \cite{GADDUCCIETAL,STATON}, adapted to the setting of nominal Muller automata; we omit information about symmetry; the equivalence being up-to accepted languages, this does not harm (but it matters for minimization; see Remark \ref{rem:no-symmetry}).
+Differently from nDMAs, \hdmas\ have finite states. 
+%\todo{La frase The configuratoin graph... infinite-branching a che serve? La togliamo?} The configuration graph is deterministic, even if still infinite-state and infinite-branching.
+Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deeper than expected, as stated in the following propositions. These are derived from the equivalence results in \cite{GADDUCCIETAL,STATON}, adapted to the setting of nominal Muller automata and languages (but see \cref{rem:no-symmetry}).
 
 \begin{figure}
 \centering
@@ -168,8 +170,7 @@ Consider the following \hdma{}
 \end{tikzpicture}
 \end{center}
 %
-where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history map from $q_1$ to $q_0$. This automaton accepts the language of the nDMA of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.\todo{Ti garba/funziona questa descrizione? Non capisco bene come viene "scelto" lo stato iniziale: qui assumo che abbia supporto vuoto.}
-\end{example}
+where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history map from $q_1$ to $q_0$. This automaton accepts the language of the nDMA of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.\end{example}
 
 
 
