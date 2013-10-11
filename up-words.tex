@@ -2,16 +2,18 @@
 %
 %
 %
-An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v$ finite words. Given a language of infinite words $\Lang$, let $UP(\Lang)$ be $\{ \alpha \in \Lang \mid \alpha = uv^\omega \land u,v \; \text{are finite} \}$. It has been proven in \cite{CalbrixNP93} that, for every two $\omega$-regular languages $\Lang_1$ and $\Lang_2$, $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$ \cite{CalbrixNP93}, i.e.\ $\omega$-regular languages are characterized by their ultimately periodic fragments.
+An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v$ finite words. Given a language of infinite words $\Lang$, let $UP(\Lang)$ be $\{ \alpha \in \Lang \mid \alpha = uv^\omega \land u,v \; \text{are finite} \}$. It has been proven in \cite{CalbrixNP93} that, for every two $\omega$-regular languages $\Lang_1$ and $\Lang_2$, $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$, i.e.\ $\omega$-regular languages are characterised by their ultimately periodic fragments.
 In this section we aim to extend this result to the nominal setting. 
 
-The preliminary result to establish, as in the classical case, is that every non-empty $\omega$-regular nominal language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states in the automaton and iterating it. In our case this is not enough, because it may not be possible to consume the same name in consecutive traversals of the same transition due to freshness. The first part of this section will be spent in showing that, given a loop in a \hdma{}, there always is a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. This implies that such path can be taken an arbitrary number of times.
+The preliminary result to establish, as in the classical case, is that every non-empty $\omega$-regular nominal language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states in the automaton and iterating it. In our case this is not enough, because it may not be possible to consume the same name in consecutive traversals of the same transition\todo{same path?} due to freshness constraints. The first part of this section will be spent in showing that, given a loop in a \hdma{}, there always is a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. This implies that such path can be taken an arbitrary number of times.
 
 We fix a loop (the specific \hdma{} is not relevant)
 \[
 	L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0
 \]
-We write $\ul{i}$ for $i \mod n$. Let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial maps telling the history of old registers and ignoring the new ones, formally
+We write $\ul{i}$ for $i \mod n$. 
+%\todo{Notice that after the loop, and independently from the initial assignment, some of the registers of $p_0$ will contain values that were contained in some of its registers in the beginning. Call these \emph{old} registers, and the rest \emph{new}.} 
+For all $i$, let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial maps telling the history of old registers and ignoring the new ones, formally
 \[
 	\widehat{\sigma}_i := \sigma_i \setminus \{ (x,y) \in \sigma_i \mid y = \star \} 
 	\qquad (i=0,\dots,n-1)
@@ -33,7 +35,7 @@ $
 where $j+1 \in J_x$ only if $\sigma_{\ul{j}}^{-1}(x_j)$ is defined. Then $J_x$ has finite cardinality.
 \end{lemma}
 %
-Now, consider any assignment $\rrho_0 \colon \weight{p_0} \to \names$. We give some lemmata about paths that start from $(p_0,\rrho_0)$ and are induced by consecutive traversals of $L$. The first one says that the assignment for $I$ given by $\rrho_0$ is always recovered after a fixed number of traversals of $L$, regardless of which symbols are consumed. In the following, given a sequence of transitions $P$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
+Now, consider any assignment $\rrho_0 \colon \weight{p_0} \to \names$. We give some lemmata about paths that start from $(p_0,\rrho_0)$ and are induced by consecutive traversals of $L$. The first one says that the assignment for $I$ given by $\rrho_0$ is always recovered \todo{``is always recovered'' oppure ``can be always recovered''?} after a fixed number of traversals of $L$, regardless of which symbols are consumed. In the following, given a sequence of transitions $P$, we write $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ whenever $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ and such path is induced by $P$.
 %
 \begin{lemma} 
 \label{lem:idI}
@@ -47,7 +49,7 @@ we have $\restr{ \rrho_\id }{I} = \restr{ \rrho_0 }{I}$.
 The second one says that, after a minimum number of traversals of $L$, a configuration can be reached where the initial values of $T$, namely those assigned by $\rrho_0$, cannot be found in any of the registers.
 %
 \begin{lemma}
-There is $\forg \geq 1$ such that, for all $\gamma \geq \forg$ ,there are $v_0,\dots,v_{\gamma-1}$ satisfying
+There is $\forg \geq 1$ s.t., for all $\gamma \geq \forg$ ,there are $v_0,\dots,v_{\gamma-1}$ satisfying
 \[
 	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \dots \TrP{v_{\gamma-1}}{L} (p_0,\rrho_\gamma)
 	\qquad 
@@ -78,14 +80,14 @@ Finally, we combine the above lemmata. We construct a path where: (1) the values
 \label{thm:loop}
 
 
-There are $v_0,\dots,v_n$ such that
+\todo{For all paths $p_0 ...$, and assignments ... there are... (essendo il teorema principle, facciamo lo statement lungo)}There are $v_0,\dots,v_n$ such that
 \[
 	(p_0, \rrho_0) \TrP{v_0}{L} (p_0, \rrho_1) \TrP{v_1}{L} \cdots \TrP{v_n}{L} (p_0,\rrho_0) \enspace .
 \]
 \end{theorem}
 
 \begin{proof}
-We can take any path of the form
+We can use any path of the form
 \[
 	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \cdots \TrP{v_{\gamma-1}}{L} (p_0,\rrho_\gamma) \TrP{v_{\gamma}}{L} \cdots \TrP{v_{\gamma + \ass - 1}}{L} (p_0,\rrho_{\gamma + 
 	 \ass})
@@ -146,7 +148,7 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
 \caption{\label{fig:upwords-ex} An example automaton. Some transitions are not shown: they are all assumed to end up in a sink state without registers.}
 \end{figure}
 
-\begin{example} We justify the above construction on the automaton in \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting set, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
+\begin{example} We justify the above construction on the automaton\todo{automaton ->  transition structure e si toglie il ``we omit the accepting set(s)''?} in \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting set, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
 We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
 \begin{align*}
 	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) &\tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}]) \\
@@ -179,7 +181,7 @@ This subpath can be traversed any number of times, so we have $u(v_0\dots v_n)^\
 Let $\Lang_1,\Lang_2$ be $\omega$-regular nominal languages. Then $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$.
 \end{theorem}
 \begin{proof}
-Consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_2 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a $\omega$-regular nominal language. Suppose it is not empty, i.e.\ $\Lang_1 \neq \Lang_2$. Then, by \cref{thm:up-fragment}, it must contain at least one ultimately periodic word, so also $UP(\Lang_1) \neq UP(\Lang_2)$, a contradiction.
+The proof mimics the one from \cite{CalbrixNP93}. Assume $\Lang_1 \neq \Lang_2$ and consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a $\omega$-regular nominal language, and since $\Lang_1 \neq \Lang_2$, it is not empty, by \cref{thm:up-fragment}, it contains at least one ultimately periodic word, so also $UP(\Lang_1) \neq UP(\Lang_2)$. \qed
 \end{proof}
 % 
 A concluding remark: this theorem tells us that every $\omega$-regular language is characterized by a sublanguage of finitely supported words (recall that the support of $uv^\omega$ just contains the finitely many symbols in $u$ and $v$). This is a very appealing result, as finite support has a central role in the nominal setting.\todo{Aggiustato: va meglio?}
