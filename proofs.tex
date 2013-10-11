@@ -20,7 +20,7 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
 \begin{proof}[of \cref{prop:ndma-to-hdma}]
 For $x$ an element of a nominal set, let $o_x$ be a chosen canonical representative of $\orb(x)$, $o_{S \subseteq X} = \{o_x \mid x \in S\}$ and $\sigma_q$ be a chosen permutation such that $\sigma_q \cdot o_q = q$.	Let $(Q,\tr{},q_0,\acc)$ be an nDMA. There is an \hdma{} accepting the same language, namely,  $(o_Q,\weight-,\htr{}{},o_{q_0},\sigma_{q_0},\{ \{ o_x \mid x \in A\} \mid A \in \acc \})$, 
 %
-where for all $q$, we let $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a q_2$, if $a \in \supp(o_{q_1})$, then we let $o_{q_1} \htr{a}{\sigma_{q_2}} o_{q_2}$; otherwise, we let $o_{q_1} \htr{\star}{\sigma_{q_2}\sub{*}{a}} o_{q_2}$. The most straightforward proof is to check that the configuration graph of this automaton accepts the same language as the original nDMA. This is already well understood from the equivalence of categories between named sets and nominal sets.
+where for all $q$, we let $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a q_2$, if $a \in \supp(o_{q_1})$, then we let $o_{q_1} \htr{a}{\sigma_{q_2}} o_{q_2}$; otherwise, we let $o_{q_1} \htr{\star}{\sigma_{q_2}\sub{*}{a}} o_{q_2}$. It is straightforward to check that the configuration graph of this automaton accepts the same language as the original nDMA. This is already well understood from the equivalence of categories between named sets and nominal sets, see e.g.\ \cite{GadducciMM06}.
 \end{proof}
 
 
