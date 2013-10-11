@@ -154,8 +154,7 @@ We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
 \end{align*}
 where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped according to the permutation $(a \; b)$, and $d$ is assigned to $z_0$. Our aim is to recover $\rho_0$ again. According to \cref{lem:idI}, $x_0$ and $y_0$ get their assignment back in $\theta = 2$ traversals of $L$ (in fact $(a\; b)^2 = (a\; b)$). As for $z_0$, its assignment is established in the second transition, but $c$ should not have been assigned to any register of $q_1$ in order for it to be consumed during this transition. This is where \cref{lem:forgetT} comes into play: it says that in at least $\epsilon = 1$ traversals of $L$ the name $c$ is discarded. This is exactly what happens in the path shown above. Then we can assign $c$ to $z_0$ in another $\zeta = 1$ traversal of $L$, according to \cref{lem:initT}. Since $\epsilon + \zeta  = \theta = 2$, traversing $L$ twice is enough. For instance, we can take the path spelling $cdbdca$.
 \end{example}
-
-
+%
 Finally we have the main results.
 %
 \begin{theorem}
@@ -183,6 +182,6 @@ Let $\Lang_1,\Lang_2$ be $\omega$-regular nominal languages. Then $UP(\Lang_1) =
 Consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_2 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a $\omega$-regular nominal language. Suppose it is not empty, i.e.\ $\Lang_1 \neq \Lang_2$. Then, by \cref{thm:up-fragment}, it must contain at least one ultimately periodic word, so also $UP(\Lang_1) \neq UP(\Lang_2)$, a contradiction.
 \end{proof}
 % 
-A concluding remark: this theorem tells us that every $\omega$-regular language is characterized by a sublanguage of finitely supported words (recall that the support of $uv^\omega$ just contains the symbols in $u$ and $v$). This is a very appealing result, as finite support has a central role in the nominal setting.\todo{Aggiustato: va meglio?}
+A concluding remark: this theorem tells us that every $\omega$-regular language is characterized by a sublanguage of finitely supported words (recall that the support of $uv^\omega$ just contains the finitely many symbols in $u$ and $v$). This is a very appealing result, as finite support has a central role in the nominal setting.\todo{Aggiustato: va meglio?}
 
 %this theorem can be rephrased as ``every $\omega$-regular nominal language is characterized by its finitely-supported fragment'' (recall that the support of $uv^\omega$ just contains the symbols in $u$ and $v$). This is a very appealing result, as finite support has a central role in the nominal setting.\todo{Marketing: che ne pensi? :D}
