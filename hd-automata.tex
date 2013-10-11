@@ -18,7 +18,7 @@ In this section, we introduce finite representations of nDMAs. These are similar
 %
 
 \begin{remark}
-To keep the notation lightweight, we do not introduce the notion of a \emph{symmetry} attached to states of an \hdma. It is well known (see \cite{PistoreThesis?}) that this would be required for minimization. However, notice that minimization of (classical) Muller automata up-to language equivalence is not possible. One among many solutions is to represent languages using two-sorted structures \cite{CV12}. Applying the same idea to hDMAs is not straightforward, and requires further investigation (more about this in the conclusions), thus symmetry would not be used in this work anyway. \todo{more about this in the conclusions!}
+To keep the notation lightweight, we do not introduce the notion of a \emph{symmetry} attached to states of an \hdma. It is well known (see \cite{PistoreThesis?}) that this would be required for minimization. However, notice that minimization of (classical) Muller automata up-to language equivalence is not possible. A solution is to represent languages using two-sorted structures \cite{CV12}. Applying the same idea to hDMAs is not straightforward, and requires further investigation (more about this in the conclusions), thus symmetry would not be used in this work anyway. \todo{more about this in the conclusions!}
 \label{rem:no-symmetry}
 \end{remark}
 %
@@ -37,6 +37,7 @@ In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. 
  \end{itemize}
 \end{definition}
 % 
+\todo{Throughout the paper, change all ref to cref for consistency}
 The definition deserves some explanation. Fix a configuration $(q_1,\rho_1)$. Say that name $a\in \names$ is \emph{assigned to} the register $x \in \weight{q_1}$ if $\rho_1(x) = a$. When $a$ is not assigned to any register, it is fresh for a given configuration. Then the transition $q_1 \htr l \sigma q_2$, under the assignment $\rho_1$, consumes a symbol as follows: either $l \in \weight{q_1}$ and $a$ is the name assigned to register $l$, or $l$ is $\star$ and $a$ is fresh. The destination assignment $\rho_2$ is defined using $\sigma$ as a binding between local registers of $q_2$ and local registers of $q_1$, therefore composing $\sigma$ with $\rho_1$ and eventually associating a freshly received name, whenever $\star$ is in the image of $\sigma$. The following lemma clarifies the notion of determinism that we use.
 
 \begin{lemma}
@@ -110,9 +111,14 @@ Given $(q_1,\rho_1) \in \confs(A)$ and $v \in \names^\omega$, there exists a uni
 %
 %
 
-\begin{example}
-The language $\names^\omega$ of all infinite words over $\names$ is recognized by
+As an example, the language $\names^\omega$ of all infinite words over $\names$ is recognised by the \hdma\ %having one state $q$, with $\weight q = \emptyset$ and one transition from $q$ to $q$, labelled by $\star$ (see 
+in \cref{fig:hd-names-omega}; the initial assignment $\rho_0$ is necessarily empty, and so is the history $\sigma$ along the transition.
+%
+%
+Differently from nDMAs, \hdmas\ have finite states. The configuration graph is deterministic, even if still infinite-state and infinite-branching.
+Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deeper than expected, as stated in the following propositions. These are derived from the equivalence results in \cite{GADDUCCIETAL,STATON}, adapted to the setting of nominal Muller automata; we omit information about symmetry; the equivalence being up-to accepted languages, this does not harm (but it matters for minimization; see Remark \ref{rem:no-symmetry}).
 
+\begin{figure}
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
   %\tikzstyle{every state}=[minimum size=10ex]
@@ -123,15 +129,8 @@ The language $\names^\omega$ of all infinite words over $\names$ is recognized b
 
   \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
 \end{tikzpicture}
-\todo{Troppo conciso? Aggiungere qualcosa riguardo run, stati visitati infinite volte?}
-\end{example}
-%
-Differently from Section \ref{sec:languages}, the automata we defined in this section are finite-state. The configuration graph is deterministic, and still infinitary and infinite state,
-%
-\todo{"even if still infinite-state and infinite-branching".}
-%
-though. 
-However, having a finite representation is promising for defining operations on automata. The similarity between configuration graphs of \hdmas, and nDMAs, is deeper than expected, as stated in the following propositions. These are derived from the equivalence results in \cite{GADDUCCIETAL,STATON}, adapted to the setting of nominal Muller automata without symmetries; the equivalence being defined up-to accepted languages, this does not harm (see also Remark \ref{rem:no-symmetry}).
+\caption{\label{fig:hd-names-omega}The \hdma\ recognising $\names^\omega$.}
+\end{figure}
 
 \begin{proposition}
  The configuration graph of $A$, equipped with the permutation action $\pi \cdot (q,\rho) = (q,\pi \circ \rho)$ forms the transition structure of an nDMA. The orbits of the obtained nDMA are in one to one correspondence with states in $Q$; thus the acceptance condition on states can be used as an acceptance condition on the orbits of the configuration graph. When the configuration $(q_0,\rho_0)$ is chosen as initial state, the obtained nDMA accepts the same language as $A$.
