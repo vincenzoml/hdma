@@ -12,7 +12,7 @@
 
 The product of finite automata is a well-know operation: in the binary case, it produces an automaton whose states are pairs $(q_1,q_2)$ of states of the original automata and transitions are those both states do. In this section we define a similar operation on the underlying \emph{transition structures} of \hdmas{}, i.e.\ on tuples $\tstr = (Q,\weight{-},q_0,\rho_0,\trarrow)$ (we want to be parametric w.r.t.\ the accepting condition). The difficulty here is handling registers: when forming pairs of states, we cannot simply make the union of their registers, because some of these registers could be assigned the same value, but assignments are injective. Therefore states have the form $(q_1,q_2,R)$, where $R$ is a relation telling which registers of $q_1$ and $q_2$ are assigned the same value, and thus represent the same register in the overall state. This is formally implemented by quotienting registers w.r.t.\ the equivalence relation $R^*$ induced by $R$.
 
-Given two transition structures $\tstr_i = (Q_i,\weight{-}_i,q_0^i,\rho_0^i,\trarrow_i)$, $i=1,2$, we define their synchronized product $\tstr_1 \syncp \tstr_2$. Given $q_1 \in Q_1$,$q_2 \in Q_2$, $Reg(q_1,q_2)$ is the set of relations that are allowed to appear in states of the form $(q_1,q_2,R)$, namely those $R \subseteq \weight{q_1}_1 \times \weight{q_2}_2$ such that, for each $(x,y) \in R$, thee is no other $(x',y') \in R$ with $x'=x$ or $y'=y$. This avoids inconsistent states where the individual assignment for $q_1$ or $q_2$ would not be injective. In the following we assume $[x]_{R^*}$ to be $\{x\}$ when $x$ does not appear in any pair of $R$.
+Given two transition structures $\tstr_i = (Q_i,\weight{-}_i,q_0^i,\rho_0^i,\trarrow_i)$, $i=1,2$, we define their synchronized product $\tstr_1 \syncp \tstr_2$. Given $q_1 \in Q_1$,$q_2 \in Q_2$, $Reg(q_1,q_2)$ is the set of relations that are allowed to appear in states of the form $(q_1,q_2,R)$, namely those $R \subseteq \weight{q_1}_1 \times \weight{q_2}_2$ such that, for each $(x,y) \in R$, there is no other $(x',y') \in R$ with $x'=x$ or $y'=y$. This avoids inconsistent states where the individual assignment for $q_1$ or $q_2$ would not be injective. In the following we assume $[x]_{R^*}$ to be $\{x\}$ when $x$ does not appear in any pair of $R$.
 
 % These relations, when appearing within states of $\tstr_1 \syncp \tstr_2$, avoid two register of the same state to be assigned the same value.
 
@@ -49,24 +49,24 @@ $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncIni
 			\\\\
 			\exists i \in \{1,2\} : l_i \in \names \land [l_i]_{R^*} = \{l_1,l_2\} \cap \names}
 			%\cap \names \quad i \in \{1,2\}}
-			{ (q_1,q_2,R) \syncHtr{[l_i]_{R^*}}{\sigma_r}
+			{ (q_1,q_2,R) \syncHtr{[l_i]_{R^*}}{\sigma_R}
 			(q_1',q_2',S) } 
 			%}
 			\quad\;
 			\inferrule[(Alloc)]
 			{ q_1 \htrind{l_1}{\sigma_1}{1} q_1' \quad q_2 \htrind{l_2}{\sigma_2}{2} q_2' \quad l_1,l_2 = \star} 
-			{ (q_1,q_2,R) \syncHtr{\star}{\sigma_a} (q_1',q_2',S) }
+			{ (q_1,q_2,R) \syncHtr{\star}{\sigma_A} (q_1',q_2',S) }
 		\end{mathpar}
-	\vspace{-2ex}
-	where:
+	%\vspace{-2ex}
+	where the relation $S$ and the mappings $\sigma_\tau$, for $\tau \in \{A,R\}$, are as follows
 	\begin{align*}
 		S &:= \sigma_2^{-1} \circ R \cup \{(l_1,l_2)\} \circ \sigma_1 
 		\\[2ex]
 		\sigma_\tau([x]_{S^*}) &:= 
 		\begin{cases}
 			[\sigma_i(x)]_{R^*} & x \in \weight{q'_i}_i \land \sigma_i(x) \neq \star \\
-			[l_{3-i}]_{R^*} & x \in \weight{q'_i}_i \land \sigma_i(x) = \star \land \tau = r \\
-			\star & x \in \weight{q'_i}_i \land \sigma_i(x) = \star \land \tau = a
+			[l_{3-i}]_{R^*} & x \in \weight{q'_i}_i \land \sigma_i(x) = \star \land \tau = R \\
+			\star & x \in \weight{q'_i}_i \land \sigma_i(x) = \star \land \tau = A
 		\end{cases}
 	\end{align*}
 %\end{itemize}
@@ -76,12 +76,12 @@ $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncIni
 %
 The definition of $\syncInit$ motivates the presence of relations in states: $R_0$-related registers are the ones that are assigned the same value by $\rho_0^1$ and $\rho_0^2$; these form the same register of $\syncInit$, so $\syncAss$ is well-defined. The synchronization mechanism is implemented by rules \regrule{} and \allrule{}: they compute transitions of $(q_1,q_2,R) \in \syncQ$ from those of $q_1$ and $q_2$ as follows.
 
-\todo{rileggere da qui} Rule \regrule{} handles two cases. First, if the transitions of $q_1$ and $q_2$ are both labelled by registers, say $l_1$ and $l_2$, and these registers correspond to the same one in $(q_1,q_2,R)$ (condition $[l_i]_{R^*} = \{l_1,l_2\}$), then \regrule{} infers a transition labelled with $[l_i]_{R^*}$ (the specific $i$ is not relevant). The target state of this transition is made of those of the transitions from $q_1$ and $q_2$, plus a relation $S$ obtained by translating $R$-related registers to $S$-related registers via $\sigma_1$ and $\sigma_2$. In this case, adding the pair $(l_1,l_2)$ to $R$ in the definition of $S$ has no effect, as it is already in $R$. The inferred history $\sigma_r$ just combines $\sigma_1$ and $\sigma_2$, consistently with $S^*$.
+\todo{rileggere da qui} Rule \regrule{} handles two cases. First, if the transitions of $q_1$ and $q_2$ are both labelled by registers, say $l_1$ and $l_2$, and these registers correspond to the same one in $(q_1,q_2,R)$ (condition $[l_i]_{R^*} = \{l_1,l_2\}$), then \regrule{} infers a transition labelled with $[l_i]_{R^*}$ (the specific $i$ is not relevant). The target state of this transition is made of those of the transitions from $q_1$ and $q_2$, plus a relation $S$ obtained by translating $R$-related registers to $S$-related registers via $\sigma_1$ and $\sigma_2$. In this case, adding the pair $(l_1,l_2)$ to $R$ in the definition of $S$ has no effect, as it is already in $R$. The inferred history $\sigma_R$ just combines $\sigma_1$ and $\sigma_2$, consistently with $S^*$.
 
-The other case for \regrule{} is when a fresh name is consumed from just one state, e.g., $q_2$. Then %synchronization can happen anyway, but 
-this name must coincide with the value assigned to the register $l_1$ labelling the transition of $q_1$. Therefore the inferred label is $[l_1]_{R^*}$. The target relation $S$ changes slightly. Suppose there are $l'_1 \in \weight{q'_1}$ and $l'_2\in \weight{q'_2}$ such that $\sigma_1(l'_1) = l_1$ and $\sigma_2(l'_2) = \star$; after $q_1$ and $q_2$ perform their transitions, both these registers are assigned the same value, so we must have $(l'_1,l'_2) \in S$. This pair is forced to be in $S$ by adding $(l_1,\star)$ to $R$ when computing $S$. This addition is harmless\todo{``harmless for well-definedness of $S$'' ?}, because $[l_1]_{R^*}$ is a singleton (rule premise $[l_1]_{R^*} = \{l_1,\star\} \cap 	\names = \{l_1\}$), so no additional, inconsistent identifications are added to $S^*$ due to transitivity. If either $l_1$ or $\star$ is not in the image of the corresponding history map, then augmenting $R$ has no effect, as the relational composition discards $(l_1,\star)$. Finally, the inferred history $\sigma_r$ should map $[l_2']_{S^*}$ to $[l_1]_{R^*}$: this is treated by the second case of its definition; all the other values are mapped as before.
+The other case for \regrule{} is when a fresh name is consumed from just one state, e.g.\ $q_2$. Then %synchronization can happen anyway, but 
+this name must coincide with the value assigned to the register $l_1$ labelling the transition of $q_1$. Therefore the inferred label is $[l_1]_{R^*}$. The target relation $S$ changes slightly. Suppose there are $l'_1 \in \weight{q'_1}$ and $l'_2\in \weight{q'_2}$ such that $\sigma_1(l'_1) = l_1$ and $\sigma_2(l'_2) = \star$; after $q_1$ and $q_2$ perform their transitions, both these registers are assigned the same value, so we must have $(l'_1,l'_2) \in S$. This pair is forced to be in $S$ by adding $(l_1,\star)$ to $R$ when computing $S$. This addition is harmless for well-definedeness of $S$, because $[l_1]_{R^*}$ is a singleton (rule premise $[l_1]_{R^*} = \{l_1,\star\} \cap 	\names = \{l_1\}$), so no additional, inconsistent identifications are added to $S^*$ due to transitivity. If either $l_1$ or $\star$ is not in the image of the corresponding history map, then augmenting $R$ has no effect, as the relational composition discards $(l_1,\star)$. Finally, the inferred history $\sigma_R$ should map $[l_2']_{S^*}$ to $[l_1]_{R^*}$: this is treated by the second case of its definition; all the other values are mapped as before.
 
-Transitions of $q_1$ and $q_2$ consuming a fresh name on both sides are turned by \allrule{} into a unique transition with freshness: $S$ is computed by adding $(\star,\star)$ to $R$, thus the registers to which the fresh name is assigned (if any) form one register in the overall state; the inferred history $\sigma_a$ gives the freshness status to this register, and acts as usual on other registers.
+Transitions of $q_1$ and $q_2$ consuming a fresh name on both sides are turned by \allrule{} into a unique transition with freshness: $S$ is computed by adding $(\star,\star)$ to $R$, thus the registers to which the fresh name is assigned (if any) form one register in the overall state; the inferred history $\sigma_A$ gives the freshness status to this register, and acts as usual on other registers.
 
 \begin{remark}
 \label{rem:syncp-fin-det}
@@ -99,25 +99,32 @@ Let $((q_1,q_2,R),\rho) \in \confs(\tstr_1 \syncp \tstr_2)$. Its $i$-th projecti
 %
 Projections always produce valid configurations in $\confs(\tstr_1)$ and $\confs(\tstr_2)$: injectivity of $\rho_i$ follows from the definition of $Reg(q_1,q_2)$, ensuring that two different $x_1,x_2 \in \weight{q_i}_i$ cannot belong to the same equivalence class of $R^*$, i.e.\ cannot have the same image through $\rho_i$. The correspondence between edges is formalized as follows.
 
-\begin{proposition}\todo{condensare, usando $\pi_i$ invece di $\pi_1,\pi_2$?}
+\begin{proposition}
+%\todo{condensare, usando $\pi_i$ invece di $\pi_1,\pi_2$?}
 \label{prop:edges-correspondence}
 Given $C \in \confs(\tstr_1 \syncp \tstr_2)$:
 \begin{enumerate}[(i)]
-	\item if $C \tr{a} C'$ then $\cproj_1(C) \tr{a} \cproj_1(C')$ and $\cproj_2(C) \tr{a} \cproj_2(C')$;
+	\item if $C \tr{a} C'$ then $\cproj_i(C) \tr{a} \cproj_i(C')$, $i = 1,2$;
+	% and $\cproj_2(C) \tr{a} \cproj_2(C')$;
 	\label{sync-to-each}
-	\item if $\cproj_1(C) \trind{a}{1} C_1$ and $\cproj_2(C) \trind{a}{1} C_2$, then there is $C'$ such that $C\tr{a} C'$ and $\cproj_1(C) = C_1$,$\cproj_2(C) = C_2$.
+	\item if $\cproj_i(C) \trind{a}{i} C_i$, $i=1,2$, 
+	%and $\cproj_2(C) \trind{a}{1} C_2$, 
+	then there is $C'$ s.t.\ $C\tr{a} C'$ and $\cproj_i(C) = C_i$.
+	%,$\cproj_2(C) = C_2$.
 	\label{each-to-sync}
 \end{enumerate}
 \end{proposition}
 %
 \begin{corollary}
 \label{cor:paths-correspondence}
-Let $C_0 = (\syncInit,\rho_0)$. We have a path $C_0 \tr{a_0} \dots \tr{a_{n-1}} C_n$ in the configuration graph of $\tstr_1 \syncp \tstr_2$ if and only if we have paths $\cproj_i(C_0) \tr{a_0} \dots \tr{a_{n-1}} \cproj_i(C_n)$ in the configuration graphs of $\tstr_i$, for $i=1,2$.
+Let $C_0 = (\syncInit,\rho_0)$. We have a path $C_0 \tr{a_0} \dots \tr{a_{n-1}} C_n$ in the configuration graph of $\tstr_1 \syncp \tstr_2$ if and only if we have paths $\cproj_i(C_0) \tr{a_0} \dots \tr{a_{n-1}} \cproj_i(C_n)$ in the configuration graphs of $\tstr_i$, for $i=1,2$. The correspondence clearly holds also for infinite paths, i.e.\ runs.
 \end{corollary}
 %
-When applied to infinite paths, this result allows us to relate the $\Inf$ of runs across the defined \hdmas.\todo{check sentence}
+This result allows us to relate the $\Inf$ of runs through the defined transition structures.%\todo{check sentence}
 %
 \begin{theorem}
 \label{thm:inf-correspondence}
-Given $\alpha \in \names^\omega$, let $r$ be a run for $\alpha$ in the configuration graph of $\tstr_1 \syncp \tstr_2$, and let $r_1$ and $r_2$ the corresponding \todo{Non capisco: paths o runs? Estenderei il corollario per parlare di runs, se è banale} paths for $\tstr_1$ and $\tstr_2$, according to \cref{cor:paths-correspondence}. Then $\pi_1(Inf(r)) = Inf(r_1)$ and $\pi_2(Inf(r)) = Inf(r_2)$.
+Given $\alpha \in \names^\omega$, let $r$ be a run for $\alpha$ in the configuration graph of $\tstr_1 \syncp \tstr_2$, and let $r_1$ and $r_2$ the corresponding 
+%\todo{Non capisco: paths o runs? Estenderei il corollario per parlare di runs, se è banale} 
+runs for $\tstr_1$ and $\tstr_2$, according to \cref{cor:paths-correspondence}. Then $\pi_1(Inf(r)) = Inf(r_1)$ and $\pi_2(Inf(r)) = Inf(r_2)$.
 \end{theorem}
