@@ -119,7 +119,7 @@ in \cref{fig:hd-names-omega}; the initial assignment $\rho_0$ is necessarily emp
 %
 Differently from nDMAs, \hdmas\ have finite states. 
 %\todo{La frase The configuratoin graph... infinite-branching a che serve? La togliamo?} The configuration graph is deterministic, even if still infinite-state and infinite-branching.
-Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deeper than expected, as stated in the following propositions. These are derived from the equivalence results in \cite{GADDUCCIETAL,STATON}, adapted to the setting of nominal Muller automata and languages (but see \cref{rem:no-symmetry}).
+Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deep, as stated in the following propositions. These are similar to the categorical equivalence results in \cite{GADDUCCIETAL,STATON}; however, notice that representing infinite branching systems using  ``allocating transitions'' requires further machinery, similar to what is studied in \cite{CM10}. See also \cref{rem:no-symmetry} about symmetry.
 
 \begin{figure}
 \centering
@@ -135,19 +135,16 @@ Finite representations are useful for effective operations on languages, as we s
 \caption{\label{fig:hd-names-omega}The \hdma\ recognising $\names^\omega$.}
 \end{figure}
 
-\begin{proposition}
+\begin{proposition}\label{pro:nset-to-nom}
  The configuration graph of $A$, equipped with the permutation action $\pi \cdot (q,\rho) = (q,\pi \circ \rho)$ forms the transition structure of an nDMA. The orbits of the obtained nDMA are in one to one correspondence with states in $Q$; thus the acceptance condition on states can be used as an acceptance condition on the orbits of the configuration graph. When the configuration $(q_0,\rho_0)$ is chosen as initial state, the obtained nDMA accepts the same language as $A$.
 \end{proposition}
 
-It is also possible to obtain an equivalent hDMA from a nDMA. In the following, for $x$ an element of a nominal set, let $o_x$ be a chosen canonical representative of $\orb(x)$, $o_{S \subseteq X} = \{o_x \mid x \in S\}$ and $\sigma_q$ be such that $\sigma_q \cdot q = o_q$. \todo{$\sigma_q$ è una permutazione?}
+\noindent It is also possible to obtain an equivalent hDMA from a nDMA, by quotienting orbits. See the proof of the next proposition for details on the construction.
 
 \begin{proposition}\label{prop:equivalence-ndma-hdma}
- For each nDMA, there is an \hdma{} accepting the same language, and vice-versa. The \hdma{} of an nDMA $(Q,\tr{\cdot},q_0,\acc)$ is $(o_Q,\weight\cdot,\htr{\cdot}{\cdot},o_{q_0},\{ o_A \mid A \in \acc \})$, 
-%
-\todo{Assegnamento iniziale? $q_0$ ha supporto vuoto? Le permutazioni lo fissano sempre?}
-%
-where $\weight{(o_q)} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a q_2$, if $a \in \supp(o_{q_1})$, then we let $o_{q_1} \htr{a}{\sigma_{q_2}} o_{q_2}$; otherwise, we let $o_{q_1} \htr{\star}{\sigma_{q_2}\sub{*}{a}} o_{q_2}$.
+For each nDMA, there is an \hdma{} accepting the same language, whose set of states is in one to one correspondence to the orbits of the original automaton.
 \end{proposition}
+
 
 \begin{example}
 Consider the following \hdma{} 

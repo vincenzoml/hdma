@@ -7,9 +7,22 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
 \end{proof}
 %
 \begin{proof}[of \cref{lem:deterministic-configuration-graph}]
- For each $a$, if $a \in \Im(\rho_1)$, recalling that $\rho_1$ is injective, there is $l \in \weight{q_1}$ with $\rho_1(l) = a$. By definition of \hdma, there is exactly one transition labelled with $l$, let it be $q_1 \htr{l}{\sigma} q_2$. Then by definition of configuration graph, we have $(q_1,\rho_1) \tr a (q_2,\rho_1 \circ \sigma)$. Since $\rho_1$ is injective, there can not be other transitions labelled with $a$ in the configuration graph. If $a \notin \Im(\rho_1)$, consider the only transition with label $\star$ from $q_1$, namely $q_1 \htr{\star}{\sigma} q_2$.  Then we have $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ in the configuration graph, and this is the only transition encompassed by the definition.
-%\todo{"unique by definition?" Non sono sicuro che "encompassed" qui sia giusto}
+ For each $a$, if $a \in \Im(\rho_1)$, recalling that $\rho_1$ is injective, there is $l \in \weight{q_1}$ with $\rho_1(l) = a$. By definition of \hdma, there is exactly one transition labelled with $l$, let it be $q_1 \htr{l}{\sigma} q_2$. Then by definition of configuration graph, we have $(q_1,\rho_1) \tr a (q_2,\rho_1 \circ \sigma)$. Since $\rho_1$ is injective, there can not be other transitions labelled with $a$ in the configuration graph. If $a \notin \Im(\rho_1)$, consider the only transition with label $\star$ from $q_1$, namely $q_1 \htr{\star}{\sigma} q_2$.  Then we have $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ in the configuration graph; this transition is unique by definition.
 \end{proof}
+
+\begin{proof}[of \cref{pro:nset-to-nom}]
+ A run $\run$ in the configuration graph clearly is also a run in the obtained automaton, and $\inf(\run)$. As $\orb(q,\rho) = \{(q,\rho')\mid \rho' : \weight{q} \inj \omega \}$, also acceptance is the same on both sides. By \cref{lem:deterministic-configuration-graph} we get determinism. The proof is completed by noting that the obtained transition function is equivariant. For this, chose a transition $(q_1,\rho_1) \tr a (q_2,\rho_2)$ in the configuration graph, and look at \cref{def:configuration-graph}, thus consider a corresponding \hdma\ transition $q_1 \htr{l}{\sigma} q_2$. The case when $l \in \weight{q_1}$ is straightforward. When $l=\star$, thus $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ consider the permuted configuration $(q_1,\pi\circ\rho_1)$. Since $a \notin \Im(\rho_1)$, also  $\pi(a) \notin \Im (\pi\circ\rho_1)$, thus we have a transition $(q_1,\pi\circ\rho_1)\tr{\pi(a)}(q_2,(\pi \circ \rho_1\circ \sigma)\sub{\pi(a)}{\sigma^{-1}(*)})$, which is precisely the required permuted transition. \qed
+\end{proof}
+
+%\begin{proof}[of \cref{prop:equivalence-ndma-hdma}]
+ 
+%\end{proof}
+\begin{proof}[of \cref{prop:ndma-to-hdma}]
+For $x$ an element of a nominal set, let $o_x$ be a chosen canonical representative of $\orb(x)$, $o_{S \subseteq X} = \{o_x \mid x \in S\}$ and $\sigma_q$ be a chosen permutation such that $\sigma_q \cdot o_q = q$.	Let $(Q,\tr{},q_0,\acc)$ be an nDMA. There is an \hdma{} accepting the same language, namely,  $(o_Q,\weight-,\htr{}{},o_{q_0},\sigma_{q_0},\{ \{ o_x \mid x \in A\} \mid A \in \acc \})$, 
+%
+where for all $q$, we let $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a q_2$, if $a \in \supp(o_{q_1})$, then we let $o_{q_1} \htr{a}{\sigma_{q_2}} o_{q_2}$; otherwise, we let $o_{q_1} \htr{\star}{\sigma_{q_2}\sub{*}{a}} o_{q_2}$. The most straightforward proof is to check that the configuration graph of this automaton accepts the same language as the original nDMA. This is already well understood from the equivalence of categories between named sets and nominal sets.
+\end{proof}
+
 
 \begin{proof}[of \cref{prop:edges-correspondence}]
 Let $C = ((q_1,q_2,R),\rho)$ and $\cproj_i(C) = (q_i,\rho_i)$, $i=1,2$.
