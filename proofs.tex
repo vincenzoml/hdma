@@ -11,6 +11,77 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
 %\todo{"unique by definition?" Non sono sicuro che "encompassed" qui sia giusto}
 \end{proof}
 
+\begin{proof}[of \cref{prop:edges-correspondence}]
+Let $C = ((q_1,q_2,R),\rho)$ and $\cproj_i(C) = (q_i,\rho_i)$, $i=1,2$.
+
+\paragraph{Part \eqref{sync-to-each}.}
+ 
+Let $C' = ((q_1',q_2',R'),\rho')$ and let 
+\[
+	(q_1,q_2,R) \syncHtr{l}{\sigma} (q_1',q_2',S)
+\] 
+be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used to infer this transition:
+\begin{itemize}
+	\item (\textsc{Reg}): then the transition is inferred from $q_i \htrind{l_i}{\sigma_i}{i} q_i'$, $i=1,2$, such that either $l_1$ or $l_2$ is in $\names$. Suppose, w.l.o.g., $l_1 \in \names$. Then $l = [l_1]_{R^*}$ and $\rho_i(l_1) = \rho([l_1]_{R^*}) = a$, so there is an edge $(q_1,\rho_1) \trind{a}{1} (q_1',\rho_1')$ in the configuration graph of $\tstr_1$. The following chain of equations shows that $\pi_1(C') = (q_1',\rho'_1)$:%we have
+	\begin{equation}
+		\label{eq:rho}
+		\begin{gathered}
+			\begin{array}{rl}
+				\rho'_1(x) &= \rho_1 (\sigma_1 (x) ) \\
+				&= \rho([\sigma_1(x)]_{R^*}) \\
+				%&& \text{(by definition of $\rho_i$)}\\
+				&= \rho(\sigma_r([x]_{S^*})) \\
+				%&& \text{(by definition of $\sigma$)}\\
+				&= \rho'([x]_{S^*}) 
+				%&& \text{(by definition of $\rho'$)}
+			\end{array}
+		\end{gathered}
+		\tag{$\dagger$}
+	\end{equation}
+	To prove the existence of an edge $(q_2,\rho_2) \trind{a}{2} (q_2',\rho_2')$ in the configuration graph of $\tstr_2$, we have to consider the following two cases:
+	\begin{itemize}
+		\item If $l_2 \in \names$, then $\rho_2(l_2) = \rho([l_2]_{R^*}) = \rho([l_1]_{R^*}) = a$, by the rule premise $[l_2]_{R^*} = \{l_1,l_2\}$;
+		%
+		\item If $l_2 = \star$, then $a$ should be fresh, so we have to check $a \notin \Im(\rho_2)$. Suppose, by contradiction, that there is $x \in \weight{q_2}_2$ such that $\rho_2(x) = a$, then $\rho([x]_{R^*}) = a = \rho([l_1]_{R^*})$, by definition of $\rho$, which implies $[x]_{R^*} = [l_1]_{R^*}$, by injectivity of $\rho$, i.e. $\{l_1,x\} \in [l_1]_{R^*}$, but the premise of the rule states $[l_1]_{R^*} = \{l_1,\star\} \cap \names = \{l_1\}$, so we have a contradiction. 
+	\end{itemize}
+	Now we have to check $\cproj_2(C') = (q_2',\rho_2')$. Since we have $\rho'_2(x) = (\rho_2 \circ \sigma_2)\sub{a}{\sigma_2^{-1}(\star)}(x)$, for $x \neq \sigma_2^{-1}(\star)$ the equations \eqref{eq:rho} hold. For $x =  \sigma_2^{-1}(\star)$ we have:
+	\begin{align*}
+		\rho'_2(x) &= (\rho_2 \circ \sigma_2)\sub{a}{x}(x) \\
+		&= a \\
+		&= \rho([l_1]_{R^*}) \\
+		&= (\rho \circ \sigma_r)([x]_{S^*}) \\
+		& = \rho'([x]_{S^*})
+	\end{align*}	
+	%All the equations just apply the definitions of the involved functions.
+	%so $\rho([l_1]_R) = \rho([l_2]_R)$, by injectivity of $\rho$.
+	%, but this means $, because $[l_1]_R = \{l_1\}$
+
+
+	\item \allrule: then we have $l=\star$ and the transition is inferred from $q_i \htrind{\star}{\sigma_i}{i} q_i'$, $i=1,2$. Since $a \notin \Im(\rho)$, we also have $a \notin \Im(\rho_i)$, so there are $(q_i,\rho_i) \trind{a}{i} (q_i',\rho_i')$ with $\rho_i' = (\rho_i \circ \sigma_i)\sub{a}{\sigma^{-1}_i(\star)}$, for $i=1,2$. Finally, we have to check that each $\rho_i'(x)$ is as required: if $x \neq\sigma_i^{-1}(\star)$ equations \eqref{eq:rho} hold; for $x=\sigma_i^{-1}(\star)$ we have
+	\begin{align*}
+		\rho'_i(x) &= (\rho_i \circ \sigma_i)\sub{a}{x}(x) \\
+		&= a \\
+		&= (\rho \circ \sigma_a) \sub{a}{\sigma_a^{-1}(\star)}(\sigma_a^{-1}(\star)) \\
+		&= (\rho \circ \sigma_a) \sub{a}{[x]_{S^*}}([x]_{S^*}) \\
+		%&& \text{(by $[\sigma_1^{-1}(\star)]_{S^*} = [\sigma_i(\star)^{-1}]_{S^*}$)} \\
+		%& = (\rho \circ \sigma) \sub{a}{[\sigma_i^{-1}(\star)]_{S^*}}([\sigma_i^{-1}(\star)]_{S^*}) && \text{(definition of $R'$)} \\
+		&= \rho'([x]_{S^*})
+	\end{align*}
+	
+	%Then there are $q_i \htrind{l_i}{\sigma_i}{i} q_i'$, $i=1,2$. We have two cases:
+%	\begin{itemize}
+%		\item 
+%	\end{itemize}
+\end{itemize} 
+
+
+\paragraph{Part \eqref{each-to-sync}.} 
+Since $\tstr_1 \syncp \tstr_2$ is deterministic, there certainly is $C \tr{a} C'$, for any $a \in \names$. This edge, by the previous part of the proof, has a corresponding edge $\cproj_i(C) \trind{a}{i} \cproj_i(C')$, for each $i=1,2$. But then $\cproj_i(C') = C_i$, by determinism of $\tstr_i$.
+%Then we must have $\pi(C') = C_i$
+
+% edge in the configuration graph of $\tstr_i$
+\qed
+\end{proof}
 
 \begin{proof}[of \cref{thm:bool-closure}]
 We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\autom_\cap$ be $(\tstr_1 \syncp \tstr_2,\acc_\cap)$; this is a proper \hdma{}, thanks to \cref{rem:syncp-fin-det}. Given $\alpha \in \names^\omega$, let $r_\cap$,$r_1$ and $r_2$ be the runs for $\alpha$ in the configuration graphs of $\autom_\cap,A_1$ and $A_2$, respectively. Then, by \cref{thm:inf-correspondence}, we have $\cproj_i(\Inf(r_\cap)) = \Inf(r_i)$, for each $i=1,2$. From this, and the definition of $\acc_\cap$, we have that $\Inf(r_\cap) \in \acc_\cap$ if and only if $\Inf(r_1) \in \acc_1$ and $\Inf(r_2) \in \acc_2$, i.e.\ $\alpha \in \Lang_{\autom_\cap}$ if and only if $\alpha \in \Lang_{\autom_1}$ and $\alpha \in\Lang_{\autom_2}$.
@@ -96,77 +167,5 @@ $\rrho_0(x) \in \Im(\trho_0)$, which implies $\rrho_0(T) \cap \Im(\trho_0) \neq 
 
 It is easy to check that this constructions reaches a configuration where all $x \in T$ have been assigned the desired value. 
 % $\trho_\ass$ satisfies the statement by construction.\todo{Dire meglio?}
-\qed
-\end{proof}
-
-\begin{proof}[of \cref{prop:edges-correspondence}]
-Let $C = ((q_1,q_2,R),\rho)$ and $\cproj_i(C) = (q_i,\rho_i)$, $i=1,2$.
-
-\paragraph{Part \eqref{sync-to-each}.}
- 
-Let $C' = ((q_1',q_2',R'),\rho')$ and let 
-\[
-	(q_1,q_2,R) \syncHtr{l}{\sigma} (q_1',q_2',S)
-\] 
-be the transition inducing $C \tr{a} C'$. We proceed by cases on the rule used to infer this transition:
-\begin{itemize}
-	\item (\textsc{Reg}): then the transition is inferred from $q_i \htrind{l_i}{\sigma_i}{i} q_i'$, $i=1,2$, such that either $l_1$ or $l_2$ is in $\names$. Suppose, w.l.o.g., $l_1 \in \names$. Then $l = [l_1]_{R^*}$ and $\rho_i(l_1) = \rho([l_1]_{R^*}) = a$, so there is an edge $(q_1,\rho_1) \trind{a}{1} (q_1',\rho_1')$ in the configuration graph of $\tstr_1$. The following chain of equations shows that $\pi_1(C') = (q_1',\rho'_1)$:%we have
-	\begin{equation}
-		\label{eq:rho}
-		\begin{gathered}
-			\begin{array}{rl}
-				\rho'_1(x) &= \rho_1 (\sigma_1 (x) ) \\
-				&= \rho([\sigma_1(x)]_{R^*}) \\
-				%&& \text{(by definition of $\rho_i$)}\\
-				&= \rho(\sigma_r([x]_{S^*})) \\
-				%&& \text{(by definition of $\sigma$)}\\
-				&= \rho'([x]_{S^*}) 
-				%&& \text{(by definition of $\rho'$)}
-			\end{array}
-		\end{gathered}
-		\tag{$\dagger$}
-	\end{equation}
-	To prove the existence of an edge $(q_2,\rho_2) \trind{a}{2} (q_2',\rho_2')$ in the configuration graph of $\tstr_2$, we have to consider the following two cases:
-	\begin{itemize}
-		\item If $l_2 \in \names$, then $\rho_2(l_2) = \rho([l_2]_{R^*}) = \rho([l_1]_{R^*}) = a$, by the rule premise $[l_2]_{R^*} = \{l_1,l_2\}$;
-		%
-		\item If $l_2 = \star$, then $a$ should be fresh, so we have to check $a \notin \Im(\rho_2)$. Suppose, by contradiction, that there is $x \in \weight{q_2}_2$ such that $\rho_2(x) = a$, then $\rho([x]_{R^*}) = a = \rho([l_1]_{R^*})$, by definition of $\rho$, which implies $[x]_{R^*} = [l_1]_{R^*}$, by injectivity of $\rho$, i.e. $\{l_1,x\} \in [l_1]_{R^*}$, but the premise of the rule states $[l_1]_{R^*} = \{l_1,\star\} \cap \names = \{l_1\}$, so we have a contradiction. 
-	\end{itemize}
-	Now we have to check $\cproj_2(C') = (q_2',\rho_2')$. Since we have $\rho'_2(x) = (\rho_2 \circ \sigma_2)\sub{a}{\sigma_2^{-1}(\star)}(x)$, for $x \neq \sigma_2^{-1}(\star)$ the equations \eqref{eq:rho} hold. For $x =  \sigma_2^{-1}(\star)$ we have:
-	\begin{align*}
-		\rho'_2(x) &= (\rho_2 \circ \sigma_2)\sub{a}{x}(x) \\
-		&= a \\
-		&= \rho([l_1]_{R^*}) \\
-		&= (\rho \circ \sigma_r)([x]_{S^*}) \\
-		& = \rho'([x]_{S^*})
-	\end{align*}	
-	%All the equations just apply the definitions of the involved functions.
-	%so $\rho([l_1]_R) = \rho([l_2]_R)$, by injectivity of $\rho$.
-	%, but this means $, because $[l_1]_R = \{l_1\}$
-
-
-	\item \allrule: then we have $l=\star$ and the transition is inferred from $q_i \htrind{\star}{\sigma_i}{i} q_i'$, $i=1,2$. Since $a \notin \Im(\rho)$, we also have $a \notin \Im(\rho_i)$, so there are $(q_i,\rho_i) \trind{a}{i} (q_i',\rho_i')$ with $\rho_i' = (\rho_i \circ \sigma_i)\sub{a}{\sigma^{-1}_i(\star)}$, for $i=1,2$. Finally, we have to check that each $\rho_i'(x)$ is as required: if $x \neq\sigma_i^{-1}(\star)$ equations \eqref{eq:rho} hold; for $x=\sigma_i^{-1}(\star)$ we have
-	\begin{align*}
-		\rho'_i(x) &= (\rho_i \circ \sigma_i)\sub{a}{x}(x) \\
-		&= a \\
-		&= (\rho \circ \sigma_a) \sub{a}{\sigma_a^{-1}(\star)}(\sigma_a^{-1}(\star)) \\
-		&= (\rho \circ \sigma_a) \sub{a}{[x]_{S^*}}([x]_{S^*}) \\
-		%&& \text{(by $[\sigma_1^{-1}(\star)]_{S^*} = [\sigma_i(\star)^{-1}]_{S^*}$)} \\
-		%& = (\rho \circ \sigma) \sub{a}{[\sigma_i^{-1}(\star)]_{S^*}}([\sigma_i^{-1}(\star)]_{S^*}) && \text{(definition of $R'$)} \\
-		&= \rho'([x]_{S^*})
-	\end{align*}
-	
-	%Then there are $q_i \htrind{l_i}{\sigma_i}{i} q_i'$, $i=1,2$. We have two cases:
-%	\begin{itemize}
-%		\item 
-%	\end{itemize}
-\end{itemize} 
-
-
-\paragraph{Part \eqref{each-to-sync}.} 
-Since $\tstr_1 \syncp \tstr_2$ is deterministic, there certainly is $C \tr{a} C'$, for any $a \in \names$. This edge, by the previous part of the proof, has a corresponding edge $\cproj_i(C) \trind{a}{i} \cproj_i(C')$, for each $i=1,2$. But then $\cproj_i(C') = C_i$, by determinism of $\tstr_i$.
-%Then we must have $\pi(C') = C_i$
-
-% edge in the configuration graph of $\tstr_i$
 \qed
 \end{proof}
