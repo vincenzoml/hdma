@@ -25,7 +25,7 @@ Given two transition structures $\tstr_i = (Q_i,\weight{-}_i,q_0^i,\rho_0^i,\tra
 %We avoid relations where two (or more) registers $x_1,x_2$ of $q_1$ are paired with the same one of $q_2$ or viceversa, because this would mean that $x_1$ and $x_2$ should be assigned the same value, but assignments are injective. Notice that $R \in Reg(q_1,q_2)$ is such that equivalence classes of $R^*$ have cardinality at most two.
 
 
-\begin{definition}[Synchronized product of transition structures]
+\begin{definition}
 \label{def:syncp}
 $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncInit,\syncAss,\syncTr{\quad})$ defined as follows:
 \begin{itemize}
@@ -90,7 +90,7 @@ $\tstr_1 \syncp \tstr_2$ is finite-state and deterministic. In fact, every set i
 %
 We shall now relate the configuration graphs of $\tstr_1 \syncp \tstr_2$, $\tstr_1$ and $\tstr_2$.
 %
-\begin{definition}[Configuration projection]
+\begin{definition}
 Let $((q_1,q_2,R),\rho) \in \confs(\tstr_1 \syncp \tstr_2)$. Its $i$-th projection, denoted $\cproj_i$, is defined as follows
 \[
 	\cproj_i((q_1,q_2,R),\rho) := (q_i,\rho_i) \qquad \rho_i := \lambda x \in \weight{q_i}_i.\rho([x]_{R^*}) \enspace .
@@ -120,7 +120,7 @@ Given $C \in \confs(\tstr_1 \syncp \tstr_2)$:
 Let $C_0 = (\syncInit,\rho_0)$. We have a path $C_0 \tr{a_0} \dots \tr{a_{n-1}} C_n$ in the configuration graph of $\tstr_1 \syncp \tstr_2$ if and only if we have paths $\cproj_i(C_0) \tr{a_0} \dots \tr{a_{n-1}} \cproj_i(C_n)$ in the configuration graphs of $\tstr_i$, for $i=1,2$. The correspondence clearly holds also for infinite paths, i.e.\ runs.
 \end{corollary}
 %
-This result allows us to relate the $\Inf$ of runs through the defined transition structures.%\todo{check sentence}
+This result allows us to relate the $\Inf$ of runs in the defined transition structures.%\todo{check sentence}
 %
 \begin{theorem}
 \label{thm:inf-correspondence}
