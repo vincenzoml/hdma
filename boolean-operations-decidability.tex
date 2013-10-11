@@ -6,28 +6,33 @@ In this section we discuss closure of $\omega$-regular nominal languages under b
 Let $\Lang_1$ and $\Lang_2$ be $\omega$-regular nominal languages, and let $\autom_1 = (\tstr_1,\acc_1)$  and $\autom_2 = (\tstr_2,\acc_2)$ be automata for these languages, where $\tstr_1$ and $\tstr_2$ are the underlying transition structures.
 The crucial tool is \cref{thm:inf-correspondence}: it says that constructing an automaton for a boolean combination of $\Lang_1$ and $\Lang_2$ amounts to defining an appropriate accepting set for $\tstr_1 \syncp \tstr_2$.
 
-\begin{definition} Let $\Lang_1$ and $\Lang_2$ languages of $\hdmas$ having transition structures $\tstr_1$ and $\tstr_2$ and acceptance condition $\acc_1$ and $\acc_2$. The automata for intersection and union are obtained by equipping the structure $\tstr_1 \syncp \tstr_2$ with accepting conditions $\acc_\cap$ and $\acc_\cup$, respectively, defined as:
+\begin{definition} We define the sets $\acc_\cap$, $\acc_\cup$ and $\acc_{\compl{\Lang_1}}$ as follows:
+%Let $\Lang_1$ and $\Lang_2$ languages of $\hdmas$ having transition structures $\tstr_1$ and $\tstr_2$ and acceptance condition $\acc_1$ and $\acc_2$. The automata for intersection and union are obtained by equipping the structure $\tstr_1 \syncp \tstr_2$ with accepting conditions $\acc_\cap$ and $\acc_\cup$, respectively, defined as:
 %
 \begin{align*}
 	\acc_\cap &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{ (q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \land q_2 \in S_2 \}\} 
 	\\
 	\acc_\cup &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{(q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \lor q_2 \in S_2 \}\} 
+	\\
+	\acc_{\compl{\Lang_1}} &:= \Pow(Q_1) \setminus \acc_1
 %	\\
 %	\acc_{\setminus} &:= \bigcup_{S_1 \in \acc_1} \{\{ (q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \land \forall S_2 \in \acc_2 : q_2 \notin S_2 \}\}
 \end{align*}
 %
-The automaton for $\compl{\Lang_1}$ can be obtained by complementing $\acc_1$ in $\Pow(Q_1)$, where $Q_1$ are the states of the corresponding \hdma.
+where $Q_1$ are the states of $\autom_1$.
+%
+%The automaton for $\compl{\Lang_1}$ can be obtained by complementing $\acc_1$ in $\Pow(Q_1)$, where $Q_1$ are the states of the corresponding \hdma.
 %but also as the automaton for $\names^\omega \setminus \Lang_1$ (see \cref{fig:hd-names-omega} for the automaton accepting $\names^\omega$). 
 \end{definition}
 
 \begin{theorem}
-$\Lang_1 \cap \Lang_2$, $\Lang_1 \cup \Lang_2$, $\Lang_1 \setminus \Lang_2$, $\compl{\Lang_1}$ are $\omega$-regular nominal languages.
+$\tstr_1 \syncp \tstr_2$, when equipped with accepting conditions $\acc_\cap$, $\acc_\cup$ and $\acc_{\compl{\Lang_1}}$, gives a \hdma{} respectively for $\Lang_1 \cap \Lang_2$, $\Lang_1 \cup \Lang_2$ and $\compl{\Lang_1}$.
 \label{thm:bool-closure}
 \end{theorem}
 %%
 Now we give decidability results.
 %
 \begin{theorem}
-Emptiness of $\Lang$ is decidable. As a corollary, tt is decidable whether $\Lang_1 = \Lang_2$.
+Emptiness of $\Lang$ is decidable. As a corollary, it is decidable whether $\Lang_1 = \Lang_2$.
 \label{thm:emptiness}
 \end{theorem}
