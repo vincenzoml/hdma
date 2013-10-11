@@ -112,7 +112,7 @@ Given $(q_1,\rho_1) \in \confs(A)$ and $v \in \names^\omega$, there exists a uni
 %\end{figure}
 %
 %
-
+%
 As an example, the language $\names^\omega$ of all infinite words over $\names$ is recognised by the \hdma\ %having one state $q$, with $\weight q = \emptyset$ and one transition from $q$ to $q$, labelled by $\star$ (see 
 in \cref{fig:hd-names-omega}; the initial assignment $\rho_0$ is necessarily empty, and so is the history $\sigma$ along the transition.
 %
@@ -121,7 +121,7 @@ Differently from nDMAs, \hdmas\ have finite states.
 %\todo{La frase The configuratoin graph... infinite-branching a che serve? La togliamo?} The configuration graph is deterministic, even if still infinite-state and infinite-branching.
 Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deep, as stated in the following propositions. These are similar to the categorical equivalence results in \cite{GadducciMM06,FioreS06}; however, notice that representing infinite branching systems using  ``allocating transitions'' requires further machinery, similar to what is studied in \cite{CianciaM10}. See also \cref{rem:no-symmetry} about symmetry.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
   %\tikzstyle{every state}=[minimum size=10ex]
@@ -132,7 +132,8 @@ Finite representations are useful for effective operations on languages, as we s
 
   \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
 \end{tikzpicture}
-\caption{\label{fig:hd-names-omega}The \hdma\ recognising $\names^\omega$.}
+\caption{The \hdma{} accepting $\names^\omega$.}
+\label{fig:hd-names-omega}
 \end{figure}
 
 \begin{proposition}\label{pro:nset-to-nom}

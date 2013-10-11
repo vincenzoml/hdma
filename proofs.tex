@@ -1,6 +1,6 @@
 %!TEX root=ndma.tex
 
-\begin{proof}[of theorem \ref{thm:languages-finitely-supported}]
+\begin{proof}[of \cref{thm:languages-finitely-supported}]
 % Let $2=\{0,1\}$ with $\pi\cdot 0 = 0$, $\pi\cdot 1 = 1$, thus $\supp(0)=\supp(1)=\emptyset$. Let $h : Q \times \names^\omega \to 2$ be such that $h(q,\alpha) = 1$ if and only if $\alpha \in \Lang_q$. 
 By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $f(x)$ is finitely supported with $\supp(f(x))\subseteq \supp(x)$. Let $h : Q \to \Pow(\names^\omega)$ be the function mapping each $q$ to $\Lang_q$. We need to show that $h$ is equivariant, that is, $h(\pi \cdot q) = \{ \pi \cdot \alpha \mid \alpha \in \Lang_q\}$. Without loss of generality, we shall prove the right-to-left inclusion. Then, since $\pi$ and $q$ are arbitrary, one can prove the left-to-right inclusion starting from the state $\pi \cdot q$ and the permutation $\pi^{-1}$. Let $\alpha \in \Lang_q$. We shall prove that $\pi\cdot\alpha \in \Lang_{\pi\cdot q}$. Consider the unique (accepting) run $r$ of $\alpha$ from $q$, and  the unique run $r'$ of $\pi \cdot \alpha$ from $\pi \cdot q$. By equivariance of the transition function, and definition of run, for all $i$, we have $r'_i = \pi \cdot r_i$, thus $\orb(r'_i)=\orb(r_i)$, therefore $\Inf(r')= \Inf(r)$. 
 \qed 
@@ -101,7 +101,7 @@ We just consider $\Lang_1 \cap \Lang_2$, the other cases are analogous. Let $\au
 \qed
 \end{proof}
 %
-\begin{proof}[of \cref{thm:emptiness}]
+\begin{proof}[of \cref{thm:decidable}]
 Let $A = (Q,\weight{-},q_0,\rho_0,\htr{}{},\acc)$ be a \hdma{} for $\Lang$. Consider the set $\Sigma_A = \{ (l,\sigma) \mid \exists q,q' \in Q : q \htr{l}{\sigma} q' \}$. This is finite, so we can use it as the alphabet of an ordinary deterministic Muller automaton $M_A = (Q \cup \{\delta\}, q_0,\tr{}_s,\acc)$, where $\delta \notin Q$ is a dummy state, and the transition function is defined as follows: $q \tr{(l,\sigma)}_s q'$ if and only if $q \htr{l}{\sigma} q'$, and $q \tr{(l,\sigma)}_s \delta$ for all other pairs $(l,\sigma) \in \Sigma_A$. Clearly $\Lang_{M_A} = \varnothing$ if and only if $\Lang = \varnothing$, as words in $\Lang_{M_A}$ are sequence of transitions of $A$ that go through accepting states infinitely often, and thus produce a word in $\Lang$, and viceversa. The claim follows by decidability of emptiness for ordinary deterministic Muller automata. Finally, to check equality of languages, observe that the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2 )$ is $\omega$-regular nominal, thanks to \cref{thm:bool-closure}. Then we just have to check its emptiness, which is decidable.
 \qed
 \end{proof}
