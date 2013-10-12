@@ -61,7 +61,7 @@ right before the different occurrences of other names, making the automaton more
 
 \begin{figure}
 \begin{center}
- \begin{tikzpicture}[->,auto,node distance=2.8cm]  
+ \begin{tikzpicture}[->,auto,node distance=2.2cm]  
   \node[state] (q0)               {$q_0$};
   \node[state] (qa) [above left of = q0] {$q_a$};
   \node[state] (qb) [below left of = q0] {$q_b$};
@@ -69,18 +69,18 @@ right before the different occurrences of other names, making the automaton more
   \node (qany) [above right of = q0] {$\ldots$};
   
   
-  \path (q0) edge [bend left]  node {$a$} (qa);
-  \path (q0) edge [bend left]  node {$b$} (qb);
-  \path (q0) edge [bend left]  node {$c$} (qc);
+  \path (q0) edge [bend left]  node[inner sep=1pt] {$a$} (qa);
+  \path (q0) edge [bend left]  node[inner sep=1pt] {$b$} (qb);
+  \path (q0) edge [bend left]  node[inner sep=1pt] {$c$} (qc);
   \path (q0) edge [bend left]  node {$\ldots$} (qany);
   
-  \path (qa) edge [bend left]  node {$a$} (q0)
+  \path (qa) edge [bend left]  node[inner sep=1pt] {$a$} (q0)
              edge [loop left] node {$b,c,d,\ldots$} (qa);
   
-  \path (qb) edge [bend left]  node {$b$} (q0)
+  \path (qb) edge [bend left]  node[inner sep=1pt] {$b$} (q0)
              edge [loop left] node {$a,c,d,\ldots$} (qb);
   
-  \path (qc) edge [bend left]  node {$c$} (q0)
+  \path (qc) edge [bend left]  node[inner sep=1pt] {$c$} (q0)
              edge [loop right] node {$a,b,d,\ldots$} (qc);
   
   \path (qany) edge [bend left]  node {$\ldots$} (q0);
