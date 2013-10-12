@@ -143,7 +143,10 @@ Finite representations are useful for effective operations on languages, as we s
 \noindent It is also possible to obtain an equivalent hDMA from a nDMA, by quotienting orbits. See the proof of the next proposition for details on the construction.
 
 \begin{proposition}\label{prop:ndma-to-hdma}
-For each nDMA, there is an \hdma{} accepting the same language, whose set of states is in one-to-one correspondence with the orbits of the original automaton.
+For each nDMA $(Q,\tr{},q_0,\acc)$, there is an \hdma{} the same language.
+For $q \in Q$ , let $o_q$ be a chosen canonical representative of $\orb(q)$, $o_{S \subseteq X} = \{o_q \mid q \in S\}$ and $\rho_q$ be a chosen permutation such that $\rho_q \cdot o_q = q$.	Construct the \hdma\  $(o_Q,\weight-,\htr{}{},o_{q_0},\rho_{q_0},\{ \{ o_q \mid q \in A\} \mid A \in \acc \})$, 
+%
+with $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a q_2$, if $a \in \supp(o_{q_1})$, let $o_{q_1} \htr{a}{\sigma} o_{q_2}$; otherwise, let $o_{q_1} \htr{\star}{\sigma_\star} o_{q_2}$, where $\sigma=\restr{\rho_{q_2}}{\weight{o_{q_2}}}$ and $\sigma_\star = \restr{\sigma_{q_2}\sub{*}{a}}{o_{q_2}}$.
 \end{proposition}
 
 
