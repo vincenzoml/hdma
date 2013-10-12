@@ -18,9 +18,9 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
  
 %\end{proof}
 \begin{proof}[of \cref{prop:ndma-to-hdma}]
- The proof is similar to the equivalence results between categories of coalgebras given in \cite{CianciaM10}. First, we need to show that for each transition $q_1 \tr a q_2$ in the original nDMA, there is an edge $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{\weight{q_2}})$ in the configuration graph of the derived \hdma. We look at the case $a \in \supp(q_1)$; the case with allocation is similar, even though technically more involved. By equivariance, from $q_1 \tr a q_2$, we have $o_{q_1} \tr{\rho^{-1}_{q_1} (a)} \rho^{-1}_{q_1}(q_2)$. Then we have an \hdma\ transition $o_{q_1} \htr{\rho^{-1}_{q_1}(a)}{\sigma} o_{q_2}$ where $\sigma = \restr{\rho_{\rho^{-1}_{q_1}(q_2)}}{\weight{o_2}}$. 
+ The proof is similar to the equivalence results between categories of coalgebras given in \cite{CianciaM10}. First, we need to show that, for each transition $q_1 \tr a q_2$ in the original nDMA, there is an edge $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{\weight{q_2}})$ in the configuration graph of the derived \hdma. We look at the case $a \in \supp(q_1)$; the case with allocation is similar, even though technically more involved. By equivariance, from $q_1 \tr a q_2$, we have $o_{q_1} \tr{\rho^{-1}_{q_1} (a)} \rho^{-1}_{q_1}(q_2)$. Then we have an \hdma\ transition $o_{q_1} \htr{\rho^{-1}_{q_1}(a)}{\sigma} o_{q_2}$ where $\sigma = \restr{\rho_{\rho^{-1}_{q_1}(q_2)}}{\weight{o_2}}$. 
  By looking at the used permutations, we have $\sigma = \restr{\rho^{-1}_{q_1} \circ \rho_{q_2}}{\weight{o_2}}$. 
- Then, in the configuration graph, we have $(o_{q_1},\mathit{id}) \tr \rho^{-1}_{q_1}(a) (o_{q_2},\sigma)$, thus by equivariance, we have 
+ Then, in the configuration graph, we have $(o_{q_1},\mathit{id}) \tr{\rho^{-1}_{q_1}(a)} (o_{q_2},\sigma)$, thus by equivariance, we have 
  $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\rho_{q_1} \circ 
  \restr {\rho^{-1}_{q_1} \circ \rho_{q_2}}{\weight{q_2}})$, 
  thus $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{q_2})$. Accordance of the accepting conditions is straightforward.
