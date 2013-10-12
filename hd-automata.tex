@@ -140,7 +140,7 @@ Finite representations are useful for effective operations on languages, as we s
  The configuration graph of $A$, equipped with the permutation action $\pi \cdot (q,\rho) = (q,\pi \circ \rho)$ forms the transition structure of an nDMA. The orbits of the obtained nDMA are in one to one correspondence with states in $Q$; thus the acceptance condition on states can be used as an acceptance condition on the orbits of the configuration graph. When the configuration $(q_0,\rho_0)$ is chosen as initial state, the obtained nDMA accepts the same language as $A$.
 \end{proposition}
 %
-It is also possible to obtain an equivalent hDMA from a nDMA, by quotienting orbits. 
+%\noindent It is also possible to obtain an equivalent hDMA from a nDMA.
 %See the proof of the next proposition for details on the construction.
 
 \begin{proposition}\label{prop:ndma-to-hdma}
@@ -172,7 +172,7 @@ Consider the following \hdma{}
 \end{tikzpicture}
 \end{center}
 %
-where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history map from $q_1$ to $q_0$. This automaton accepts the language of the nDMA of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.\end{example}
+where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history from $q_1$ to $q_0$ (we omit empty histories). This automaton accepts the language of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.\end{example}
 
 
 
