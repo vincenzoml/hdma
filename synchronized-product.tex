@@ -87,7 +87,9 @@ Transitions of $q_1$ and $q_2$ consuming a fresh name on both sides are turned b
 
 \begin{remark}
 \label{rem:syncp-fin-det}
-$\tstr_1 \syncp \tstr_2$ is finite-state and deterministic. In fact, every set in the definition of $\syncQ$ is finite, and cartesian products, powerset and finite union of finite sets again yield finite sets. As for determinism, given $(q_1,q_2,R) \in \syncQ$, each $l \in \syncW{(q_1,q_2,R)} \cup \{\star\}$ uniquely determines which labels $l_1$ and $l_2$ should appear in the rule premises (e.g. if $l = \{l_1\}$, with $l_1 \in \weight{q_1}_1$, then $l_2 = \star$), and by determinism each $q_i$ can do a unique transition labeled by $l_i$.
+$\tstr_1 \syncp \tstr_2$ is finite-state and deterministic. In fact, every set in the definition of $\syncQ$ is finite.
+%, and cartesian products, powerset and finite union of finite sets again yield finite sets.
+As for determinism, given $(q_1,q_2,R) \in \syncQ$, each $l \in \syncW{(q_1,q_2,R)} \cup \{\star\}$ uniquely determines which labels $l_1$ and $l_2$ should appear in the rule premises (e.g. if $l = \{l_1\}$, with $l_1 \in \weight{q_1}_1$, then $l_2 = \star$), and by determinism each $q_i$ can do a unique transition labeled by $l_i$.
 \end{remark}
 %
 We shall now relate the configuration graphs of $\tstr_1 \syncp \tstr_2$, $\tstr_1$ and $\tstr_2$.
