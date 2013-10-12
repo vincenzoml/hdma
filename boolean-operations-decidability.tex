@@ -1,10 +1,10 @@
 %!TEX root=ndma.tex
 \newcommand{\compl}[1]{\overline{#1}}
  
-In this section we discuss closure of $\omega$-regular nominal languages under boolean operations, and decidability of emptiness and language equality.
+%In this section we discuss closure of $\omega$-regular nominal languages under boolean operations, and decidability of emptiness and language equality.
 
 Let $\Lang_1$ and $\Lang_2$ be $\omega$-regular nominal languages, and let $\autom_1 = (\tstr_1,\acc_1)$  and $\autom_2 = (\tstr_2,\acc_2)$ be automata for these languages, where $\tstr_1$ and $\tstr_2$ are the underlying transition structures.
-The crucial tool is \cref{thm:inf-correspondence}: it says that constructing an automaton for a boolean combination of $\Lang_1$ and $\Lang_2$ amounts to defining an appropriate accepting set for $\tstr_1 \syncp \tstr_2$.
+The crucial tool is \cref{thm:inf-correspondence}: constructing an automaton for a boolean combination of $\Lang_1$ and $\Lang_2$ amounts to defining an appropriate accepting set for $\tstr_1 \syncp \tstr_2$.
 
 \begin{definition} We define the sets $\acc_\cap$, $\acc_\cup$ and $\acc_{\compl{\Lang_1}}$ as follows:
 %Let $\Lang_1$ and $\Lang_2$ languages of $\hdmas$ having transition structures $\tstr_1$ and $\tstr_2$ and acceptance condition $\acc_1$ and $\acc_2$. The automata for intersection and union are obtained by equipping the structure $\tstr_1 \syncp \tstr_2$ with accepting conditions $\acc_\cap$ and $\acc_\cup$, respectively, defined as:
