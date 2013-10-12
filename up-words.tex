@@ -138,11 +138,11 @@ We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
 where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped according to the permutation $(a \; b)$, and $d$ is assigned to $z_0$. Our aim is to recover $\rho_0$ again. According to \cref{lem:idI}, $x_0$ and $y_0$ get their assignment back in $\theta = 2$ traversals of $L$ (in fact $(a\; b)^2 = (a\; b)$). As for $z_0$, its assignment is established in the second transition, but $c$ should not have been assigned to any register of $q_1$ in order for it to be consumed during this transition. This is where \cref{lem:forgetT} comes into play: it says that in at least $\epsilon = 1$ traversals of $L$ the name $c$ is discarded. This is exactly what happens in the path shown above. Then we can assign $c$ to $z_0$ in another $\zeta = 1$ traversal of $L$, according to \cref{lem:initT}. Since $\epsilon + \zeta  = \theta = 2$, traversing $L$ twice is enough. For instance, we can take the path spelling $cdbdca$.
 \end{example}
 %
-Finally we have the main results.
+\noindent Finally we introduce the main results of this section.
 %
 \begin{theorem}
 \label{thm:up-fragment}
-Every non-empty nominal $\omega$-regular language $\Lang$ has an ultimately periodic fragment.
+When $\Lang$ is a non-empty $\omega$-regular language, $UP(\Lang) \neq \emptyset$.
 \end{theorem}
 \begin{proof}
 Let $\autom$ be the automaton for $\Lang$. Take any $\alpha \in \Lang$ and let $I = \Inf(r^\alpha)$ (recall $r^\alpha$ is the run for $\alpha$ in $\autom$), so $I \in \acc$. A path spelling $\alpha$ in the configuration graph of $A$ must begin with
@@ -159,7 +159,7 @@ The subpath from $(q_1,\rho_1)$ can be traversed any number of times, so we have
 
 \begin{theorem}
 \label{thm:up-determinacy}
-Let $\Lang_1,\Lang_2$ be nominal $\omega$-regular languages. Then $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$.
+For $\Lang_1,\Lang_2$ nominal $\omega$-regular, $UP(\Lang_1) = UP(\Lang_2) \implies\Lang_1 = \Lang_2$.
 \end{theorem}
 \begin{proof}
 The proof mimics the one from \cite{CalbrixNP93}. Assume $\Lang_1 \neq \Lang_2$ and consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a nominal $\omega$-regular language (set difference can be expressed via intersection and complement)  and, by $\Lang_1 \neq \Lang_2$, it is not empty, so by \cref{thm:up-fragment} it contains at least one ultimately periodic word, which implies $UP(\Lang_1) \neq UP(\Lang_2)$. \qed
