@@ -10,10 +10,11 @@ The crucial tool is \cref{thm:inf-correspondence}: constructing an automaton for
 %Let $\Lang_1$ and $\Lang_2$ languages of $\hdmas$ having transition structures $\tstr_1$ and $\tstr_2$ and acceptance condition $\acc_1$ and $\acc_2$. The automata for intersection and union are obtained by equipping the structure $\tstr_1 \syncp \tstr_2$ with accepting conditions $\acc_\cap$ and $\acc_\cup$, respectively, defined as:
 %
 \begin{align*}
-	\acc_\cap &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{ (q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \land q_2 \in S_2 \}\} 
+	\acc_\cap &:= \{ S \subseteq \syncQ \mid \pi_1(S) \in \acc_1 \land \pi_2(S) \in \acc_2 \} 
 	\\
-	\acc_\cup &:= \bigcup_{S_1 \in \acc_1,S_2 \in \acc_2 } \{\{(q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \lor q_2 \in S_2 \}\} 
+	\acc_\cap &:= \{ S \subseteq \syncQ \mid \pi_1(S) \in \acc_1 \lor \pi_2(S) \in \acc_2 \} 
 	\\
+	%\acc_\cap &:= \{ S \subseteq \syncQ \mid \pi_1(S) \notin \acc_1 \} 
 	\acc_{\compl{\Lang_1}} &:= \Pow(Q_1) \setminus \acc_1 \qquad \text{where $Q_1$ are the states of $\autom_1$.}
 %	\\
 %	\acc_{\setminus} &:= \bigcup_{S_1 \in \acc_1} \{\{ (q_1,q_2,R) \in \syncQ \mid q_1 \in S_1 \land \forall S_2 \in \acc_2 : q_2 \notin S_2 \}\}

@@ -9,7 +9,7 @@ In this section, we introduce finite representations of nDMAs. These are similar
   \item $Q$ is a finite set of \emph{states};
   \item for $q \in Q$, $\weight{q}$ is a finite set of \emph{local names} (or \emph{registers}) of state $q$;
   \item $q_0 \in Q$ is the \emph{initial state};
-  \item $\rho_0 : \weight{q_0} \to \names$ is the \emph{initial assignment};
+  \item $\rho_0 : \weight{q_0} \inj \names$ is the \emph{initial assignment};
   \item $\acc \subseteq \Pow(Q)$ is the \emph{accepting condition}, in the style of \emph{Muller automata};
   \item $\htr{}{}$ is the \emph{transition relation}, made up of quadruples $q_1 \htr{l}{\sigma} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, label $l \in \weight{q_1} \uplus \{\star\}$, and \emph{history} $\sigma : \weight{q_2} \inj \weight{q_1} \uplus \{l\}$;
   \item the transition relation is \emph{deterministic} in the following sense: for each $q_1 \in Q$,   there is exactly one transition with source $q_1$ and label $\star$, and exactly one transition with source $q_1$ and label $x$ for each $x \in \weight{q_1}$.
@@ -30,7 +30,7 @@ In the following we fix a \hdma{} $A = (Q,\weight -,q_0,\rho_0,\htr{}{},\acc)$. 
 
 \begin{definition}
 \label{def:configuration-graph}
-The \emph{configuration graph} of $A$ is a is a graph with edges of the form  
+The \emph{configuration graph} of $A$ is a graph with edges of the form  
 $(q_1,\rho_1) \tr a (q_2,\rho_2)$ where the source and destination are configurations, and $a \in \names$. There is one such edge if and only if there is a transition $q_1 \htr l \sigma q_2$ in $A$ and either of the following happens: 
  \begin{itemize} 
   \item $l \in \weight{q_1}$, $\rho_1(l) = a$, and $\rho_2 = \rho_1 \circ \sigma$;
@@ -144,10 +144,10 @@ Finite representations are useful for effective operations on languages, as we s
 %See the proof of the next proposition for details on the construction.
 
 \begin{proposition}\label{prop:ndma-to-hdma}
-For each nDMA $(Q,\tr{},q_0,\acc)$, there is an \hdma{} the same language.
+For each nDMA $(Q,\tr{},q_0,\acc)$, there is an \hdma{} accepting the same language.
 For $q \in Q$ , let $o_q$ be a chosen canonical representative of $\orb(q)$, $o_{S \subseteq X} = \{o_q \mid q \in S\}$ and $\rho_q$ be a chosen permutation such that $\rho_q \cdot o_q = q$.	Construct the \hdma\  $(o_Q,\weight-,\htr{}{},o_{q_0},\restr{\rho_{q_0}}{\weight{o_{q_0}}},\{ \{ o_q \mid q \in A\} \mid A \in \acc \})$, 
 %
-with $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a q_2$, if $a \in \supp(o_{q_1})$, let $o_{q_1} \htr{a}{\sigma} o_{q_2}$; otherwise, let $o_{q_1} \htr{\star}{\sigma_\star} o_{q_2}$, where $\sigma=\restr{\rho_{q_2}}{\weight{o_{q_2}}}$ and $\sigma_\star = \restr{\sigma_{q_2}\sub{*}{a}}{\weight{o_{q_2}}}$.
+with $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a o_{q_2}$, if $a \in \supp(o_{q_1})$, let $o_{q_1} \htr{a}{\sigma} o_{q_2}$; otherwise, let $o_{q_1} \htr{\star}{\sigma_\star} o_{q_2}$, where $\sigma=\restr{\rho_{q_2}}{\weight{o_{q_2}}}$ and $\sigma_\star = \restr{\sigma_{q_2}\sub{*}{a}}{\weight{o_{q_2}}}$.
 \end{proposition}
 
 
