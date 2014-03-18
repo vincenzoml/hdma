@@ -1,0 +1,106 @@
+%!TEX root=ndma.tex
+
+In this section we show that our automata can be used to model interesting properties of real-life distributed systems. Consider a peer to peer system where each peer receives queries from other peers and buffers them. Then one query is selected, among the buffered ones, and is served by establishing a temporary connection with the target peer. This is what happens e.g.\ in Gnutella\todo{più o meno}.
+% and serves them in a first-come-first-served order. The number of unserved queries at each time is bounded, say at most $n$. When a query is selected to be served, the peer established a temporary connection with the target peer. We assume that peers have a fair behavior, i.e.\ they do not accept other queries from peers that have already sent one, if this has yet to be served.
+
+%We want to model such a peer as an automaton, as succinct as possible, i.e.\ with a small number of states and transitions. 
+These systems typically run forever, so it is reasonable to capture their behavior as an infinite sequence of actions. We assume peers have four kinds of observable actions: 
+\begin{itemize}
+	\item arrival of a new query from $p$, denoted $q(p)$; 
+	\item selection of a query to serve, denoted $s(p)$; 
+	\item connection to $p$ to serve its request, denoted $c(p)$; 
+	\item disconnection from $p$, denoted $d(p)$.
+\end{itemize}
+%
+Notice, however, that the number of possible peer identifiers $p$ can be huge. This means that an ordinary automaton modeling a peer may have a very large number of states and transitions. However, using our notion of automaton, where actions are ``symbolic'', we can obtain very compact models.
+
+We will give automata for two query selection policies: \emph{FCFS fair policy} and \emph{friend policy}. Then, using results from \autoref{sec:boolean-operations-decidability}, the negation of these automata can be intersected with a user-defined peer model: if the resulting automaton has empty language, which is a decidable property, then the peer complies with those policies.
+%one can give an automaton representing a peer and check that the intersection of 
+
+
+%The crucial idea is using symbolic actions:
+
+\paragraph{FCFS fair policy.}
+We want to model query selection in a FCFS style. Moreover, we want to capture fairness: queries from already buffered peers are discarded. We assume that the buffer has size $n$. 
+
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
+	
+%  \node[state,initial] (q0) {$q_0$}; 
+%  \node[state,right=9ex of q0] (q1) {$q_1$};
+%  \node[state,right=9ex of q1] (q2) {$q_2$};
+%
+%  \path (q0) edge [loop below]  node[inner sep=1pt] (star) {$q(\star),enq$} (q0);
+%  \path (q0) edge node[inner sep=1pt] (s1) {$s(1),id$} (q1);
+%  \path (q1) edge node[inner sep=1pt] (s1) {$c(1),id$} (q2);
+%  \path (q2) edge [above,out=135,in=45] node[inner sep=1pt] (s1) {$d(1),deq$} (q0);
+
+  \node[state,initial] (q0) {$q_0$}; 
+  \node[state,right=10ex of q0] (q1) {$q_1$};
+  \node[state,right=10ex of q1] (q2) {$q_2$};
+  \node[right=10ex of q2] (dots) {$\dots$};
+  \node[state,right=10ex of dots] (qn) {$q_n$};
+
+  \node[state,below=6ex of q1] (s1) {$s_1$};
+  \node[state,below=6ex of q2] (s2) {$s_2$};
+  \node[below=10ex of dots] (dotss) {$\dots$};
+  \node[state,below=6ex of qn] (sn) {$s_n$};
+
+  \node[state,below=6ex of s1] (c1) {$c_1$};
+  \node[state,below=6ex of s2] (c2) {$c_2$};
+  \node[below=10ex of dotss] (dotsss) {$\dots$};
+  \node[state,below=6ex of sn] (cn) {$c_n$};
+
+  \path (q0) edge node[inner sep=1pt,above] {\lab{q(\star)}} node[inner sep=1pt,below] {\lab{enq_1}} (q1);
+  \path (q1) edge node[inner sep=1pt,above] {\lab{q(\star)}} node[inner sep=1pt,below] {\lab{enq_2}} (q2);
+  \path (q2) edge node[inner sep=1pt,above] {\lab{q(\star)}} node[inner sep=1pt,below] {\lab{enq_3}}  (dots);
+  \path (dots) edge node[inner sep=1pt,above] {\lab{q(\star)}} node[inner sep=1pt,below] {\lab{enq_n}} (qn);
+
+%  \path (q2) edge [above,out=135,in=45] node[inner sep=1pt] (s1) {$d(1),deq$} (q0);
+
+  \path (q1) edge node[inner sep=1pt,left] {\lab{s(1)}} node[inner sep=1pt,right] {\lab{id}} (s1);
+  \path (q2) edge node[inner sep=1pt,left] {\lab{s(1)}} node[inner sep=1pt,right] {\lab{id}} (s2);
+  \path (qn) edge node[inner sep=1pt,left] {\lab{s(1)}} node[inner sep=1pt,right] {\lab{id}} (sn);
+  \path (qn) edge[loop] node[inner sep=1pt,above] {\lab{q(\star)}} node[inner sep=1pt,below] {\lab{id}} (qn);
+
+  \path (s1) edge[bend left] node[inner sep=1pt,left] {\lab{c(1)}} node[inner sep=1pt,right] {\lab{id}} (c1);
+  \path (s2) edge[bend left] node[inner sep=1pt,left] {\lab{c(1)}} node[inner sep=1pt,right] {\lab{id}} (c2);
+  \path (sn) edge[bend left] node[inner sep=1pt,left] {\lab{c(1)}} node[inner sep=1pt,right] {\lab{id}} (cn);
+
+  \path (c1) edge node[inner sep=1pt,left] {\lab{d(1)}} node[inner sep=1pt,right] {\lab{deq_1}} (q0);
+  \path (c2) edge node[inner sep=1pt,left] {\lab{d(1)}} node[inner sep=1pt,right] {\lab{deq_2}} (q1);
+
+
+%  \path (q2)
+%  \path (qn)
+	
+
+\end{tikzpicture}
+\caption{Automaton for the FCFS policy.}
+\label{fig:fcfs}
+\end{figure}
+%
+The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i,c_i$ is equipped with $i$ registers, for $i=i,\dots,n$, and $q_0$ has no registers. Each transition has a function saying how registers in the target state take values from those of the source state.
+\[
+	enq_i(x) = 
+	\begin{cases}
+		\star & x = i \\
+		x & x < i
+	\end{cases}
+	\qquad
+%	shift(x) =
+%x	\begin{cases}
+%		\star & x = n \\
+%		x+1 & x< n
+%	\end{cases}
+	\qquad
+	deq_i(x) = x + 1
+\]
+%
+The intuition is that transitions from $q_i$ to $q_{i+1}$ correspond to buffering a ``fresh'' query, that is one whose sender is not already buffered, in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. A transition from $q_i$ to $s_i$ picks the query $p$ in register $1$, that is always the oldest one; transition $s_i$ to $c_i$ establishes a connection to $p$; transition $c_i$ to $q_{i-1}$ removes $p$ from the buffer, and shifts the registers' content so that now register $1$ contains the query that arrived right after the one of $p$. In order to have a deterministic automaton, we assume each state has all possible outgoing transitions: those not shown in\autoref{fig:fcfs} are assumed to go to a sink state. The acceptance conditions contains all subsets of the states of this automaton, excluding the sink one.
+
+%
+
+\paragraph{Friend queries.} We introduce the concept of \emph{friend query}. This a query coming from a ``friend'' peer, which should be served as soon as possible, that is: after the current query has been served.
