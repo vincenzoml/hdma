@@ -150,11 +150,14 @@ For $q \in Q$ , let $o_q$ be a chosen canonical representative of $\orb(q)$, $o_
 with $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a o_{q_2}$, if $a \in \supp(o_{q_1})$, let $o_{q_1} \htr{a}{\sigma} o_{q_2}$; otherwise, let $o_{q_1} \htr{\star}{\sigma_\star} o_{q_2}$, where $\sigma=\restr{\rho_{q_2}}{\weight{o_{q_2}}}$ and $\sigma_\star = \restr{\sigma_{q_2}\sub{*}{a}}{\weight{o_{q_2}}}$.
 \end{proposition}
 
-
 \begin{example}
-Consider the following \hdma{} 
+Consider the \hdma\ in \autoref{fig:hd-of-example},
+%
+where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history from $q_1$ to $q_0$ (we omit empty histories). This automaton accepts the language of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.
+\end{example}
 
-\begin{center}
+\begin{figure}[t]
+\centering{
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,node distance=14ex,auto,semithick,initial text={}]
   \tikzstyle{every state}=[minimum size=6ex]
   \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
@@ -170,10 +173,9 @@ Consider the following \hdma{}
   \path (q1) edge [bend left] node {$x$} (q0);
   \path (reg) edge[densely dashed,bend right] (star);
 \end{tikzpicture}
-\end{center}
-%
-where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history from $q_1$ to $q_0$ (we omit empty histories). This automaton accepts the language of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.\end{example}
-
+}
+\caption{\hdma\ corresponding to the nDMA of \autoref{fig:example-session}\label{fig:hd-of-example}}
+\end{figure}
 
 
 % 

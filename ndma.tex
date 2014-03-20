@@ -1,6 +1,6 @@
 \documentclass[orivec]{llncs}
 
-\title{A decidable class of (nominal) omega-regular languages over an infinite alphabet}
+\title{Nominal deterministic omega automata}
 \author{Vincenzo Ciancia\inst{1} \and Matteo Sammartino\inst{2}}
 \institute{ISTI-CNR, Pisa \and Dipartimento di Informatica, Universit\`a di Pisa, Pisa }
 
@@ -15,7 +15,7 @@
 \maketitle
 
 \begin{abstract}
- We define a class of languages of infinite words over infinite alphabets, and the corresponding automata. The automata used for recognition are a generalisation of deterministic Muller automata to the setting of nominal sets. Remarkably, the obtained languages are determined by their ultimately periodic fragments, as in the classical case. Closure under complement, union and intersection, and decidability of emptiness and equivalence are preserved by the generalisation. This is shown by using finite representations of the (otherwise infinite-state) defined class of automata.
+  Nominal sets, presheaf categories, and named sets, have successfully served as models of the state space of process calculi featuring resource generation. More recently, automata built in such categories have been studied as acceptors of languages of finite words over infinite alphabets. In this paper we investigate automata whose state spaces are nominal sets, and that accept infinite words. These automata are a generalisation of deterministic Muller automata to the setting of nominal sets. Remarkably, the obtained languages are determined by their ultimately periodic fragments, as in the classical case. We prove decidability of complement, union, intersection, emptiness and equivalence. This is shown using finite representations of the (otherwise infinite-state) defined class of automata. The definition of such operations enables model checking of systems featuring infinite behaviours, and resource allocation, to be carried on using automata-theoretic methods, like in the classical case.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}\input{introduction}

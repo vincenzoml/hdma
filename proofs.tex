@@ -186,3 +186,32 @@ It is easy to check that this constructions reaches a configuration where all $x
 % $\trho_\ass$ satisfies the statement by construction.\todo{Dire meglio?}
 \qed
 \end{proof}
+
+
+\begin{proof}(of \autoref{thm:loop})
+We can take any path of the form
+\[
+	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \cdots \TrP{v_{\gamma-1}}{L} (p_0,\rrho_\gamma) \TrP{v_{\gamma}}{L} \cdots \TrP{v_{\gamma + \ass - 1}}{L} (p_0,\rrho_{\gamma + 
+	 \ass})
+\]
+where the part from $(p_0,\rrho_0)$ to $(p_0,\rrho_\gamma)$ is given by \cref{lem:forgetT} and the remaining subpath is given by \cref{lem:initT}, with $\trho_0 = \rrho_\gamma$. The only constraint about $\gamma$ is that there should be a positive integer $\lambda$ such that $\gamma + \ass = \lambda \id$, where $\id$ is given by \cref{lem:idI}. The claim follows from $\restr{\rrho_{\gamma + \ass}}{T} = \restr{\rrho_0}{T}$ and 
+$\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I \cup T = \weight{p_0}$, imply $\rrho_{\gamma + \ass} = \rrho_0$.
+\qed
+\end{proof}
+
+\begin{proof}(of \autoref{thm:up-fragment})
+Let $\autom$ be the automaton for $\Lang$. Take any $\alpha \in \Lang$ and let $I = \Inf(r^\alpha)$ (recall $r^\alpha$ is the run for $\alpha$ in $\autom$), so $I \in \acc$. A path spelling $\alpha$ in the configuration graph of $A$ must begin with
+$
+	(q_0,\rho_0) \Tr{u} (q_1,\rho_1) \TrP{v}{P} (q_1,\rho_2),
+$
+where $q_1 \in I$ and $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ is such that $P$ goes through all the states in $I$. Since $P$ is a loop, we can replace its induced path with a new one given by \cref{thm:loop} 
+$
+	(q_0,\rho_0) \Tr{u} (q_1,\rho_1) \TrP{v_0}{P} \cdots \TrP{v_n}{P} (q_1,\rho_1).
+$
+The subpath from $(q_1,\rho_1)$ can be traversed any number of times, so we have $u(v_0\dots v_n)^\omega \in \Lang$.
+\qed
+\end{proof}
+
+\begin{proof}(of \autoref{thm:up-determinacy})
+The proof mimics the one from \cite{CalbrixNP93}. Assume $\Lang_1 \neq \Lang_2$ and consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a nominal $\omega$-regular language (set difference can be expressed via intersection and complement)  and, by $\Lang_1 \neq \Lang_2$, it is not empty, so by \cref{thm:up-fragment} it contains at least one ultimately periodic word, which implies $UP(\Lang_1) \neq UP(\Lang_2)$. \qed
+\end{proof}

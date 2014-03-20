@@ -58,8 +58,8 @@ This is an idealised version of a service, where each in a number of potentially
 \end{example}
 
 \begin{figure}
-\begin{center}
- \begin{tikzpicture}[->,auto,node distance=2.2cm]  
+\centering
+ {\begin{tikzpicture}[->,auto,node distance=1.8cm]  
   \node[state] (q0)               {$q_0$};
   \node[state] (qa) [above left of = q0] {$q_a$};
   \node[state] (qb) [below left of = q0] {$q_b$};
@@ -86,7 +86,7 @@ This is an idealised version of a service, where each in a number of potentially
              
 \end{tikzpicture}
 %
-\end{center}
+}
 \caption{\label{fig:example-session} The nDMA of \cref{exa:session}, with $\acc = \{ \{ \{ q_0 \} , \{ q_a \mid a \in \names \}\}\}$.}
 \end{figure}
 

@@ -5,12 +5,12 @@
 An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v$ finite words. Given a language of infinite words $\Lang$, let $UP(\Lang)$ be its \emph{ultimately periodic fragment} $\{ \alpha \in \Lang \mid \alpha = uv^\omega \land u,v \; \text{are finite} \}$. It has been proven in \cite{CalbrixNP93,Buchi62} that, for every two $\omega$-regular languages $\Lang_1$ and $\Lang_2$, $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$, i.e.\ $\omega$-regular languages are characterised by their ultimately periodic fragments.
 In this section we aim to extend this result to the nominal setting. 
 
-The preliminary result to establish, as in the classical case, is that every non-empty nominal $\omega$-regular language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states in the automaton and iterating it. In our case this is not enough, because it may not be possible to consume the same name in consecutive traversals of the same transition of a \hdma, due to freshness constraints. The first part of this section will be spent in showing that, given a loop in a \hdma{}, there always is a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. This implies that such path can be taken an arbitrary number of times.
+The preliminary result to establish, as in the classical case, is that every non-empty nominal $\omega$-regular language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states in the automaton and iterating it. In our case it may not be possible to consume the same name in consecutive traversals of the same transition of a \hdma, due to freshness constraints. The first part of this section will be spent in showing that, given a loop in a \hdma{}, there always is a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. Thus, such path can be taken an arbitrary number of times.
 
-We fix a loop (the specific \hdma{} is not relevant)
-\[
-	L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0
-\]
+Fix a loop 
+%\[
+	$L \;:=\; p_0 \htr{l_0}{\sigma_0} p_1 \htr{l_1}{\sigma_1} \dots \htr{l_{n-1}}{\sigma_{n-1}} p_0$ (the specific \hdma{} is not relevant).
+%\]
 We write $\ul{i}$ for $i \mod n$. 
 %\todo{Notice that after the loop, and independently from the initial assignment, some of the registers of $p_0$ will contain values that were contained in some of its registers in the beginning. Call these \emph{old} registers, and the rest \emph{new}.} 
 For all $i=0,\dots,n-1$, let $\widehat{\sigma}_i \colon \weight{p_\ul{i+1}} \pto \weight{p_i}$ be the partial maps telling the history of old registers and ignoring the new ones, formally $\widehat{\sigma}_i := \sigma_i \setminus \{ (x,y) \in \sigma_i \mid y = \star \}$, and let $\widehat{\sigma} \colon \weight{p_0} \pto \weight{p_0}$ be their composition $\widehat{\sigma}_0 \circ \widehat{\sigma}_1 \dots \circ \widehat{\sigma}_{n-1}$. We define the set $I$ as the greatest subset of $\dom(\widehat{\sigma})$ such that $ \widehat{\sigma}(I) = I$,
@@ -61,22 +61,12 @@ Finally, we combine the above lemmata. We construct a path where: (1) the values
 %
 %
 %\todo{For all paths $p_0 ...$, and assignments ... there are... (essendo il teorema principle, facciamo lo statement lungo)}
-For each loop $L$ and all assignments $\rrho_0 \colon \weight{p_0} \to \names$, where $p_0$ is the initial state of $L$, there are $v_0,\dots,v_n$ such that
-\[
-	(p_0, \rrho_0) \TrP{v_0}{L} (p_0, \rrho_1) \TrP{v_1}{L} \cdots \TrP{v_n}{L} (p_0,\rrho_0) \enspace .
-\]
+For each loop $L$ with initial state $p_0$, and assignment $\rrho_0 \colon \weight{p_0} \to \names$, there are $v_0,\dots,v_n$ such that
+%\[
+$	(p_0, \rrho_0) \TrP{v_0}{L} (p_0, \rrho_1) \TrP{v_1}{L} \cdots \TrP{v_n}{L} (p_0,\rrho_0) $.
+%\]
 \end{theorem}
 
-\begin{proof}
-We can take any path of the form
-\[
-	(p_0,\rrho_0) \TrP{v_0}{L} (p_0,\rrho_1) \TrP{v_1}{L} \cdots \TrP{v_{\gamma-1}}{L} (p_0,\rrho_\gamma) \TrP{v_{\gamma}}{L} \cdots \TrP{v_{\gamma + \ass - 1}}{L} (p_0,\rrho_{\gamma + 
-	 \ass})
-\]
-where the part from $(p_0,\rrho_0)$ to $(p_0,\rrho_\gamma)$ is given by \cref{lem:forgetT} and the remaining subpath is given by \cref{lem:initT}, with $\trho_0 = \rrho_\gamma$. The only constraint about $\gamma$ is that there should be a positive integer $\lambda$ such that $\gamma + \ass = \lambda \id$, where $\id$ is given by \cref{lem:idI}. The claim follows from $\restr{\rrho_{\gamma + \ass}}{T} = \restr{\rrho_0}{T}$ and 
-$\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I \cup T = \weight{p_0}$, imply $\rrho_{\gamma + \ass} = \rrho_0$.
-\qed
-\end{proof}
 %
 
 \begin{figure}[t]
@@ -131,10 +121,15 @@ $\restr{\rrho_{\gamma + \ass}}{I} = \restr{\rrho_0}{I}$ which, together with $I 
 
 \begin{example} We justify the above construction on the \hdma{} of \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting condition, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
 We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
-\begin{align*}
-	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) &\tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}]) \\
-	&\tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])
-\end{align*}
+%\begin{align*}
+$	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) \tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}])
+	\tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])$
+%\end{align*}
+%
+% \begin{align*}
+% 	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) &\tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}]) \\
+% 	&\tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])
+% \end{align*}
 where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped according to the permutation $(a \; b)$, and $d$ is assigned to $z_0$. Our aim is to recover $\rho_0$ again. According to \cref{lem:idI}, $x_0$ and $y_0$ get their assignment back in $\theta = 2$ traversals of $L$ (in fact $(a\; b)^2 = (a\; b)$). As for $z_0$, its assignment is established in the second transition, but $c$ should not have been assigned to any register of $q_1$ in order for it to be consumed during this transition. This is where \cref{lem:forgetT} comes into play: it says that in at least $\epsilon = 1$ traversals of $L$ the name $c$ is discarded. This is exactly what happens in the path shown above. Then we can assign $c$ to $z_0$ in another $\zeta = 1$ traversal of $L$, according to \cref{lem:initT}. Since $\epsilon + \zeta  = \theta = 2$, traversing $L$ twice is enough. For instance, we can take the path spelling $cdbdca$.
 \end{example}
 %
@@ -144,26 +139,11 @@ where $d \neq a,b,c$. Notice that the values of $x_0$ and $y_0$ get swapped acco
 \label{thm:up-fragment}
 When $\Lang$ is a non-empty $\omega$-regular language, $UP(\Lang) \neq \emptyset$.
 \end{theorem}
-\begin{proof}
-Let $\autom$ be the automaton for $\Lang$. Take any $\alpha \in \Lang$ and let $I = \Inf(r^\alpha)$ (recall $r^\alpha$ is the run for $\alpha$ in $\autom$), so $I \in \acc$. A path spelling $\alpha$ in the configuration graph of $A$ must begin with
-$
-	(q_0,\rho_0) \Tr{u} (q_1,\rho_1) \TrP{v}{P} (q_1,\rho_2),
-$
-where $q_1 \in I$ and $(q_1,\rho_1) \TrP{v}{P} (q_2,\rho_2)$ is such that $P$ goes through all the states in $I$. Since $P$ is a loop, we can replace its induced path with a new one given by \cref{thm:loop} 
-$
-	(q_0,\rho_0) \Tr{u} (q_1,\rho_1) \TrP{v_0}{P} \cdots \TrP{v_n}{P} (q_1,\rho_1).
-$
-The subpath from $(q_1,\rho_1)$ can be traversed any number of times, so we have $u(v_0\dots v_n)^\omega \in \Lang$.
-\qed
-\end{proof}
 
 \begin{theorem}
 \label{thm:up-determinacy}
 For $\Lang_1,\Lang_2$ nominal $\omega$-regular, $UP(\Lang_1) = UP(\Lang_2) \implies\Lang_1 = \Lang_2$.
 \end{theorem}
-\begin{proof}
-The proof mimics the one from \cite{CalbrixNP93}. Assume $\Lang_1 \neq \Lang_2$ and consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a nominal $\omega$-regular language (set difference can be expressed via intersection and complement)  and, by $\Lang_1 \neq \Lang_2$, it is not empty, so by \cref{thm:up-fragment} it contains at least one ultimately periodic word, which implies $UP(\Lang_1) \neq UP(\Lang_2)$. \qed
-\end{proof}
 % 
 Note that a similar result could not be achieved in the presence of so-called \emph{global freshness} \cite{Tze11}, e.g.\ the one-state automaton accepting only globally fresh symbols would have empty ultimately periodic fragment, just like the empty language. As a concluding remark, we note that, by \cref{thm:up-determinacy}, every $\omega$-regular language is characterized by a sublanguage of finitely supported words (the support of $uv^\omega$ just contains the finitely many symbols in $u$ and $v$). We find this result appealing, given the central role of the notion of support in the nominal setting. 
 
