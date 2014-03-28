@@ -51,43 +51,124 @@ Using $\names$ simplifies the presentation, especially in Section \ref{sec:hd-au
 \begin{example}\label{exa:session}
  Consider the nDMA in \cref{fig:example-session}. We have $Q = \{q_0\} \cup \{q_a \mid a \in \names\}$. For all $\pi$, we let $\pi \cdot q_0 = q_0$, $\pi \cdot q_a = q_{\pi(a)}$. We have $\supp(q_0) = \emptyset$, and $\supp(q_a) = \{ a \}$. For all $a$, let $q_0 \tr{a} q_a$, $q_a \tr{a} q_0$, and for $b \neq a$, $q_a \tr b q_a$. Each of the infinite ``legs'' of the automaton rooted in $q_0$ remembers a different name, and returns to $q_0$ when the same name is encountered again. There are two orbits, namely $\orb_0 = \{ q_0 \}$ and $\orb_1 = \{ q_a \mid a \in \names \}$. We let $\acc = \{ \{ \orb_0, \orb_1 \} \}$. For acceptance, a word needs to cross both orbits infinitely often. Thus, $\Lang_{q_0}=\{aua \mid a \in \names, u \in (\names\setminus\{a\})^* \}^\omega$.
 % 
-This is an idealised version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Infinitely often, an arbitrary symbol occurs, representing an ``access''; the next occurrence of the same symbol denotes a ``leave''. One could use an  alphabet with two infinite orbits to distinguish the two kinds of action (see Remark \ref{rem:simple-alphabet}), or reserve two distinguished names of $\names$ to be used as ``brackets'' 	
+This is an idealized version of a service, where each in a number of potentially infinite users (represented by names) may access the service, reference other users, and later leave. Infinitely often, an arbitrary symbol occurs, representing an ``access''; the next occurrence of the same symbol denotes a ``leave''. One could use an  alphabet with two infinite orbits to distinguish the two kinds of action (see Remark \ref{rem:simple-alphabet}), or reserve two distinguished names of $\names$ to be used as ``brackets'' 	
 %to appear in words 
  before the different occurrences of other names, adding more states.
  %Another option is to add to the alphabet two special symbols without names, say, ``access'' and ``leave'', and additional states and transitions, to appear before the two distinct usages of a symbol.
 \end{example}
 
-\begin{figure}
-\centering
- {\begin{tikzpicture}[->,auto,node distance=1.8cm]  
+\begin{figure}[t]
+
+\begin{center}
+\subfigure[]{
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=15ex,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]  
   \node[state] (q0)               {$q_0$};
   \node[state] (qa) [above left of = q0] {$q_a$};
   \node[state] (qb) [below left of = q0] {$q_b$};
   \node[state] (qc) [below right of = q0] {$q_c$};
   \node (qany) [above right of = q0] {$\ldots$};
-  
-  
+  	\coordinate (Middle) at ($(qb)!0.5!(qc)$);
+  \node (acc) [below=3ex of Middle] {$\acc = \{ \{ \{ q_0 \} , \{ q_a \mid a \in \names \}\}\}$};
+% 
+%  
   \path (q0) edge [bend left]  node[inner sep=1pt] {$a$} (qa);
   \path (q0) edge [bend left]  node[inner sep=1pt] {$b$} (qb);
   \path (q0) edge [bend left]  node[inner sep=1pt] {$c$} (qc);
-  \path (q0) edge [bend left]  node {$\ldots$} (qany);
-  
+  \path (q0) edge [bend left]  node {$\ldots$} (qany);  
   \path (qa) edge [bend left]  node[inner sep=1pt] {$a$} (q0)
-             edge [loop left] node {$b,c,d,\ldots$} (qa);
-  
+             edge [loop left] node {$b,c,d,\ldots$} (qa);  
   \path (qb) edge [bend left]  node[inner sep=1pt] {$b$} (q0)
-             edge [loop left] node {$a,c,d,\ldots$} (qb);
-  
+             edge [loop left] node {$a,c,d,\ldots$} (qb);  
   \path (qc) edge [bend left]  node[inner sep=1pt] {$c$} (q0)
-             edge [loop right] node {$a,b,d,\ldots$} (qc);
-  
+             edge [loop right] node {$a,b,d,\ldots$} (qc);  
   \path (qany) edge [bend left]  node {$\ldots$} (q0);
              edge [loop right] node {} (qany);
-             
-\end{tikzpicture}
 %
+\end{tikzpicture}
+\label{fig:example-session}
 }
-\caption{\label{fig:example-session} The nDMA of \cref{exa:session}, with $\acc = \{ \{ \{ q_0 \} , \{ q_a \mid a \in \names \}\}\}$.}
+\hspace{2ex}
+\subfigure[]{
+{\centering
+ \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}] 
+\tikzstyle{every state}=[minimum size=10ex]
+  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
+%	
+%
+\node[register,label={[shift={(2pt,-2pt)}]above:$x_0$}] (reg00) {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$y_0$}] (reg01) [right=10pt of reg00] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$z_0$}] (reg02) [right=10pt of reg01] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$x_1$}] (reg10) [right=50pt of reg02] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$y_1$}] (reg11) [right=10pt of reg10] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$z_1$}] (reg12) [right=10pt of reg11] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$y_2$}] (reg21) at ($(reg02)!0.5!(reg10)$) [yshift=-15ex] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$x_2$}] (reg20) [left=10pt of reg21] {};
+  \node[register,label={[shift={(2pt,-2pt)}]above:$z_2$}] (reg22) [right=10pt of reg21] {};
+  \node[state,initial,fit={(reg00) (reg01) (reg02)},inner sep=2ex] (q0) {};
+  \node[above left=-1ex of q0] (lab0) {$q_0$}; 
+  \node[state,fit={(reg10) (reg11) (reg12)},inner sep=2ex] (q1) {};
+  \node[above right=-1ex of q1] (lab1) {$q_1$}; 
+  \node[state,fit={(reg20) (reg21) (reg22)},inner sep=2ex] (q2) {};
+  \node[below=1pt of q2] (lab2) {$q_2$}; 
+
+  \path (q0) edge [bend left] node {$z_0$} (q1);
+  \path (q1) edge [bend left=40]  node[inner sep=1pt] (star) {$\star$} (q2);
+  \path (q2) edge [bend left=40] node {$x_2$} (q0);	
+  \path (reg10) edge[densely dotted,out=90,in=90,looseness=2,shorten >=5pt,shorten <=5pt] (reg01);
+  \path (reg11) edge[densely dotted,out=90,in=90,looseness=2,shorten >=5pt,shorten <=5pt] (reg00);
+  \path (reg12) edge[densely dotted,out=90,in=90,looseness=2,shorten >=5pt,shorten <=5pt] (reg02);
+  \path (reg20) edge[densely dotted,shorten <=5pt] (reg10);
+  \path (reg21) edge[densely dotted,shorten <=5pt] (reg11);
+  \path (reg22) edge[bend right,densely dotted] (star);
+  \path (reg20) edge[densely dotted,shorten <=1pt] (reg00);
+  \path (reg21) edge[densely dotted,shorten <=1pt] (reg01);
+  \path (reg22) edge[densely dotted,shorten <=1pt] (reg02);
+\end{tikzpicture}
+}
+\label{fig:upwords-ex}
+}
+\end{center}
+%
+\vspace{-6.3ex}
+\begin{center}
+\subfigure[]{
+{
+\centering
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]
+%
+%	
+  \node[state,initial] (q0) {$q_0$}; 
+  \node[below=1ex of q0] {$\acc = \{ \{ q_0 \} \}$};
+%
+  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
+\end{tikzpicture}
+}
+\label{fig:hd-names-omega}
+}
+%
+\hspace{10ex}
+\subfigure[]{
+{\centering
+\begin{tikzpicture}[->,shorten >=1pt,node distance=14ex,auto,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]
+  \tikzstyle{every state}=[minimum size=6ex]
+  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]	
+  \node[state,initial] (q0) {$q_0$}; 
+  \node[state,right of=q0] (q1) {};  
+  \node (lab1) at (q1) {$q_1$};  \node[register,label={[xshift=-3pt,yshift=-2pt]right:$x$}] (reg) [above=1pt of lab1] {};
+	\coordinate (Middle) at ($(q0)!0.5!(q1)$);
+  \node[below=4ex of Middle] {$\acc = \{\{q_0,q_1\}\}$};
+  \path (q0) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q1);
+  \path (q1) edge[loop right] node[inner sep=1pt] {$\star$} (q1);
+  \path (q1) edge [bend left] node {$x$} (q0);
+  \path (reg) edge[densely dotted,bend right] (star);
+\end{tikzpicture}
+}
+\label{fig:hd-of-example}
+}
+\end{center}
+
+\label{fig:automata}
+\caption{Some automata, together with their accepting conditions. \subref{fig:example-session} is the nDMA of \cref{exa:session} and \subref{fig:hd-of-example} is the corresponding \hdma; \subref{fig:upwords-ex} is an example \hdma\, where we have omitted the accepting condition and unrelevant transitions, all assumed to end up in a sink state without registers; \subref{fig:hd-names-omega} is the \hdma\ recognizing $\names^\omega$.}
 \end{figure}
 
 \noindent Accepted words may fail to be finitely supported. However, languages are, in line with the intuition of studying machines with finite memory, that never halt.

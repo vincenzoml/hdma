@@ -69,55 +69,55 @@ $	(p_0, \rrho_0) \TrP{v_0}{L} (p_0, \rrho_1) \TrP{v_1}{L} \cdots \TrP{v_n}{L} (p
 
 %
 
-\begin{figure}[t]
-\begin{center}
- \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
-  \tikzstyle{every state}=[minimum size=10ex]
-  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
-	
-  \node[register,label={[shift={(2pt,-2pt)}]above:$x_0$}] (reg00) {};
-  \node[register,label={[shift={(2pt,-2pt)}]above:$y_0$}] (reg01) [right=10pt of reg00] {};
-  \node[register,label={[shift={(2pt,-2pt)}]above:$z_0$}] (reg02) [right=10pt of reg01] {};
-
-  \node[register,label={[shift={(2pt,-2pt)}]above:$x_1$}] (reg10) [right=50pt of reg02] {};
-  \node[register,label={[shift={(2pt,-2pt)}]above:$y_1$}] (reg11) [right=10pt of reg10] {};
-  \node[register,label={[shift={(2pt,-2pt)}]above:$z_1$}] (reg12) [right=10pt of reg11] {};
-
-  \node[register,label={[shift={(2pt,-2pt)}]above:$y_2$}] (reg21) at ($(reg02)!0.5!(reg10)$) [yshift=-15ex] {};
-
-  \node[register,label={[shift={(2pt,-2pt)}]above:$x_2$}] (reg20) [left=10pt of reg21] {};
-  \node[register,label={[shift={(2pt,-2pt)}]above:$z_2$}] (reg22) [right=10pt of reg21] {};
-
-
-
-  \node[state,initial,fit={(reg00) (reg01) (reg02)},inner sep=2ex] (q0) {};
-  \node[above left=-1ex of q0] (lab0) {$q_0$}; 
-  \node[state,fit={(reg10) (reg11) (reg12)},inner sep=2ex] (q1) {};
-  \node[above right=-1ex of q1] (lab1) {$q_1$}; 
-  \node[state,fit={(reg20) (reg21) (reg22)},inner sep=2ex] (q2) {};
-  \node[below=1pt of q2] (lab2) {$q_2$}; 
-
-  \path (q0) edge [bend left] node {$z_0$} (q1);
-  \path (q1) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q2);
-  \path (q2) edge [bend left] node {$x_2$} (q0);
-	
-  \path (reg10) edge[densely dashed,out=90,in=90,looseness=2,shorten >=7pt,shorten <=8pt] (reg01);
-  \path (reg11) edge[densely dashed,out=90,in=90,looseness=2,shorten >=7pt,shorten <=8pt] (reg00);
-  \path (reg12) edge[densely dashed,out=90,in=90,looseness=2,shorten >=7pt,shorten <=8pt] (reg02);
-
-  \path (reg20) edge[densely dashed,shorten <=8pt] (reg10);
-  \path (reg21) edge[densely dashed,shorten <=8pt] (reg11);
-  \path (reg22) edge[bend right,densely dashed] (star);
-
-  \path (reg20) edge[densely dashed,shorten <=5pt] (reg00);
-  \path (reg21) edge[densely dashed,shorten <=5pt] (reg01);
-  \path (reg22) edge[densely dashed,shorten <=5pt] (reg02);
-
-\end{tikzpicture}
-
-\end{center}
-\caption{\label{fig:upwords-ex} An example automaton. Some transitions are not shown: they are all assumed to end up in a sink state without registers.}
-\end{figure}
+%\begin{figure}[t]
+%\begin{center}
+% \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
+%  \tikzstyle{every state}=[minimum size=10ex]
+%  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
+%	
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$x_0$}] (reg00) {};
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$y_0$}] (reg01) [right=10pt of reg00] {};
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$z_0$}] (reg02) [right=10pt of reg01] {};
+%
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$x_1$}] (reg10) [right=50pt of reg02] {};
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$y_1$}] (reg11) [right=10pt of reg10] {};
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$z_1$}] (reg12) [right=10pt of reg11] {};
+%
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$y_2$}] (reg21) at ($(reg02)!0.5!(reg10)$) [yshift=-15ex] {};
+%
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$x_2$}] (reg20) [left=10pt of reg21] {};
+%  \node[register,label={[shift={(2pt,-2pt)}]above:$z_2$}] (reg22) [right=10pt of reg21] {};
+%
+%
+%
+%  \node[state,initial,fit={(reg00) (reg01) (reg02)},inner sep=2ex] (q0) {};
+%  \node[above left=-1ex of q0] (lab0) {$q_0$}; 
+%  \node[state,fit={(reg10) (reg11) (reg12)},inner sep=2ex] (q1) {};
+%  \node[above right=-1ex of q1] (lab1) {$q_1$}; 
+%  \node[state,fit={(reg20) (reg21) (reg22)},inner sep=2ex] (q2) {};
+%  \node[below=1pt of q2] (lab2) {$q_2$}; 
+%
+%  \path (q0) edge [bend left] node {$z_0$} (q1);
+%  \path (q1) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q2);
+%  \path (q2) edge [bend left] node {$x_2$} (q0);
+%	
+%  \path (reg10) edge[densely dashed,out=90,in=90,looseness=2,shorten >=7pt,shorten <=8pt] (reg01);
+%  \path (reg11) edge[densely dashed,out=90,in=90,looseness=2,shorten >=7pt,shorten <=8pt] (reg00);
+%  \path (reg12) edge[densely dashed,out=90,in=90,looseness=2,shorten >=7pt,shorten <=8pt] (reg02);
+%
+%  \path (reg20) edge[densely dashed,shorten <=8pt] (reg10);
+%  \path (reg21) edge[densely dashed,shorten <=8pt] (reg11);
+%  \path (reg22) edge[bend right,densely dashed] (star);
+%
+%  \path (reg20) edge[densely dashed,shorten <=5pt] (reg00);
+%  \path (reg21) edge[densely dashed,shorten <=5pt] (reg01);
+%  \path (reg22) edge[densely dashed,shorten <=5pt] (reg02);
+%
+%\end{tikzpicture}
+%
+%\end{center}
+%\caption{\label{fig:upwords-ex} An example automaton. Some transitions are not shown: they are all assumed to end up in a sink state without registers.}
+%\end{figure}
 
 \begin{example} We justify the above construction on the \hdma{} of \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting condition, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
 We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path

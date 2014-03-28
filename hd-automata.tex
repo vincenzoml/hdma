@@ -121,20 +121,18 @@ Differently from nDMAs, \hdmas\ have finite states.
 %\todo{La frase The configuratoin graph... infinite-branching a che serve? La togliamo?} The configuration graph is deterministic, even if still infinite-state and infinite-branching.
 Finite representations are useful for effective operations on languages, as we shall see later. The similarity between configuration graphs of \hdmas, and nDMAs, is deep, as stated in the following propositions. These are similar to the categorical equivalence results in \cite{GadducciMM06,FioreS06}; however, notice that representing infinite branching systems using  ``allocating transitions'' requires further machinery, similar to what is studied in \cite{CianciaM10}. See also \cref{rem:no-symmetry} about symmetry.
 
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
-  %\tikzstyle{every state}=[minimum size=10ex]
-  %\tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
-	
-  \node[state,initial] (q0) {$q_0$}; 
-  \node[right=10ex of q0] {$\acc = \{ \{q_0 \}\}$ };
-
-  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
-\end{tikzpicture}
-\caption{The \hdma{} accepting $\names^\omega$.}
-\label{fig:hd-names-omega}
-\end{figure}
+%\begin{figure}[t]
+%\centering
+%\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
+%	
+%  \node[state,initial] (q0) {$q_0$}; 
+%  \node[right=10ex of q0] {$\acc = \{ \{q_0 \}\}$ };
+%
+%  \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
+%\end{tikzpicture}
+%\caption{The \hdma{} accepting $\names^\omega$.}
+%\label{fig:hd-names-omega}
+%\end{figure}
 
 \begin{proposition}\label{pro:nset-to-nom}
  The configuration graph of $A$, equipped with the permutation action $\pi \cdot (q,\rho) = (q,\pi \circ \rho)$ forms the transition structure of an nDMA. The orbits of the obtained nDMA are in one to one correspondence with states in $Q$; thus the acceptance condition on states can be used as an acceptance condition on the orbits of the configuration graph. When the configuration $(q_0,\rho_0)$ is chosen as initial state, the obtained nDMA accepts the same language as $A$.
@@ -156,26 +154,26 @@ Consider the \hdma\ in \autoref{fig:hd-of-example},
 where the labelled dot within $q_1$ represents its register, and the dashed line depicts the history from $q_1$ to $q_0$ (we omit empty histories). This automaton accepts the language of \cref{exa:session}. In fact, $q_0$ is the only element in the orbit of the initial state of the nDMA, and $q_1$ canonically represents all $q_a$, $a \in \names$. This notation for \hdmas{} will be used throughout the paper.
 \end{example}
 
-\begin{figure}[t]
-\centering{
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,node distance=14ex,auto,semithick,initial text={}]
-  \tikzstyle{every state}=[minimum size=6ex]
-  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
-	
-  \node[state,initial] (q0) {$q_0$}; 
-  \node[state,right of=q0] (q1) {};  
-  \node (lab1) at (q1) {$q_1$};
-  \node[register,label={[xshift=-3pt,yshift=-2pt]right:$x$}] (reg) [above=1pt of lab1] {};
-  \node[right=8ex of q1] {$\acc = \{\{q_0,q_1\}\}$};
-
-  \path (q0) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q1);
-  \path (q1) edge[loop right] node[inner sep=1pt] {$\star$} (q1);
-  \path (q1) edge [bend left] node {$x$} (q0);
-  \path (reg) edge[densely dashed,bend right] (star);
-\end{tikzpicture}
-}
-\caption{\hdma\ corresponding to the nDMA of \autoref{fig:example-session}\label{fig:hd-of-example}}
-\end{figure}
+%\begin{figure}[t]
+%\centering{
+%\begin{tikzpicture}[->,>=stealth',shorten >=1pt,node distance=14ex,auto,semithick,initial text={}]
+%  \tikzstyle{every state}=[minimum size=6ex]
+%  \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
+%	
+%  \node[state,initial] (q0) {$q_0$}; 
+%  \node[state,right of=q0] (q1) {};  
+%  \node (lab1) at (q1) {$q_1$};
+%  \node[register,label={[xshift=-3pt,yshift=-2pt]right:$x$}] (reg) [above=1pt of lab1] {};
+%  \node[right=8ex of q1] {$\acc = \{\{q_0,q_1\}\}$};
+%
+%  \path (q0) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q1);
+%  \path (q1) edge[loop right] node[inner sep=1pt] {$\star$} (q1);
+%  \path (q1) edge [bend left] node {$x$} (q0);
+%  \path (reg) edge[densely dashed,bend right] (star);
+%\end{tikzpicture}
+%}
+%\caption{\hdma\ corresponding to the nDMA of \autoref{fig:example-session}\label{fig:hd-of-example}}
+%\end{figure}
 
 
 % 
