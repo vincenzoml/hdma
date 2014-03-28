@@ -12,9 +12,9 @@ These systems typically run forever, so it is reasonable to capture their behavi
 	\item disconnection from $p$, denoted $d(p)$.
 \end{itemize}
 %
-Notice, however, that the number of possible peer identifiers $p$ can be huge. This means that an ordinary automaton modeling a peer may have a very large number of states and transitions. However, using our notion of automaton, where actions are ``symbolic'', we can obtain very compact models.
+Notice that the number of possible peer identifiers $p$ can be huge. This means that an ordinary automaton modeling a peer may have a very large number of states and transitions. However, using our notion of automaton, where actions are ``symbolic'', we can obtain very compact models.
 
-We will give automata for two query selection policies: \emph{FCFS fair policy} and \emph{friend policy}. Then, using results from \autoref{sec:boolean-operations-decidability}, the negation of these automata can be intersected with a user-defined peer model: if the resulting automaton has empty language, which is a decidable property, then the peer complies with those policies.
+We will give automata for two query selection policies: \emph{FCFS fair policy} and \emph{friend policy}. Then, using results from \autoref{sec:boolean-operations-decidability}, the negation of these automata can be intersected with a user-defined peer model: if the resulting automaton has empty language, which is a decidable check, then the peer complies with those policies.
 %one can give an automaton representing a peer and check that the intersection of 
 
 
@@ -26,7 +26,7 @@ We want to model query selection in a FCFS style. Moreover, we want to capture f
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={}]
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]
 	
 %  \node[state,initial] (q0) {$q_0$}; 
 %  \node[state,right=9ex of q0] (q1) {$q_1$};
@@ -99,8 +99,11 @@ The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i,c_i$ is equipp
 	deq_i(x) = x + 1
 \]
 %
-The intuition is that transitions from $q_i$ to $q_{i+1}$ correspond to buffering a ``fresh'' query, that is one whose sender is not already buffered, in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. A transition from $q_i$ to $s_i$ picks the query $p$ in register $1$, that is always the oldest one; transition $s_i$ to $c_i$ establishes a connection to $p$; transition $c_i$ to $q_{i-1}$ removes $p$ from the buffer, and shifts the registers' content so that now register $1$ contains the query that arrived right after the one of $p$. In order to have a deterministic automaton, we assume each state has all possible outgoing transitions: those not shown in\autoref{fig:fcfs} are assumed to go to a sink state. The acceptance conditions contains all subsets of the states of this automaton, excluding the sink one.
+The intuition is that transitions from $q_i$ to $q_{i+1}$ correspond to buffering a ``fresh'' query, that is one whose sender is not already buffered, in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. A transition from $q_i$ to $s_i$ picks the query $p$ in register $1$, that is always the oldest one; transition $s_i$ to $c_i$ establishes a connection to $p$; transition $c_i$ to $q_{i-1}$ removes $p$ from the buffer, and shifts the registers' content so that now register $1$ contains the query that arrived right after the one of $p$. Our automaton should (1) be deterministic and (2) have a Muller-style accepting condition. For (1), we assume each state has all possible outgoing transitions: those not shown in \autoref{fig:fcfs} are assumed to go to a sink state. For (2), we take all subsets of the states, excluding the sink one, as accepting set, that is: behaviors that go through states and transitions depicted in \autoref{fig:fcfs} are all accepted.
+%Our automata have a Muller-style accepting condition
+%The acceptance conditions contains all subsets of the states of this automaton, excluding the sink one.
 
 %
 
-\paragraph{Friend queries.} We introduce the concept of \emph{friend query}. This a query coming from a ``friend'' peer, which should be served as soon as possible, that is: after the current query has been served.
+\paragraph{Friend queries.} A \emph{friend query} is a query coming from a ``friend'' peer, which should be served as soon as possible, that is: after the current query has been served. We introduce the new kind of action $q_f(p)$ to model a friend query from $p$. An automaton that correctly handles such queries can be obtained from the one of \autoref{fig:fcfs} as follows: we add a transition from $q_i$ to $q_{i+1}$, for each $i=0,\dots,n-1$, labelled with $q_f(\star)$ and with the map $top_i$, sending $1$ to $\star$ and $x > 1$ to $x-1$; and a looping transition on $q_n$ with label $q_f(\star)$ and map $id$, which discards friend queries when the buffer is full. Intuitively, $top_i$ always stores the friend query in register $1$, so that transitions $s(1)$ will always pick it.\todo[size=\tiny]{Qui assumo che essere ``friend'' è una proprietà del peer, cioè un predicato unario. Se dovessi catturare una relazione di amicizia probabilmente avrei bisogno di registri costanti che contengono gli identificatori degli amici, oppure di modellare relazioni di amicizia con grafi.}
+%by modifying the one of \autoref{fig:fcfs} as follows: we add states $f_i$ ($i=1,\dots,n$)
