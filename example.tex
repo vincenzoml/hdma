@@ -1,6 +1,6 @@
 %!TEX root=ndma.tex
 
-In this section we show that our automata can be used to model interesting properties of real-life distributed systems. Consider a peer to peer system where each peer receives queries from other peers and buffers them. Then one query is selected, among the buffered ones, and is served by establishing a temporary connection with the target peer. This is what happens e.g.\ in Gnutella\todo{più o meno}.
+In this section we show that our automata can be used to model interesting properties of real-life distributed systems. Consider a peer to peer system where each peer receives queries from other peers and buffers them. Then one query is selected, among the buffered ones, and is served by establishing a temporary connection with the target peer. This is similar to what happens e.g.\ in Gnutella\todo{più o meno}.
 % and serves them in a first-come-first-served order. The number of unserved queries at each time is bounded, say at most $n$. When a query is selected to be served, the peer established a temporary connection with the target peer. We assume that peers have a fair behavior, i.e.\ they do not accept other queries from peers that have already sent one, if this has yet to be served.
 
 %We want to model such a peer as an automaton, as succinct as possible, i.e.\ with a small number of states and transitions. 
