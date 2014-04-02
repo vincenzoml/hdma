@@ -4,6 +4,14 @@
 
 %\todo{Dire che la prova UP non è banale. Dire che finite representation allows for a very simple proof of decidability of emptiness}
 
+The behaviour of processes has traditionally been represented using forms of transition structures, such as labelled transition systems or automata. On the other hand, automata are also used to characterise subsets of a set of models (e.g., finite or infinite words). In this sense, automata can be considered logic formulas. This is made clearer when observing that several modal logics enjoy a translation to automata. Processes that feature resource allocation, such as, the behaviour of $\pi$-calculus agents \cite{?}, present more problems, exemplified by the definition of bisimilarity in the $\pi$-calculus itself. Transition structures that correctly model name allocation have been proposed in various forms, including coalgebras over presheaf categories \cite{?}, history-dependent automata \cite{?}, and nominal sets \cite{?}. These three categories have been proved equivalent in \cite{?,?}. More recently, the field of \emph{nominal automata} has essentially used the same structures, no longer as semantic models, but rather as acceptor of languages of finite words (see e.g., \cite{Tze11,KST12,GC11,BojanczykKL11}). In particular, the obtained languages are based on infinite alphabets, but still feature some form of finite memory (in fact, the well known \emph{register automata} can be cast as nominal automata, see \cite{?}). 
+
+
+The case of infinite words over nominal alphabets is more problematic, as an infinite word over an infinite alphabet is generally not finitely supported. Consider a machine that reads any symbol from an infinite, countable alphabet, and never stores it. Clearly, such a machine has finite (empty) memory. The set of its traces is simply described as the set of all infinite words over the alphabet. However, in the language we have various species of words. Some of them are finitely supported, e.g.\ words that consist of the infinite repetition of a finite word. Some others are not finitely supported, such as the word enumerating all the symbols of the alphabet. Such words lay inherently out of the realm of nominal sets. However, the existence of these words does not give to the language infinite memory. More precisely,  words without finite support can not be ``singled out'' by a finite memory machine; if a machine accepts one of those, then it will accept infinitely many others, including finitely supported words.  
+
+The aim of this work is to translate the intuitions in the previous paragraphs into precise mathematical terms, in order to define a class of languages of infinite words over infinite alphabets, enjoying finite-memory properties. We extend automata over nominal sets to handle infinite words, by imposing a (Muller-style) acceptance condition 
+over the \emph{orbits} (not the states!) of automata. By doing so, it turns out that our languages not only are finite-memory, but they retain computational properties, such as closure under boolean operations and decidability of emptiness (thus, containment and equivalence), which we prove by providing finite representations, and effective constructions. 
+
 \begin{itemize}
 	\item Systems with infinite behavior: peer to peer, cloud...
 	\item Resource allocation is a key operation. 
@@ -24,15 +32,16 @@ Several recent papers (see e.g., \cite{Tze11,KST12,GC11}) deal with nominal auto
 The case of infinite words over nominal alphabets is more problematic, as an infinite word over an infinite alphabet is generally not finitely supported. Consider a machine that reads any symbol from an infinite, countable alphabet, and never stores it. Clearly, such a machine has finite (empty) memory. The set of its traces is simply described as the set of all infinite words over the alphabet. However, in the language we have various species of words. Some of them are finitely supported, e.g.\ words that consist of the infinite repetition of a finite word. Some others are not finitely supported, such as the word enumerating all the symbols of the alphabet. Such words lay inherently out of the realm of nominal sets. However, the existence of these words does not give to the language infinite memory. More precisely,  words without finite support can not be ``singled out'' by a finite memory machine; if a machine accepts one of those, then it will accept infinitely many others, including finitely supported words.  
 
 The aim of this work is to translate the intuitions in the previous paragraphs into precise mathematical terms, in order to define a class of languages of infinite words over infinite alphabets, enjoying finite-memory properties. We extend automata over nominal sets to handle infinite words, by imposing a (Muller-style) acceptance condition 
-over the \emph{orbits} (not the states!) of automata. By doing so, it turns out that our languages not only are finite-memory, but they retain computational properties, such as closure under boolean operations and decidability of emptiness (thus, containment and equivalence), which we prove by providing finite representations, and effective constructions. Moreover, we prove that the obtained languages are determined by their \emph{ultimately periodic} fragments, just as in the classical result by B\"uchi \cite{Buchi62}. %\cite{CalbrixNP93}. 
-This clarifies the intuition about accepting ``infinitely many other words'' for machines accepting a word which is not finitely supported. 
+over the \emph{orbits} (not the states!) of automata. By doing so, it turns out that our languages not only are finite-memory, but they retain computational properties, such as closure under boolean operations and decidability of emptiness (thus, containment and equivalence), which we prove by providing finite representations, and effective constructions. 
+%Moreover, we prove that the obtained languages are determined by their \emph{ultimately periodic} fragments, just as in the classical result by B\"uchi \cite{Buchi62}. %\cite{CalbrixNP93}. 
+%This clarifies the intuition about accepting ``infinitely many other words'' for machines accepting a word which is not finitely supported. 
 %
-The proof itself is non-trivial, as one has to deal with freshness and finite memory, and it crucially depends on the usage of finite representations.
-Being determined by ultimately periodic fragments is
-a relevant property for classical automata, whose consequences have probably not yet been explored in full.
+%The proof itself is non-trivial, as one has to deal with freshness and finite memory, and it crucially depends on the usage of finite representations.
+%Being determined by ultimately periodic fragments is
+%a relevant property for classical automata, whose consequences have probably not yet been explored in full.
 %
-For example, such property has been used in learning of languages of infinite words \cite{FCCTW08}, or to find canonical representatives up-to language equivalence, in a coalgebraic flavour \cite{CV12}. We expect that further exploitation of ultimately-periodic fragments may also be beneficial for 
-our automata.%
+%For example, such property has been used in learning of languages of infinite words \cite{FCCTW08}, or to find canonical representatives up-to language equivalence, in a coalgebraic flavour \cite{CV12}. We expect that further exploitation of ultimately-periodic fragments may also be beneficial for 
+%our automata.%
 
 
 
