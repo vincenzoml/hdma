@@ -74,7 +74,7 @@ $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncIni
 %\end{itemize}
 \end{definition}
 %
- Before explaining in detail the formal definition, we remark that the relation $S$ is well defined, i.e.\ it belongs to $Reg(q_1',q_2')$: the addition of $\{(l_1,l_2)\}$ to $R$ is harmless, as will be explained in the following, and $\sigma_1$ and $\sigma^{-1}_2$ can never map the same value to two different values (as they are functions) or viceversa (as they are injective).
+ Before explaining in detail the formal definition, we remark that the relation $S$ is well defined, i.e.\ it belongs to $Reg(q_1',q_2')$: the addition of $\{(l_1,l_2)\}$ to $R$ is harmless, as will be explained in the following, and $\sigma_1$ and $\sigma^{-1}_2$ can never map the same value to two different values (as they are functions) or vice versa (as they are injective).
 %
 The definition of $\syncInit$ motivates the presence of relations in states: $R_0$-related registers are the ones that are assigned the same value by $\rho_0^1$ and $\rho_0^2$; these form the same register of $\syncInit$, so $\syncAss$ is well-defined. The synchronization mechanism is implemented by rules \regrule{} and \allrule{}: they compute transitions of $(q_1,q_2,R) \in \syncQ$ from those of $q_1$ and $q_2$ as follows.
 
@@ -136,7 +136,7 @@ This result allows us to relate the $\Inf$ of runs in the defined transition str
 %
 \begin{theorem}
 \label{thm:inf-correspondence}
-Given $\alpha \in \names^\omega$, let $r$ be a run for $\alpha$ in the configuration graph of $\tstr_1 \syncp \tstr_2$, and let $r_1$ and $r_2$ the corresponding 
+Given $\alpha \in \names^\omega$, let $r$ be a run for $\alpha$ in the configuration graph of $\tstr_1 \syncp \tstr_2$, and let $r_1$ and $r_2$ be the corresponding 
 %\todo{Non capisco: paths o runs? Estenderei il corollario per parlare di runs, se è banale} 
 runs for $\tstr_1$ and $\tstr_2$, according to \cref{cor:paths-correspondence}. Then $\pi_1(Inf(r)) = Inf(r_1)$ and $\pi_2(Inf(r)) = Inf(r_2)$.
 \end{theorem}
