@@ -13,7 +13,7 @@ We assume peers have three kinds of observable actions:
 %
 
 
-Our main example will be the automata-theoretic specification of a ``first come first serve'' peer selection policy for queries, named \emph{FCFS fair policy}; we shall also discuss a policy that keeps into account a number of locally identified ``friend peers'' taking priority over the others, that we call \emph{friend policy}. 
+Our main example will be the automata-theoretic specification of a ``first come first serve'' peer selection policy for queries, named \emph{FCFS fair policy}; we shall also discuss a policy that takes into account a number of locally identified ``friend peers'' taking priority over the others, that we call \emph{friend policy}. 
 %Then, using results from \autoref{sec:boolean-operations-decidability}, the negation of these automata can be intersected with a user-defined peer model: if the resulting automaton has empty language, which is a decidable check, then the peer complies with those policies.
 %one can give an automaton representing a peer and check that the intersection of 
 
@@ -26,7 +26,7 @@ We want to model query selection in a FCFS style. Moreover, we want to capture f
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=1, every node/.style={scale=1}]
 
   \node[state,initial] (q0) {$q_0$}; 
   \node[state,right=10ex of q0] (q1) {$q_1$};
@@ -74,7 +74,7 @@ We want to model query selection in a FCFS style. Moreover, we want to capture f
 \label{fig:fcfs}
 \end{figure}
 %
-The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped with $i$ registers, for $i=i,\dots,n$, and $q_0$ has no registers. Registers are local to states (we will discuss this aspect throughout the paper), thus each transition is equipped with a function expressing how registers in the target state take values from those of the source state.
+The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped with $i$ registers, for $i=1,\dots,n$, and $q_0$ has no registers. Registers are local to states (we will discuss this aspect throughout the paper), thus each transition is equipped with a function expressing how registers in the target state take values from those of the source state.
 \[
 	enq_i(x) = 
 	\begin{cases}
@@ -91,7 +91,7 @@ The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped w
 	deq_i(x) = x + 1
 \]
 %
-The intuition is that transitions from $q_i$ to $q_{i+1}$ correspond to buffering a ``fresh'' query, from a peer whose identiy is not already known, and thus it is stored in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. The transition from $q_i$ to $s_i$ picks the query $p$ from register $1$, that is always the oldest one, and establishes a connection to $p$;
+The intuition is that transitions from $q_i$ to $q_{i+1}$ labeled with $\star$ correspond to buffering a ``fresh'' query, from a peer whose identiy is not already known, and thus it is stored in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. The transition from $q_i$ to $s_i$ picks the query $p$ from register $1$, that is always the oldest one, and establishes a connection to $p$;
 %; transition $s_i$ to $c_i$ establishes a connection to $p$; 
 the transition from $s_i$ to $q_{i-1}$ removes $p$ from the buffer, and shifts the registers' content so that now register $1$ contains the query that arrived right after the one of $p$. Our automaton should (1) be deterministic and (2) have a Muller-style accepting condition. For (1), we assume each state has all possible outgoing transitions: those not shown in \autoref{fig:fcfs} are assumed to go to a sink state. For (2), we take all subsets of the states, excluding the sink one, as Muller sets; that is: behaviors that go through states and transitions depicted in \autoref{fig:fcfs} are all accepted. All these notions will be clearer after we formally introduce nominal Muller automata.
 %Our automata have a Muller-style accepting condition

@@ -28,7 +28,7 @@ In nominal sets terminology, the transition relation is an \emph{equivariant fun
 \end{definition}
 
 \begin{definition}\label{def:nominal-run}
- Given a word $\alpha \in \names^\omega$, a \emph{run} of $\alpha$ from $q \in Q$ is a sequence of states $\run_i \in Q^\omega$, such that $\run_0 = q$, and for all $i$ we have $\run_i \tr{\alpha_i} \run_{i+1}$. 
+ Given a word $\alpha \in \names^\omega$, a \emph{run} of $\alpha$ from $q \in Q$ is a sequence of states $\run \in Q^\omega$, such that $\run_0 = q$, and for all $i$ we have $\run_i \tr{\alpha_i} \run_{i+1}$. 
  By determinism (see Definition \ref{def:ndma}), for each infinite word $\alpha$, and each state $q$, there is exactly one run of $\alpha$ from $q$, that we call $\run^{\alpha,q}$, or simply $\run^{\alpha}$ when $q=q_0$.
 \end{definition}
 
@@ -61,7 +61,7 @@ This is an idealized version of a service, where each in a number of potentially
 
 \begin{center}
 \subfigure[]{
-\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=15ex,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]  
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=15ex,semithick,initial text={},scale=0.8, every node/.style={scale=0.8}]  
   \node[state] (q0)               {$q_0$};
   \node[state] (qa) [above left of = q0] {$q_a$};
   \node[state] (qb) [below left of = q0] {$q_b$};
@@ -90,7 +90,7 @@ This is an idealized version of a service, where each in a number of potentially
 \hspace{2ex}
 \subfigure[]{
 {\centering
- \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}] 
+ \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.8, every node/.style={scale=0.8}] 
 \tikzstyle{every state}=[minimum size=10ex]
   \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]
 %	
@@ -134,7 +134,7 @@ This is an idealized version of a service, where each in a number of potentially
 \subfigure[]{
 {
 \centering
-\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=0.8, every node/.style={scale=0.8}]
 %
 %	
   \node[state,initial] (q0) {$q_0$}; 
@@ -149,7 +149,7 @@ This is an idealized version of a service, where each in a number of potentially
 \hspace{10ex}
 \subfigure[]{
 {\centering
-\begin{tikzpicture}[->,shorten >=1pt,node distance=14ex,auto,semithick,initial text={},scale=0.7, every node/.style={scale=0.7}]
+\begin{tikzpicture}[->,shorten >=1pt,node distance=14ex,auto,semithick,initial text={},scale=0.8, every node/.style={scale=0.8}]
   \tikzstyle{every state}=[minimum size=6ex]
   \tikzstyle{register}=	[circle,fill,draw,inner sep=0pt,minimum size=2pt]	
   \node[state,initial] (q0) {$q_0$}; 
@@ -171,7 +171,8 @@ This is an idealized version of a service, where each in a number of potentially
 \caption{Some automata, together with their accepting conditions. \subref{fig:example-session} is the nDMA of \cref{exa:session} and \subref{fig:hd-of-example} is the corresponding \hdma; \subref{fig:upwords-ex} is an example \hdma\, where we have omitted the accepting condition and unrelevant transitions, all assumed to end up in a sink state without registers; \subref{fig:hd-names-omega} is the \hdma\ recognizing $\names^\omega$.}
 \end{figure}
 
-\noindent Accepted words may fail to be finitely supported. However, languages are, in line with the intuition of studying machines with finite memory, that never halt.
+\noindent Accepted words may fail to be finitely supported. However, languages are. This adheres to the intuition that a machine running forever may read an unbounded amount of different pieces of data, but still have finite memory.
+%in line with the intuition of studying machines with finite memory, that never halt.
 
 \begin{theorem}\label{thm:languages-finitely-supported}
  For $\Lang$ a language, and $\pi\in \Perm$, let $\pi\cdot \Lang = \{\pi \cdot \alpha \mid \alpha \in \Lang\}$. For each state $q$ of an nDMA, $\Lang_{q}$ is finitely supported.
