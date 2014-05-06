@@ -13,6 +13,8 @@ We assume peers have three kinds of observable actions:
 %
 
 
+Automata executing variants of a communication protocol in this setting may have very different behaviors. For example, a system could give preference to a small set of peers, thus making the execution of a global peer-to-peer algorithm less effective. Using automata, we can specify policies (for example, fairness requirements) that characterise desired behaviors.
+%
 Our main example will be the automata-theoretic specification of a ``first come first serve'' peer selection policy for queries, named \emph{FCFS fair policy}; we shall also discuss a policy that takes into account a number of locally identified ``friend peers'' taking priority over the others, that we call \emph{friend policy}. 
 %Then, using results from \autoref{sec:boolean-operations-decidability}, the negation of these automata can be intersected with a user-defined peer model: if the resulting automaton has empty language, which is a decidable check, then the peer complies with those policies.
 %one can give an automaton representing a peer and check that the intersection of 
