@@ -10,21 +10,24 @@ By properties of nominal sets, for $x$ finitely supported and $f$ equivariant, $
  For each $a$, if $a \in \Im(\rho_1)$, recalling that $\rho_1$ is injective, there is $l \in \weight{q_1}$ with $\rho_1(l) = a$. By definition of \hdma, there is exactly one transition labelled with $l$, let it be $q_1 \htr{l}{\sigma} q_2$. Then by definition of configuration graph, we have $(q_1,\rho_1) \tr a (q_2,\rho_1 \circ \sigma)$. Since $\rho_1$ is injective, there can not be other transitions labelled with $a$ in the configuration graph. If $a \notin \Im(\rho_1)$, consider the only transition with label $\star$ from $q_1$, namely $q_1 \htr{\star}{\sigma} q_2$.  Then we have $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ in the configuration graph; this transition is unique by definition.
 \end{proof}
 
-\begin{proof}[of \cref{pro:nset-to-nom}]
- A run $\run$ in the configuration graph clearly is also a run in the obtained automaton. As $\orb(q,\rho) = \{(q,\rho')\mid \rho' : \weight{q} \inj \names \}$, also acceptance is the same on both sides. By \cref{lem:deterministic-configuration-graph} we get determinism. The proof is completed by noting that the obtained transition function is equivariant. For this, chose an edge $(q_1,\rho_1) \tr{a} (q_2,\rho_2)$ in the configuration graph, and look at \cref{def:configuration-graph}, thus consider a corresponding \hdma\ transition $q_1 \htr{l}{\sigma} q_2$. The case when $l \in \weight{q_1}$ is straightforward. When $l=\star$, thus $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ consider the permuted configuration $(q_1,\pi\circ\rho_1)$,  for any permutation $\pi$. Since $a \notin \Im(\rho_1)$, also  $\pi(a) \notin \Im (\pi\circ\rho_1)$, thus we have a transition $(q_1,\pi\circ\rho_1)\tr{\pi(a)}(q_2,(\pi \circ \rho_1\circ \sigma)\sub{\pi(a)}{\sigma^{-1}(*)})$, which is precisely the required permuted transition. \qed
-\end{proof}
 
-%\begin{proof}[of \cref{prop:equivalence-ndma-hdma}]
+\begin{proof}[of \autoref{pro:nset-to-nom-and-back}]
+ Fix an hDMA $A$. To find the corresponding nDMA, observe that the configuration graph of $A$, equipped with the permutation action $\pi \cdot (q,\rho) = (q,\pi \circ \rho)$ forms the transition structure of an nDMA. The orbits of the obtained nDMA are in one to one correspondence with states in $Q$; thus the acceptance condition on states can be used as an acceptance condition on the orbits of the configuration graph. When the configuration $(q_0,\rho_0)$ is chosen as initial state, the obtained nDMA accepts the same language as $A$.
  
-%\end{proof}
-\begin{proof}[of \cref{prop:ndma-to-hdma}]
- The proof is similar to the equivalence results between categories of coalgebras given in \cite{CianciaM10}. First, we need to show that, for each transition $q_1 \tr a q_2$ in the original nDMA, there is an edge $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{\weight{q_2}})$ in the configuration graph of the derived \hdma. We look at the case $a \in \supp(q_1)$; the case with allocation is similar, even though technically more involved. By equivariance, from $q_1 \tr a q_2$, we have $o_{q_1} \tr{\rho^{-1}_{q_1} (a)} \rho^{-1}_{q_1}(q_2)$. Then we have an \hdma\ transition $o_{q_1} \htr{\rho^{-1}_{q_1}(a)}{\sigma} o_{q_2}$ where $\sigma = \restr{\rho_{\rho^{-1}_{q_1}(q_2)}}{\weight{o_2}}$. 
- By looking at the used permutations, we have $\sigma = \restr{\rho^{-1}_{q_1} \circ \rho_{q_2}}{\weight{o_2}}$. 
- Then, in the configuration graph, we have $(o_{q_1},\mathit{id}) \tr{\rho^{-1}_{q_1}(a)} (o_{q_2},\sigma)$, thus by equivariance, we have 
- $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\rho_{q_1} \circ 
- \restr {\rho^{-1}_{q_1} \circ \rho_{q_2}}{\weight{q_2}})$, 
- thus $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{q_2})$. Accordance of the accepting conditions is straightforward.
- \qed
+ A run $\run$ in the configuration graph clearly is also a run in the obtained automaton. As $\orb(q,\rho) = \{(q,\rho')\mid \rho' : \weight{q} \inj \names \}$, also acceptance is the same on both sides. By \cref{lem:deterministic-configuration-graph} we get determinism. The proof is completed by noting that the obtained transition function is equivariant. For this, chose an edge $(q_1,\rho_1) \tr{a} (q_2,\rho_2)$ in the configuration graph, and look at \cref{def:configuration-graph}, thus consider a corresponding \hdma\ transition $q_1 \htr{l}{\sigma} q_2$. The case when $l \in \weight{q_1}$ is straightforward. When $l=\star$, thus $(q_1,\rho_1) \tr a (q_2,(\rho_1 \circ \sigma)\sub{a}{\sigma^{-1}(\star)})$ consider the permuted configuration $(q_1,\pi\circ\rho_1)$,  for any permutation $\pi$. Since $a \notin \Im(\rho_1)$, also  $\pi(a) \notin \Im (\pi\circ\rho_1)$, thus we have a transition $(q_1,\pi\circ\rho_1)\tr{\pi(a)}(q_2,(\pi \circ \rho_1\circ \sigma)\sub{\pi(a)}{\sigma^{-1}(*)})$, which is precisely the required permuted transition. 
+
+For the other direction, fix an nDMA $(Q,\tr{},q_0,\acc)$. 
+for $q \in Q$ , let $o_q$ be a chosen canonical representative of $\orb(q)$, $o_{S \subseteq X} = \{o_q \mid q \in S\}$ and $\rho_q$ be a chosen permutation such that $\rho_q \cdot o_q = q$.	Construct the \hdma\  $(o_Q,\weight-,\htr{}{},o_{q_0},\restr{\rho_{q_0}}{\weight{o_{q_0}}},\{ \{ o_q \mid q \in A\} \mid A \in \acc \})$, 
+%
+with $\weight{o_q} = \supp(o_q)$. For each nDMA transition $o_{q_1} \tr a o_{q_2}$, if $a \in \supp(o_{q_1})$, let $o_{q_1} \htr{a}{\sigma} o_{q_2}$; otherwise, let $o_{q_1} \htr{\star}{\sigma_\star} o_{q_2}$, where $\sigma=\restr{\rho_{q_2}}{\weight{o_{q_2}}}$ and $\sigma_\star = \restr{\sigma_{q_2}\sub{*}{a}}{\weight{o_{q_2}}}$. The defined hDMA accepts the same language as the original nDMA.
+
+The proof is similar to the equivalence results between categories of coalgebras given in \cite{CianciaM10}. First, we need to show that, for each transition $q_1 \tr a q_2$ in the original nDMA, there is an edge $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{\weight{q_2}})$ in the configuration graph of the derived \hdma. We look at the case $a \in \supp(q_1)$; the case with allocation is similar, even though technically more involved. By equivariance, from $q_1 \tr a q_2$, we have $o_{q_1} \tr{\rho^{-1}_{q_1} (a)} \rho^{-1}_{q_1}(q_2)$. Then we have an \hdma\ transition $o_{q_1} \htr{\rho^{-1}_{q_1}(a)}{\sigma} o_{q_2}$ where $\sigma = \restr{\rho_{\rho^{-1}_{q_1}(q_2)}}{\weight{o_2}}$. 
+By looking at the used permutations, we have $\sigma = \restr{\rho^{-1}_{q_1} \circ \rho_{q_2}}{\weight{o_2}}$. 
+Then, in the configuration graph, we have $(o_{q_1},\mathit{id}) \tr{\rho^{-1}_{q_1}(a)} (o_{q_2},\sigma)$, thus by equivariance, we have 
+$(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\rho_{q_1} \circ 
+\restr {\rho^{-1}_{q_1} \circ \rho_{q_2}}{\weight{q_2}})$, 
+thus $(o_{q_1},\restr{\rho_{q_1}}{\weight{q_1}}) \tr a (o_{q_2},\restr{\rho_{q_2}}{q_2})$. Accordance of the accepting conditions is straightforward.
+\qed
 \end{proof}
 
 
@@ -110,7 +113,6 @@ Let $A = (Q,\weight{-},q_0,\rho_0,\htr{}{},\acc)$ be a \hdma{} for $\Lang$. Cons
 \qed
 \end{proof}
 %
-\end{document}
 %
 We give one straightforward lemma about configuration graphs.
 %
@@ -214,3 +216,5 @@ The subpath from $(q_1,\rho_1)$ can be traversed any number of times, so we have
 \begin{proof}(of \autoref{thm:up-determinacy})
 The proof mimics the one from \cite{CalbrixNP93}. Assume $\Lang_1 \neq \Lang_2$ and consider the language $(\Lang_1 \cup \Lang_2) \setminus (\Lang_1 \cap \Lang_2)$. By \cref{thm:bool-closure}, this is a nominal $\omega$-regular language (set difference can be expressed via intersection and complement)  and, by $\Lang_1 \neq \Lang_2$, it is not empty, so by \cref{thm:up-fragment} it contains at least one ultimately periodic word, which implies $UP(\Lang_1) \neq UP(\Lang_2)$. \qed
 \end{proof}
+
+\end{document}
