@@ -13,9 +13,10 @@ We assume peers have three kinds of observable actions:
 %
 
 
-Automata executing variants of a communication protocol in this setting may have very different behaviors. For example, a system could give preference to a small set of peers, thus making the execution of a global peer-to-peer algorithm less effective. Using automata, we can specify policies (for example, fairness requirements) that characterise desired behaviors.
+Automata executing variants of a communication protocol in this setting may have very different behaviors. For example, a system could give preference to a small set of peers, thus making the execution of a global peer-to-peer algorithm less effective. Using automata, we can specify policies (for example, fairness requirements) that characterize desired behaviors. {\bf One key property that we require is \emph{determinism}: policies should always consider all possible actions from a given state (even if not all of them will be accepted) and each action should have a unique outcome. These are desirable properties for the specification of a policy, with a nice technical consequence: the automaton modeling the policy is closed under all boolean operations, which is essential for verification.}
 %
-Our main example will be the automata-theoretic specification of a ``first come first serve'' peer selection policy for queries, named \emph{FCFS fair policy}; we shall also discuss a policy that takes into account a number of locally identified ``friend peers'' taking priority over the others, that we call \emph{friend policy}. 
+Our main example will be the %automata-theoretic 
+specification of a ``first come first serve'' peer selection policy for queries, named \emph{FCFS fair policy}; we shall also discuss a policy that takes into account a number of locally identified ``friend peers'' taking priority over the others, that we call \emph{friend policy}. 
 %Then, using results from \autoref{sec:boolean-operations-decidability}, the negation of these automata can be intersected with a user-defined peer model: if the resulting automaton has empty language, which is a decidable check, then the peer complies with those policies.
 %one can give an automaton representing a peer and check that the intersection of 
 
@@ -76,22 +77,17 @@ We want to model query selection in a FCFS style. Moreover, we want to capture f
 \label{fig:fcfs}
 \end{figure}
 %
-The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped with $i$ registers, for $i=1,\dots,n$, and $q_0$ has no registers. Registers can store identifiers, and are local to states (we will discuss this aspect throughout the paper), thus each transition is equipped with a function expressing how registers in the target state take values from those of the source state.
-\[
-	enq_i(x) = 
-	\begin{cases}
-		\star & x = i \\
-		x & x < i
-	\end{cases}
-	\qquad
-%	shift(x) =
-%x	\begin{cases}
-%		\star & x = n \\
-%		x+1 & x< n
+The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped with $i$ registers, for $i=1,\dots,n$, and $q_0$ has no registers. Registers can store identifiers, and are local to states (we will discuss this aspect throughout the paper), thus each transition is equipped with a function expressing how registers in the target state take values from those of the source state. We have two such functions: $enq_i(x)$, mapping $i$ to $\star$ and $x < i$ to $x$, and $deq_i$, mapping $x$ to $x+1$.
+%\[
+%	enq_i(x) = 
+%	\begin{cases}
+%		\star & x = i \\
+%		x & x < i
 %	\end{cases}
-	\qquad
-	deq_i(x) = x + 1
-\]
+%	\qquad
+%	\qquad
+%	deq_i(x) = x + 1
+%\]
 %
 The intuition is that transitions from $q_i$ to $q_{i+1}$ labeled with $\star$ correspond to buffering a ``fresh'' query, from a peer whose identiy is not already known, and thus it is stored in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. The transition from $q_i$ to $s_i$ picks the query $p$ from register $1$, that is always the oldest one, and establishes a connection to $p$;
 %; transition $s_i$ to $c_i$ establishes a connection to $p$; 

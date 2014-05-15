@@ -1,0 +1,179 @@
+\begin{thebibliography}{10}
+\scriptsize
+
+\bibitem{Buchi60}
+B{\"u}chi, J.R.:
+\newblock Weak second-order arithmetic and finite automata.
+\newblock Z. Math. Logik Grundl. Math. \textbf{6} (1960)  66--92
+
+\bibitem{Elgot61}
+Elgot, C.C.:
+\newblock Decision problems of finite automata design and related arithmetics.
+\newblock Trans. Amer. Math. Soc. (98) (1961)  21--51
+
+\bibitem{ClarkeS01}
+Clarke, E.M., Schlingloff, B.H.:
+\newblock Model checking.
+\newblock In: Handbook of Automated Reasoning.
+\newblock Elsevier (2001)  1635--1790
+
+\bibitem{MilnerPW92}
+Milner, R., Parrow, J., Walker, D.:
+\newblock A calculus of mobile processes, {I/II}.
+\newblock Inf. Comput. \textbf{100}(1) (1992)  1--77
+
+\bibitem{FioreT01}
+Fiore, M.P., Turi, D.:
+\newblock Semantics of name and value passing.
+\newblock In: 16th Annual IEEE Symposium on Logic in Computer Science, IEEE
+  Computer Society (2001)  93--104
+
+\bibitem{BonchiBCG11}
+Bonchi, F., Buscemi, M.G., Ciancia, V., Gadducci, F.:
+\newblock A presheaf environment for the explicit fusion calculus.
+\newblock J. Autom. Reasoning \textbf{49}(2) (2012)  161--183
+
+\bibitem{Miculan08}
+Miculan, M.:
+\newblock A categorical model of the fusion calculus.
+\newblock Electr. Notes Theor. Comput. Sci. \textbf{218} (2008)  275--293
+
+\bibitem{GhaniYV04}
+Ghani, N., Yemane, K., Victor, B.:
+\newblock Relationally staged computations in calculi of mobile processes.
+\newblock Electr. Notes Theor. Comput. Sci. \textbf{106} (2004)  105--120
+
+\bibitem{SammartinoM14}
+Montanari, U., Sammartino, M.:
+\newblock A network-conscious {$\pi$}-calculus and its coalgebraic semantics.
+\newblock To appear in Theor. Comput. Sci. (2014)
+
+\bibitem{MontanariP05}
+Montanari, U., Pistore, M.:
+\newblock Structured coalgebras and minimal hd-automata for the
+  {$\pi$}-calculus.
+\newblock Theor. Comput. Sci. \textbf{340}(3) (2005)  539--576
+
+\bibitem{CianciaM10}
+Ciancia, V., Montanari, U.:
+\newblock Symmetries, local names and dynamic (de)-allocation of names.
+\newblock Inf. Comput. \textbf{208}(12) (2010)  1349 -- 1367
+
+\bibitem{BojanczykKL11}
+Bojanczyk, M., Klin, B., Lasota, S.:
+\newblock Automata with group actions.
+\newblock In: Proceedings of the 26th Annual IEEE Symposium on Logic in
+  Computer Science, LICS 2011, IEEE Computer Society (2011)  355--364
+
+\bibitem{GadducciMM06}
+Gadducci, F., Miculan, M., Montanari, U.:
+\newblock About permutation algebras, (pre)sheaves and named sets.
+\newblock Higher-Order and Symbolic Computation \textbf{19}(2-3) (2006)
+  283--304
+
+\bibitem{FioreS06}
+Fiore, M.P., Staton, S.:
+\newblock Comparing operational models of name-passing process calculi.
+\newblock Inf. Comput. \textbf{204}(4) (2006)  524--560
+
+\bibitem{CianciaKM10}
+Ciancia, V., Kurz, A., Montanari, U.:
+\newblock Families of symmetries as efficient models of resource binding.
+\newblock Electr. Notes Theor. Comput. Sci. \textbf{264}(2) (2010)  63--81
+
+\bibitem{Tze11}
+Tzevelekos, N.:
+\newblock Fresh-register automata.
+\newblock In: Proceedings of the 38th ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages, POPL 2011, ACM (2011)  295--306
+
+\bibitem{KST12}
+Kurz, A., Suzuki, T., Tuosto, E.:
+\newblock On nominal regular languages with binders.
+\newblock In: Foundations of Software Science and Computational Structures -
+  15th International Conference, FOSSACS 2012, Springer (2012)  255--269
+
+\bibitem{GC11}
+Gabbay, M.J., Ciancia, V.:
+\newblock Freshness and name-restriction in sets of traces with names.
+\newblock In: FOSSACS. (2011)  365--380
+
+\bibitem{GP02}
+Gabbay, M., Pitts, A.M.:
+\newblock A new approach to abstract syntax with variable binding.
+\newblock Formal Asp. Comput. \textbf{13}(3-5) (2002)  341--363
+
+\bibitem{Pistore99}
+Pistore, M.:
+\newblock History Dependent Automata.
+\newblock PhD thesis, University of Pisa (1999)
+
+\bibitem{CV12}
+Ciancia, V., Venema, Y.:
+\newblock Stream automata are coalgebras.
+\newblock In: Coalgebraic Methods in Computer Science. Volume 7399 of LNCS.
+\newblock Springer (2012)  90--108
+
+\bibitem{SammartinoPhD}
+Sammartino, M.:
+\newblock {A Network-Aware Process Calculus for Global Computing and its
+  Categorical Framework}.
+\newblock PhD thesis, University of Pisa (2013)
+
+\bibitem{Bojanczyk13}
+Bojanczyk, M.:
+\newblock Modelling infinite structures with atoms.
+\newblock In Libkin, L., Kohlenbach, U., de~Queiroz, R.J.G.B., eds.: WoLLIC.
+  Volume 8071 of Lecture Notes in Computer Science., Springer (2013)  13--28
+
+\bibitem{Vnnen07}
+V{\"a}{\"a}n{\"a}nen, J.A.:
+\newblock Dependence Logic - A New Approach to Independence Friendly Logic.
+  Volume~70 of London Mathematical Society student texts.
+\newblock Cambridge University Press (2007)
+
+\bibitem{Galliani12}
+Galliani, P.:
+\newblock The Dynamics of Imperfect Information.
+\newblock PhD thesis, University of Amsterdam (September 2012)
+
+\bibitem{DemriL09}
+Demri, S., Lazic, R.:
+\newblock {LTL} with the freeze quantifier and register automata.
+\newblock ACM Trans. Comput. Log. \textbf{10}(3) (2009)
+
+\bibitem{Lazic11}
+Lazic, R.:
+\newblock Safety alternating automata on data words.
+\newblock ACM Trans. Comput. Log. \textbf{12}(2) (2011) ~10
+
+\bibitem{BojanczykDMSS11}
+Bojanczyk, M., David, C., Muscholl, A., Schwentick, T., Segoufin, L.:
+\newblock Two-variable logic on data words.
+\newblock ACM Trans. Comput. Log. \textbf{12}(4) (2011) ~27
+
+\bibitem{KaraST12}
+Kara, A., Schwentick, T., Tan, T.:
+\newblock Feasible automata for two-variable logic with successor on data
+  words.
+\newblock In Dediu, A.H., Mart\'{\i}n-Vide, C., eds.: LATA. Volume 7183 of
+  Lecture Notes in Computer Science., Springer (2012)  351--362
+
+\bibitem{Bollig11}
+Bollig, B.:
+\newblock An automaton over data words that captures {EMSO} logic.
+\newblock In Katoen, J.P., K{\"o}nig, B., eds.: CONCUR. Volume 6901 of Lecture
+  Notes in Computer Science., Springer (2011)  171--186
+
+\bibitem{KaraT10}
+Kara, A., Tan, T.:
+\newblock Extending {B\"uchi} automata with constraints on data values.
+\newblock CoRR \textbf{abs/1012.5439} (2010)
+
+\bibitem{GrumbergKS10}
+Grumberg, O., Kupferman, O., Sheinvald, S.:
+\newblock Variable automata over infinite alphabets.
+\newblock In Dediu, A.H., Fernau, H., Mart\'{\i}n-Vide, C., eds.: LATA. Volume
+  6031 of Lecture Notes in Computer Science., Springer (2010)  561--572
+
+\end{thebibliography}
