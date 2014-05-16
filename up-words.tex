@@ -5,7 +5,12 @@
 An \emph{ultimately periodic} word is a word of the form $uv^\omega$, with $u,v$ finite words. Given a language of infinite words $\Lang$, let $UP(\Lang)$ be its \emph{ultimately periodic fragment} $\{ \alpha \in \Lang \mid \alpha = uv^\omega \land u,v \; \text{are finite} \}$. It has been proven in \cite{CalbrixNP93,Buchi62} that, for every two $\omega$-regular languages $\Lang_1$ and $\Lang_2$, $UP(\Lang_1) = UP(\Lang_2)$ implies $\Lang_1 = \Lang_2$, i.e.\ $\omega$-regular languages are characterised by their ultimately periodic fragments.
 In this section we aim to extend this result to the nominal setting. 
 
-The preliminary result to establish, as in the classical case, is that every non-empty nominal $\omega$-regular language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states in the automaton and iterating it. In our case it may not be possible to consume the same name in consecutive traversals of the same transition of a \hdma, due to freshness constraints. The first part of this section will be spent in showing that, given a loop in a \hdma{}, there always is a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. Thus, such path can be taken an arbitrary number of times.
+The preliminary result to establish, as in the classical case, is that every non-empty nominal $\omega$-regular language $\Lang$ contains at least one ultimately periodic word. For $\omega$-regular languages, this involves finding a loop through accepting states in the automaton and iterating it. 
+%In our case it may not be possible to consume the same name in consecutive traversals of the same transition of a \hdma, due to freshness constraints. 
+For \hdmas, freshness constraints could forbid consuming the same name in consecutive traversals of the same transition.
+We first show that, 
+%The first part of this section will be spent in showing that, 
+given a loop in a \hdma{}, there always is a path induced by consecutive traversals of the loop, such that its initial and final configurations coincide. Thus, such path can be taken an arbitrary number of times.
 
 Fix a loop 
 %\[
@@ -119,7 +124,7 @@ $	(p_0, \rrho_0) \TrP{v_0}{L} (p_0, \rrho_1) \TrP{v_1}{L} \cdots \TrP{v_n}{L} (p
 %\caption{\label{fig:upwords-ex} An example automaton. Some transitions are not shown: they are all assumed to end up in a sink state without registers.}
 %\end{figure}
 
-\begin{example} We justify the above construction on the \hdma{} of \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. We omit the accepting condition, as it is not relevant. Consider the loop $L$ formed by all the depicted transitions.
+\begin{example} We justify the above construction on the \hdma{} of \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. Consider the loop $L$ formed by all the depicted transitions.
 We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Consider the path
 %\begin{align*}
 $	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) \tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}])
