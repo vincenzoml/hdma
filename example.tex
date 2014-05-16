@@ -1,15 +1,18 @@
 %!TEX root=ndma.tex
 
-In order to introduce the presented topic, in this section we discuss an application of nominal automata to distributed systems. Consider an idealized \emph{peer-to-peer} system where each peer receives queries from an arbitrary, unbounded number of other peers, represented by an infinite set of unique identifiers. Each peer buffers requests in a finite queue. Then one query is selected, among the buffered ones, and is served by establishing a temporary connection with the target. Peers are not normally supposed to terminate, thus their relevant properties ought to predicate on infinite words. On the other hand, actions executed by peers carry information about other peers, which are drawn from an infinite set, therefore the symbols constituting words are infinite. Finally, each peer has finite memory. This is the key to maintain decidability, and is mathematically modeled by the notion of \emph{finite support} in nominal automata. Once established that our languages are made of infinite words over an infinite alphabet, but retain a finite memory property, we can attempt to use automata to characterize properties of local peers in a global environment. 
+In order to introduce the presented topic, in this section we discuss an application of nominal automata to distributed systems. Consider an idealized \emph{peer-to-peer} system where each peer receives queries from an arbitrary, unbounded number of other peers, represented by an infinite set of unique identifiers. Each peer buffers requests in a finite queue. Then one query is selected, among the buffered ones, and is served by establishing a temporary connection with the target. Peers are not normally supposed to terminate, thus their relevant properties ought to predicate on infinite words. On the other hand, actions executed by peers carry information about other peers, which are drawn from an infinite set, therefore the symbols constituting words are infinite. Finally, each peer has finite memory. This is the key to maintain decidability, and is mathematically modeled by the notion of \emph{finite support} in nominal automata. Once established that our languages are made of infinite words over an infinite alphabet, but retain a finite memory property, we can use automata to characterize properties of local peers in a global environment. 
 % and serves them in a first-come-first-served order. The number of unserved queries at each time is bounded, say at most $n$. When a query is selected to be served, the peer established a temporary connection with the target peer. We assume that peers have a fair behavior, i.e.\ they do not accept other queries from peers that have already sent one, if this has yet to be served.
 %We want to model such a peer as an automaton, as succinct as possible, i.e.\ with a small number of states and transitions. 
-We assume peers have three kinds of observable actions: 
-\begin{itemize}
-	\item arrival of a new query from $p$, denoted $q(p)$; 
-	\item selection of a query to serve and connection to its sender $p$, denoted $s(p)$; 
+We assume three kinds of observable actions for peers: 
+%\begin{itemize}
+	%\item 
+	arrival of a new query from $p$, written $q(p)$; 
+	%\item 
+	selection of a query to serve and connection to its sender $p$, written $s(p)$; 
 	%\item connection to $p$ to serve its request, denoted $c(p)$; 
-	\item disconnection from $p$, denoted $d(p)$.
-\end{itemize}
+	%\item 
+	disconnection from $p$, written $d(p)$.
+%\end{itemize}
 %
 
 
