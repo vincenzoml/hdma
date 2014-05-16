@@ -130,7 +130,7 @@ This is an idealized version of a service, where each in a number of potentially
 \end{center}
 %
 \vspace{-6.3ex}
-\begin{center}
+%\begin{center}
 \subfigure[]{
 {
 \centering
@@ -165,10 +165,12 @@ This is an idealized version of a service, where each in a number of potentially
 }
 \label{fig:hd-of-example}
 }
-\end{center}
-
+%\end{center}
 \label{fig:automata}
-\caption{Some automata, together with their accepting conditions. \subref{fig:example-session} is the nDMA of \cref{exa:session} and \subref{fig:hd-of-example} is the corresponding \hdma; \subref{fig:upwords-ex} is an example \hdma\, where we have omitted the accepting condition and unrelevant transitions, all assumed to end up in a sink state without registers; \subref{fig:hd-names-omega} is the \hdma\ recognizing $\names^\omega$.}
+\vskip -10pt
+\caption{Some automata, together with their accepting conditions.
+%\subref{fig:example-session} is the nDMA of \cref{exa:session} and \subref{fig:hd-of-example} is the corresponding \hdma; \subref{fig:upwords-ex} is an example \hdma\, where we have omitted the accepting condition and irrelevant transitions, all assumed to end up in a sink state without registers; \subref{fig:hd-names-omega} is the \hdma\ recognizing $\names^\omega$.
+}\vskip-10pt
 \end{figure}
 
 \noindent Accepted words may fail to be finitely supported. However, languages are. This adheres to the intuition that a machine running forever may read an unbounded amount of different pieces of data, but still have finite memory.

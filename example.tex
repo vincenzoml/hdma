@@ -75,6 +75,7 @@ We want to model query selection in a FCFS style. Moreover, we want to capture f
 \end{tikzpicture}
 \caption{Automaton for the FCFS policy.}
 \label{fig:fcfs}
+\vskip -10pt
 \end{figure}
 %
 The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped with $i$ registers, for $i=1,\dots,n$, and $q_0$ has no registers. Registers can store identifiers, and are local to states (we will discuss this aspect throughout the paper), thus each transition is equipped with a function expressing how registers in the target state take values from those of the source state. We have two such functions: $enq_i(x)$, mapping $i$ to $\star$ and $x < i$ to $x$, and $deq_i$, mapping $x$ to $x+1$.
