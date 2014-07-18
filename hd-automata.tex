@@ -11,7 +11,7 @@ In this section, we introduce finite representations of nDMAs. These are similar
   \item $q_0 \in Q$ is the \emph{initial state};
   \item $\rho_0 : \weight{q_0} \inj \names$ is the \emph{initial assignment};
   \item $\acc \subseteq \Pow(Q)$ is the \emph{accepting condition}, in the style of \emph{Muller automata};
-  \item $\htr{}{}$ is the \emph{transition relation}, made up of quadruples $q_1 \htr{l}{\sigma} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, label $l \in \weight{q_1} \uplus \{\star\}$, and \emph{history} $\sigma : \weight{q_2} \inj \weight{q_1} \uplus \{l\}$;
+  \item $\htr{}{}$ is the \emph{transition relation}, made up of quadruples $q_1 \htr{l}{\sigma} q_2$, having \emph{source} $q_1$, \emph{target} $q_2$, label $l \in \weight{q_1} \uplus \{\star\}$, and \emph{history} $\sigma : \weight{q_2} \inj \weight{q_1} \cup \{l\}$;
   \item the transition relation is \emph{deterministic} in the following sense: for each $q_1 \in Q$,   there is exactly one transition with source $q_1$ and label $\star$, and exactly one transition with source $q_1$ and label $x$ for each $x \in \weight{q_1}$.
  \end{itemize}
 \end{definition}
@@ -55,16 +55,16 @@ We use the notation $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ to denote a path that spe
 \begin{definition}
  A \emph{run} $\run$ of an infinite word $\alpha \in \names^\omega$ from configuration $(q,\rho)$ is a sequence $(q_i,\rho_i)$ of configurations, indexed by $\omega$, such that $(q_0,\rho_0)=(q,\rho)$ and for all $i$, in the configuration graph, we have $(q_i,\rho_i) \tr{\alpha_i} (q_{i+1},\rho_{i+1})$. 
 \end{definition}
-
-\noindent The following is a simple corollary of  \cref{lem:deterministic-configuration-graph}.
-
+%
+Finally, after a simple corollary of  \cref{lem:deterministic-configuration-graph}, we define acceptance of \hdmas. 
+%
 \begin{proposition}
 \label{prop:unique-path}
 Given $(q_1,\rho_1) \in \confs(A)$ and $v \in \names^\omega$, there exists a unique path $(q_1,\rho_1) \Tr{v} (q_2,\rho_2)$ in the configuration graph of $A$. Similarly, for each word $\alpha$ and configuration $(q,\rho)$, there is a unique run $\run^{\alpha,q,\rho}$ from $(q,\rho)$. We omit $q$ and $\rho$ from the notation, when dealing with the \emph{initial configuration} $(q_0,\rho_0)$.
 \end{proposition}
-
-\noindent Finally, we define acceptance of \hdmas. 
-
+%
+%\noindent Finally, we define acceptance of \hdmas. 
+%
 \begin{definition}\label{def:acceptance-of-hdmas}
  Consider the unique run $\run$ of an infinite word $\alpha$ from configuration $(q,\rho)$. 
  Let $\Inf(\run)$ denote the set  of states that appear infinitely often in the first component of $\run$. By finiteness of $Q$, $\Inf(\run)$ is not empty. The automaton $A$ accepts $\alpha$ whenever $\Inf(r) \in \acc$. In this case, we speak of the \emph{language} $\Lang_A$ of words accepted by the automaton.

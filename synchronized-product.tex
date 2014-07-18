@@ -10,9 +10,9 @@
 \newcommand{\allrule}{\textsc{(Alloc)}}
 \newcommand{\cproj}{\pi}
 
-The product of finite automata is a well-known operation: in the binary case, it produces an automaton whose states are pairs $(q_1,q_2)$ of states of the original automata and transitions are those both states do. In this section we define a similar operation on the underlying \emph{transition structures} of \hdmas{}, i.e.\ on tuples $\tstr = (Q,\weight{-},q_0,\rho_0,\trarrow)$ (we want to be parametric w.r.t.\ the accepting condition). One should  be careful in handling registers. When forming pairs of states, some of these registers could be constrained to have the same value.
+The product of two finite automata uses the well-known \emph{synchronised product} construction. In this section we define this operation on the underlying \emph{transition structures} of \hdmas{}, i.e.\ on tuples $\tstr = (Q,\weight{-},q_0,\rho_0,\trarrow)$ (we want to be parametric w.r.t.\ the accepting condition). One should  be careful in handling registers. When forming pairs of states, some of these registers could be constrained to have the same value.
 %assignments are injective. 
-Thus, states have the form $(q_1,q_2,R)$, where $R$ is a relation telling which registers of $q_1$ and $q_2$ contain the same value, representing the same register in the composite state. This is implemented by quotienting registers w.r.t.\ the equivalence relation $R^*$ induced by $R$; the construction is similar to the case of register automata, and to the construction of products in named sets given in \cite{CianciaM10}.
+Thus, states have the form $(q_1,q_2,R)$, where $R$ is a relation, linking registers of $q_1$ and $q_2$, that represent the same register in the synchronised product. This is implemented by quotienting registers w.r.t.\ the equivalence $R^*$ induced by $R$; the construction is similar to the case of register automata, and to the construction of products in named sets given in \cite{CianciaM10}.
 
 Given two transition structures $\tstr_i = (Q_i,\weight{-}_i,q_0^i,\rho_0^i,\trarrow_i)$, $i=1,2$, we define their synchronized product $\tstr_1 \syncp \tstr_2$. Given $q_1 \in Q_1$,$q_2 \in Q_2$, $Reg(q_1,q_2)$ is the set of relations that are allowed to appear in states of the form $(q_1,q_2,R)$, namely those $R \subseteq \weight{q_1}_1 \times \weight{q_2}_2$ such that, for each $(x,y) \in R$, there is no other $(x',y') \in R$ with $x'=x$ or $y'=y$. This avoids inconsistent states where the individual assignment for $q_1$ or $q_2$ would not be injective. In the following we assume $[x]_{R^*}$ (the canonical representative of the equivalence class of $x$ in $R^*$) to be $\{x\}$ when $x$ does not appear in any pair of $R$.
 
@@ -29,7 +29,7 @@ Given two transition structures $\tstr_i = (Q_i,\weight{-}_i,q_0^i,\rho_0^i,\tra
 
 \begin{definition}
 \label{def:syncp}
-$\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncInit,\syncAss,\syncTr{\quad})$ defined as follows:
+$\tstr_1 \syncp \tstr_2$ is the tuple $(\syncQ,\syncW{-},\syncInit,\syncAss,\syncTr{\quad})$ where:
 \begin{itemize}
 	\item 
 	%$\syncQ := \bigcup_{q_1 \in Q_1,q_2 \in Q_2} \{(q_1,q_2)\} \times Reg(q_1,q_2)$;
@@ -60,10 +60,11 @@ $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncIni
 			{ (q_1,q_2,R) \syncHtr{\star}{\sigma_A} (q_1',q_2',S) }
 		\end{mathpar}
 	%\vspace{-2ex}
-	where the relation $S$ and the mappings $\sigma_\tau$, for $\tau \in \{A,R\}$, are as follows
+	where $S := \sigma_2^{-1} \circ R \cup \{(l_1,l_2)\} \circ \sigma_1 $ and
+% and the mappings $\sigma_\tau$, for $\tau \in \{A,R\}$, are as follows
 	\begin{align*}
-		S &:= \sigma_2^{-1} \circ R \cup \{(l_1,l_2)\} \circ \sigma_1 
-		\\[2ex]
+		%S &:= \sigma_2^{-1} \circ R \cup \{(l_1,l_2)\} \circ \sigma_1 
+		%\\[2ex]
 		\sigma_\tau([x]_{S^*}) &:= 
 		\begin{cases}
 			[\sigma_i(x)]_{R^*} & x \in \weight{q'_i}_i \land \sigma_i(x) \neq \star \\
@@ -78,7 +79,7 @@ $\tstr_1 \syncp \tstr_2$ is the transition structure $(\syncQ,\syncW{-},\syncIni
 %
 The definition of $\syncInit$ motivates the presence of relations in states: $R_0$-related registers are the ones that are assigned the same value by $\rho_0^1$ and $\rho_0^2$; these form the same register of $\syncInit$, so $\syncAss$ is well-defined. The synchronization mechanism is implemented by rules \regrule{} and \allrule{}: they compute transitions of $(q_1,q_2,R) \in \syncQ$ from those of $q_1$ and $q_2$ as follows.
 
-Rule \regrule{} handles two cases. First, if the transitions of $q_1$ and $q_2$ are both labelled by registers, say $l_1$ and $l_2$, and these registers correspond to the same one in $(q_1,q_2,R)$ (condition $[l_i]_{R^*} = \{l_1,l_2\}$), then \regrule{} infers a transition labelled with $[l_i]_{R^*}$ (the specific $i$ is not relevant). The target state of this transition is made of those of the transitions from $q_1$ and $q_2$, plus a relation $S$ obtained by translating $R$-related registers to $S$-related registers via $\sigma_1$ and $\sigma_2$. In this case, adding the pair $(l_1,l_2)$ to $R$ in the definition of $S$ has no effect, as it is already in $R$. The inferred history $\sigma_R$ just combines $\sigma_1$ and $\sigma_2$, consistently with $S^*$.
+Rule \regrule{} handles two cases. First, if the transitions of $q_1$ and $q_2$ are both labelled by registers, say $l_1$ and $l_2$, and these registers correspond to the same one in $(q_1,q_2,R)$ (condition $[l_i]_{R^*} = \{l_1,l_2\}$, recalling that $[l_i]_{R^*}$ cannot contain more labels due to injectivity of register maps), then \regrule{} infers a transition labelled with $[l_i]_{R^*}$ (the specific $i$ is not relevant). The target state of this transition is made of those of the transitions from $q_1$ and $q_2$, plus a relation $S$ obtained by translating $R$-related registers to $S$-related registers via $\sigma_1$ and $\sigma_2$. In this case, adding the pair $(l_1,l_2)$ to $R$ in the definition of $S$ has no effect, as it is already in $R$. The inferred history $\sigma_R$ just combines $\sigma_1$ and $\sigma_2$, consistently with $S^*$.
 
 The other case for \regrule{} is when a fresh name is consumed from just one state, e.g.\ $q_2$.
 This name must coincide with the value assigned to the register $l_1$ labelling the transition of $q_1$. Therefore the inferred label is $[l_1]_{R^*}$. The target relation $S$ changes slightly. Suppose there are $l'_1 \in \weight{q'_1}$ and $l'_2\in \weight{q'_2}$ such that $\sigma_1(l'_1) = l_1$ and $\sigma_2(l'_2) = \star$; after $q_1$ and $q_2$ perform their transitions, both these registers are assigned the same value, so we require $(l'_1,l'_2) \in S$. This pair is forced to be in $S$ by adding $(l_1,\star)$ to $R$ when computing $S$. This does not harm well-definedness of $S$, because $[l_1]_{R^*}$ is a singleton (rule premise $[l_1]_{R^*} = \{l_1,\star\} \cap 	\names = \{l_1\}$), so no additional, inconsistent identifications are added to $S^*$ due to transitivity. If either $l_1$ or $\star$ is not in the image of the corresponding history map, then augmenting $R$ has no effect, as the relational composition discards $(l_1,\star)$. The history $\sigma_R$ should map $[l_2']_{S^*}$ to $[l_1]_{R^*}$: this is treated by the second case of its definition; all the other values are mapped as before.
@@ -104,17 +105,18 @@ Projections always produce valid configurations in $\confs(\tstr_1)$ and $\confs
 \begin{proposition}
 %\todo{condensare, usando $\pi_i$ invece di $\pi_1,\pi_2$?}
 \label{prop:edges-correspondence}
-Given $C \in \confs(\tstr_1 \syncp \tstr_2)$, 
-\begin{enumerate}[(i)]
-	\item \vskip -6pt if $C \tr{a} C'$ then $\cproj_i(C) \tr{a} \cproj_i(C')$, $i = 1,2$;
+Given $C \in \confs(\tstr_1 \syncp \tstr_2)$: 
+\begin{inparaenum}[(i)]
+	\item %\vskip -6pt 
+	if $C \tr{a} C'$ then $\cproj_i(C) \tr{a} \cproj_i(C')$, $i = 1,2$;
 	% and $\cproj_2(C) \tr{a} \cproj_2(C')$;
 	\label{sync-to-each}
 	\item if $\cproj_i(C) \trind{a}{i} C_i$, $i=1,2$, 
 	%and $\cproj_2(C) \trind{a}{1} C_2$, 
-	then there is $C'$ s.t.\ $C\tr{a} C'$ and $\cproj_i(C) = C_i$.
+	then $\exists C' : C\tr{a} C'$ and $\cproj_i(C) = C_i$.
 	%,$\cproj_2(C) = C_2$.
 	\label{each-to-sync}
-\end{enumerate}
+\end{inparaenum}
 % \begin{enumerate}[(i)]
 % 	\item if $C \tr{a} C'$ then $\cproj_i(C) \tr{a} \cproj_i(C')$, $i = 1,2$;
 % 	% and $\cproj_2(C) \tr{a} \cproj_2(C')$;

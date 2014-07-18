@@ -16,7 +16,11 @@ We assume three kinds of observable actions for peers:
 %
 
 
-Automata executing variants of a communication protocol in this setting may have very different behaviors. For example, a system could give preference to a small set of peers, thus making the execution of a global peer-to-peer algorithm less effective. Using automata, we can specify policies (for example, fairness requirements) that characterize desired behaviors. One key property that we require is \emph{determinism}: policies should always consider all possible actions from a given state (even if not all of them will be accepted) and each action should have a unique outcome. These are desirable properties for the specification of a policy, with a nice technical consequence: the automaton modeling the policy is closed under all boolean operations, which is essential for verification.
+Variants of a communication protocol in this setting may have very different behaviors. Policies characterizing desired ones, for instance fairness requirements, can be specified by automata.
+%For example, a system could give preference to a small set of peers, thus making the execution of a global peer-to-peer algorithm less effective. 
+%Automata can specify policies (for example, fairness requirements) that characterize desired behaviors. 
+For decidability reasons, policies should be \emph{deterministic}: they should always consider all possible actions from a given state, even if not all of them will be accepted, and each action should have a unique outcome. 
+%These are desirable properties for the specification of a policy, with a nice technical consequence: the automaton modeling the policy is closed under all boolean operations, which is essential for verification.
 %
 Our main example will be the %automata-theoretic 
 specification of a ``first come first serve'' peer selection policy for queries, named \emph{FCFS fair policy}; we shall also discuss a policy that takes into account a number of locally identified ``friend peers'' taking priority over the others, that we call \emph{friend policy}. 
@@ -26,10 +30,10 @@ specification of a ``first come first serve'' peer selection policy for queries,
 
 %The crucial idea is using symbolic actions:
 
-\paragraph{FCFS fair policy.}
-We want to model query selection in a FCFS style. Moreover, we want to capture fairness: queries from already buffered peers are discarded. We assume that the buffer has size $n$. 
-
-
+\emph{FCFS fair policy.}
+We model query selection by a \emph{fair} FCFS discipline: queries from already buffered peers are discarded. We assume that the buffer has size $n$. 
+%
+%
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.8cm,semithick,initial text={},scale=1, every node/.style={scale=1}]
@@ -60,7 +64,7 @@ We want to model query selection in a FCFS style. Moreover, we want to capture f
   \path (q1) edge node[inner sep=1pt,left] {\lab{s(1)}} node[inner sep=1pt,right] {\lab{id}} (s1);
   \path (q2) edge node[inner sep=1pt,left] {\lab{s(1)}} node[inner sep=1pt,right] {\lab{id}} (s2);
   \path (qn) edge node[inner sep=1pt,left] {\lab{s(1)}} node[inner sep=1pt,right] {\lab{id}} (sn);
-  \path (qn) edge[loop] node[inner sep=1pt,above] {\lab{q(\star)}} node[inner sep=1pt,below] {\lab{id}} (qn);
+  \path (qn) edge[loop right] node[inner sep=4pt,above] {\lab{q(\star)}} node[inner sep=4pt,below] {\lab{id}} (qn);
 
 %  \path (s1) edge[bend left] node[inner sep=1pt,left] {\lab{c(1)}} node[inner sep=1pt,right] {\lab{id}} (c1);
 %  \path (s2) edge[bend left] node[inner sep=1pt,left] {\lab{c(1)}} node[inner sep=1pt,right] {\lab{id}} (c2);
@@ -95,13 +99,14 @@ The automaton is shown in \autoref{fig:fcfs}. Each state $q_i,s_i$ is equipped w
 %
 The intuition is that transitions from $q_i$ to $q_{i+1}$ labeled with $\star$ correspond to buffering a ``fresh'' query, from a peer whose identiy is not already known, and thus it is stored in register $i+1$. The loop on $q_n$ discards new peers when the buffer is full. The transition from $q_i$ to $s_i$ picks the query $p$ from register $1$, that is always the oldest one, and establishes a connection to $p$;
 %; transition $s_i$ to $c_i$ establishes a connection to $p$; 
-the transition from $s_i$ to $q_{i-1}$ removes $p$ from the buffer, and shifts the registers' content so that now register $1$ contains the query that arrived right after the one of $p$. Our automaton should (1) be deterministic and (2) have a Muller-style accepting condition. For (1), we assume each state has all possible outgoing transitions: those not shown in \autoref{fig:fcfs} are assumed to go to a sink state. For (2), we take all subsets of the states, excluding the sink one, as Muller sets; that is: behaviors that go through states and transitions depicted in \autoref{fig:fcfs} are all accepted. All these notions will be clearer after we formally introduce nominal Muller automata.
+the transition from $s_i$ to $q_{i-1}$ removes $p$ from the buffer, and shifts the registers' content so that register $1$ contains the query that arrived right after the one of $p$. Our automaton should (1) be deterministic and (2) have a Muller-style accepting condition. For (1), we assume each state has all possible outgoing transitions: those not shown in \autoref{fig:fcfs} are assumed to go to a sink state. For (2), we take all subsets of the states, excluding the sink one, as Muller sets; that is: behaviors that go through states and transitions depicted in \autoref{fig:fcfs} are all accepted. 
+%All these notions will be clearer after we formally introduce nominal Muller automata.
 %Our automata have a Muller-style accepting condition
 %The acceptance conditions contains all subsets of the states of this automaton, excluding the sink one.
 
 %
 
-\paragraph{Friend queries.} A \emph{friend query} is a query coming from a ``friend'' peer, which should be served as soon as possible, that is: after the current query has been served. To model such scenarios, one can introduce an action $q_f(p)$ to model a friend query from $p$. An automaton that correctly handles such queries can be obtained from the one of \autoref{fig:fcfs} as follows: we add a transition from $q_i$ to $q_{i+1}$, for each $i=0,\dots,n-1$, labelled with $q_f(\star)$ and with the map $top_i$, sending $1$ to $\star$ and $x > 1$ to $x-1$; furthermore, a looping transition on $q_n$ is added with label $q_f(\star)$ and map $id$, which discards friend queries when the buffer is full. Intuitively, $top_i$ always stores the friend query in register $1$, so that transitions $s(1)$ will always pick it, and shifts the priority of all the other peers.
+\emph{Friend queries.} A \emph{friend query} is a query coming from a ``friend'' peer, which should be served as soon as possible, that is: after the current query has been served. To model such scenarios, one can introduce an action $q_f(p)$ to model a friend query from $p$. An automaton that correctly handles such queries can be obtained from the one of \autoref{fig:fcfs} as follows: we add a transition from $q_i$ to $q_{i+1}$, for each $i=0,\dots,n-1$, labelled with $q_f(\star)$ and with the map $top_i$, sending $1$ to $\star$ and $x > 1$ to $x-1$; furthermore, a looping transition on $q_n$ is added with label $q_f(\star)$ and map $id$, which discards friend queries when the buffer is full. Intuitively, $top_i$ always stores the friend query in register $1$, so that transitions $s(1)$ will always pick it, and shifts the priority of all the other peers.
 
 %\todo[size=\tiny]{Qui assumo che essere ``friend'' è una proprietà del peer, cioè un predicato unario. Se dovessi catturare una relazione di amicizia probabilmente avrei bisogno di registri costanti che contengono gli identificatori degli amici, oppure di modellare relazioni di amicizia con grafi. V: certo, ma dal punto di vista locale, questa cosa non importa, è come se ci fosse un compilatore, diciamo così, che traduce il livello globale in quello locale}
 %by modifying the one of \autoref{fig:fcfs} as follows: we add states $f_i$ ($i=1,\dots,n$)

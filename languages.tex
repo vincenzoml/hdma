@@ -58,6 +58,7 @@ This is an idealized version of a service, where each in a number of potentially
 \end{example}
 
 \begin{figure}[t]
+\vskip -10pt
 %\begin{center}
 \subfigure[]{
 \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=15ex,semithick,initial text={},scale=0.8, every node/.style={scale=0.8}]  
@@ -108,7 +109,7 @@ This is an idealized version of a service, where each in a number of potentially
   \node[state,fit={(reg10) (reg11) (reg12)},inner sep=2ex] (q1) {};
   \node[above right=-1ex of q1] (lab1) {$q_1$}; 
   \node[state,fit={(reg20) (reg21) (reg22)},inner sep=2ex] (q2) {};
-  \node[below=1pt of q2] (lab2) {$q_2$}; 
+  \node[above=1pt of q2] (lab2) {$q_2$}; 
 
   \path (q0) edge [bend left] node {$z_0$} (q1);
   \path (q1) edge [bend left=40]  node[inner sep=1pt] (star) {$\star$} (q2);
@@ -127,8 +128,8 @@ This is an idealized version of a service, where each in a number of potentially
 \label{fig:upwords-ex}
 }
 %\end{center}
-%
-%\vspace{-6.3ex}
+
+\vspace{-4ex}
 %\begin{center}
 \subfigure[]{
 {
@@ -137,7 +138,7 @@ This is an idealized version of a service, where each in a number of potentially
 %
 %	
   \node[state,initial] (q0) {$q_0$}; 
-  \node[below=1ex of q0] {$\acc = \{ \{ q_0 \} \}$};
+  \node[right=5ex of q0] {$\acc = \{ \{ q_0 \} \}$};
 %
   \path (q0) edge [loop right]  node[inner sep=1pt] (star) {$\star$} (q0);
 \end{tikzpicture}
@@ -154,8 +155,8 @@ This is an idealized version of a service, where each in a number of potentially
   \node[state,initial] (q0) {$q_0$}; 
   \node[state,right of=q0] (q1) {};  
   \node (lab1) at (q1) {$q_1$};  \node[register,label={[xshift=-3pt,yshift=-2pt]right:$x$}] (reg) [above=1pt of lab1] {};
-	\coordinate (Middle) at ($(q0)!0.5!(q1)$);
-  \node[below=4ex of Middle] {$\acc = \{\{q_0,q_1\}\}$};
+	%\coordinate (Middle) at ($(q0)!0.5!(q1)$);
+  \node[right=5ex of q1] {$\acc = \{\{q_0,q_1\}\}$};
   \path (q0) edge [bend left]  node[inner sep=1pt] (star) {$\star$} (q1);
   \path (q1) edge[loop right] node[inner sep=1pt] {$\star$} (q1);
   \path (q1) edge [bend left] node {$x$} (q0);

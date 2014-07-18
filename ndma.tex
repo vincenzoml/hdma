@@ -1,9 +1,9 @@
 \documentclass[orivec]{llncs}
 
 \title{A class of automata for the verification of infinite, resource-allocating behaviours
-% \thanks{Research partially funded by projects EU 
-% ASCENS (nr. 257414), EU QUANTICOL (nr. 600708), 
-% IT MIUR CINA and PAR FAS 2007-2013 Regione Toscana TRACE-IT.}
+ \thanks{Research partially funded by projects EU 
+ ASCENS (nr. 257414), EU QUANTICOL (nr. 600708), 
+ IT MIUR CINA and PAR FAS 2007-2013 Regione Toscana TRACE-IT.}
 }
 \author{Vincenzo Ciancia\inst{1} \and Matteo Sammartino\inst{2}}
 \institute{ISTI-CNR, Pisa \and Dipartimento di Informatica, Universit\`a di Pisa, Pisa }
@@ -12,6 +12,7 @@
 \input{vincenzo-macros}
 
 \raggedbottom
+\frenchspacing
 
 \begin{document}
 
@@ -32,17 +33,18 @@ Process calculi for service-oriented computing often feature generation of fresh
 
 \section{Background}\label{sec:background}\input{background}
 
-\section{Nominal regular \texorpdfstring{$\omega$}{omega}-languages}\label{sec:languages}\input{languages}
+\section{Nominal \texorpdfstring{$\omega$}{omega}-regular languages}\label{sec:languages}\input{languages}
 
 
 \section{Finite automata}\label{sec:hd-automata}
 \input{hd-automata}
 
 
-\section{Synchronized product}\label{sec:sync-product}
+\section{Synchronized product and boolean operations}\label{sec:sync-product}
 \input{synchronized-product}
 
-\section{Boolean operations and decidability}\label{sec:boolean-operations-decidability}\input{boolean-operations-decidability}
+%\section{Boolean operations and decidability}\label{sec:boolean-operations-decidability}
+\input{boolean-operations-decidability}
 
 \section{Ultimately-periodic words}\label{sec:up-words}\input{up-words}
 
@@ -50,7 +52,7 @@ Process calculi for service-oriented computing often feature generation of fresh
 \input{future-work}
 \input{related-work}
 
-%\paragraph{Acknowledgements.} The authors thank Nikos Tzevelekos, Emilio Tuosto and Gianluca Mezzetti for several fruitful discussions related to nominal automata.
+\paragraph{Acknowledgements.} The authors thank Nikos Tzevelekos, Emilio Tuosto and Gianluca Mezzetti for several fruitful discussions related to nominal automata.
 
 \bibliographystyle{splncs}
 \bibliography{bibliography}
