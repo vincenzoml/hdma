@@ -124,7 +124,7 @@ $	(p_0, \rrho_0) \TrP{v_0}{L} (p_0, \rrho_1) \TrP{v_1}{L} \cdots \TrP{v_n}{L} (p
 %\caption{\label{fig:upwords-ex} An example automaton. Some transitions are not shown: they are all assumed to end up in a sink state without registers.}
 %\end{figure}
 
-\begin{example} We justify the above construction on the \hdma{} of \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. Consider the loop $L$ formed by all the depicted transitions. We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Look at the path
+\begin{example} We justify the construction on the \hdma{} of \cref{fig:upwords-ex}, with initial assignment $\rho_0(x_0) = a$,$\rho_0(y_0) = b$ and $\rho_0(z_0) = c$. Consider the loop $L$ formed by all the depicted transitions. We have $I = \{x_0,y_0\}$ and $T = \{z_0\}$. Look at the path
 %\begin{align*}
 $	(q_0,[\subs{a}{x_0},\subs{b}{y_0},\subs{c}{z_0}]) \tr{c} (q_1,[\subs{b}{x_1},\subs{a}{y_1},\subs{c}{z_1}]) \tr{d} (q_2,[\subs{b}{x_2},\subs{a}{y_2},\subs{d}{z_2}])
 	\tr{b} (q_0,[\subs{b}{x_0},\subs{a}{y_0},\subs{d}{z_0}])$
